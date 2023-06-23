@@ -1,7 +1,6 @@
 @php
     $me = auth()->user();
 @endphp
-@vite(['resources/js/event-index.js'])
 <x-layout.dashboard :user="$me" >
     <main class="flex flex-col gap-4 @container">
         <header class="flex items-center justify-between">
