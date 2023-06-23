@@ -1,0 +1,36 @@
+const categories = [
+  { value: "medical", text: "Medical" },
+  { value: "educational", text: "Educational" },
+  { value: "financial", text: "Financial" },
+  { value: "services", text: "Services" },
+  { value: "travel", text: "Travel" }
+];
+
+// subcategory
+const subcategories = {
+    medical: ["Pharmaceuticals", "Medical Devices", "Healthcare Services"],
+    educational: ["K-12 Education", "Higher Education", "Online Learning"],
+    financial: ["Banking", "Investment Management", "Insurance"],
+    services: ["Consulting", "Marketing", "Technology Services"],
+    travel: ["Air Travel", "Hotels", "Car Rentals"]
+  };
+
+
+
+  <nav class="!hidden">
+  @foreach (array_chunk($menuItems, 2) as $row)
+      <row>
+          @foreach ($row as $item)
+              <item data-cat="{{ $item['cat'] }}"
+                  @if (isset($item['active']) && $item['active']) data-active="true" @endif>
+                  <icon>
+                      <x-dynamic-component :component="'icon-' . $item['icon']" />
+                  </icon>
+                  <text>
+                      {{ $item['text'] }}
+                  </text>
+              </item>
+          @endforeach
+      </row>
+  @endforeach
+</nav>

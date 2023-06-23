@@ -1,0 +1,183 @@
+// hack
+dashboard > header:first-child {
+    @apply hidden;
+}
+main {
+    @apply flex bg-neutral-0 pb-12;
+
+    core {
+        @apply mx-auto w-max bg-neutral-0 flex gap-8;
+        nav {
+            @apply py-[52px] flex bg-neutral-3 px-[36px] border-l border-neutral-4 flex-col gap-6;
+            widgect {
+                @apply bg-neutral-1 w-[290px] flex pb-8 flex-col gap-2 rounded-[15px];
+                header {
+                    @apply font-medium py-4 text-base-content px-4 w-full;
+                }
+            }
+            ._qrcode {
+                @apply items-center;
+                qrcode {
+                    img {
+                        @apply w-[105px] h-[105px] block;
+                    }
+                }
+                fullname {
+                    @apply text-sm font-medium;
+                }
+                wallet {
+                    @apply text-sm text-neutral/50 block text-center   break-all w-[230px];
+                }
+            }
+            ._signchain {
+                @apply items-start bg-[#232627] text-white gap-4;
+                header {
+                    @apply text-base-100;
+                }
+                message {
+                    @apply text-sm px-4;
+                }
+            }
+            ._contact {
+                socials {
+                    @apply flex flex-col gap-2  pl-4;
+                    item {
+                        @apply flex gap-3 items-center;
+                        icon {
+                            // styles for the icon element
+                            i {
+                                @apply text-[#92929D];
+                            }
+                        }
+                        span {
+                            @apply text-sm;
+                        }
+                    }
+                }
+            }
+            ._guidance {
+                value {
+                    @apply flex items-center gap-4 px-4;
+
+                    item {
+                        @apply flex flex-col items-center gap-2;
+
+                        color {
+                            @apply w-11 h-11 rounded;
+
+                            &._color-default {
+                                @apply border border-neutral/20;
+                            }
+                        }
+                        text {
+                            @apply text-xs;
+                        }
+                    }
+                }
+            }
+        }
+        root {
+            @apply py-[52px] flex flex-col bg-neutral-0 w-full gap-4;
+            widgect {
+                @apply bg-neutral-2 shadow-lg shadow-neutral-4/80 border-neutral-4  flex py-12 px-4 gap-2 flex-col  rounded-[15px];
+                header {
+                    font-family: "Inter", sans-serif;
+                    @apply font-medium px-4 w-full;
+                }
+                value {
+                    @apply text-neutral-5 px-4;
+                }
+            }
+            section {
+                @apply w-full;
+                grid {
+                    @apply gap-4;
+                }
+                label {
+                    @apply text-sm py-2 block font-medium;
+                }
+            }
+            ._category {
+                value {
+                    @apply flex gap-4 items-center;
+                    item {
+                        @apply cursor-pointer flex w-11 flex-col gap-2 items-center;
+                        icon {
+                            @apply rounded w-11 h-11 bg-neutral/10 flex items-center justify-center;
+                        }
+                        text {
+                            @apply text-xs;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.js-modal-categories {
+    navigation {
+        @apply flex gap-6 flex-row text-sm font-medium text-neutral/50 border-b border-neutral/10;
+        tab_selector {
+            @apply py-4 border-b-2 cursor-pointer;
+            &[data-tab="tab1"] {
+                @apply text-blue-600  border-primary;
+            }
+            &[data-tab="tab2"] {
+                @apply border-transparent hover:text-neutral;
+            }
+        }
+        actions {
+            @apply ml-auto;
+            search {
+                @apply flex items-center gap-2;
+                field {
+                    @apply relative;
+                    input {
+                        @apply border border-neutral/50 placeholder:text-neutral/80 placeholder:font-light rounded-md py-2 px-4 block w-full leading-5 focus:outline-none focus:bg-white focus:border-indigo-500;
+                    }
+                    div {
+                        @apply absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none;
+                        i {
+                            @apply text-neutral/50;
+                        }
+                    }
+                }
+                button {
+                    @apply py-2 px-4 bg-primary/80 hover:bg-primary text-white rounded;
+                }
+            }
+        }
+    }
+
+    nav {
+        @apply col-span-2 flex flex-col gap-4 justify-center;
+        row {
+            @apply grid grid-cols-2 gap-8;
+            item {
+                @apply cursor-pointer flex w-full items-center gap-4 filter;
+                icon {
+                    @apply fill-black text-black border-neutral/50 rounded-[10px]  border flex items-center justify-center w-12 h-12;
+                    svg {
+                        @apply fill-black;
+                    }
+                }
+                &[data-active="true"] {
+                    svg {
+                        @apply fill-primary;
+                    }
+                    text {
+                        @apply text-primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// js
+.js-category-icon {
+    &[data-selected="true"] {
+        @apply bg-primary text-white;
+    }
+}

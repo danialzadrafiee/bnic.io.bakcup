@@ -1,0 +1,82 @@
+main {
+    @apply p-8 bg-neutral/5;
+}
+
+card {
+    @apply bg-white rounded-lg block  w-[1200px]  mx-auto shadow-md p-6;
+}
+
+row {
+    @apply flex items-center mb-4;
+}
+
+column {
+    @apply flex flex-col w-1/2;
+
+    &:first-child {
+        @apply pr-4;
+    }
+
+    &:last-child {
+        @apply pl-4;
+    }
+}
+
+span {
+    @apply  font-medium mb-2;
+}
+
+input[type="text"],
+textarea,
+select {
+    @apply block w-full border-neutral/30  rounded-lg py-3 px-4 mb-3 focus:outline-none focus:bg-white;
+    &.invalid {
+        @apply border-error bg-error/40;
+    }
+}
+
+textarea {
+    @apply h-24;
+}
+
+label {
+    @apply flex flex-col;
+
+    span {
+        @apply text-neutral text-sm;
+    }
+}
+
+divider {
+    @apply w-full grow  flex gap-4 items-center text-center  font-medium  my-12;
+    &::after,
+    &::before {
+        content: "";
+        @apply h-[1px] grow shrink block  bg-neutral/30;
+    }
+}
+
+[disabled] {
+    @apply bg-neutral/10 cursor-not-allowed;
+}
+
+.__members {
+    row {
+        @apply flex flex-row justify-start items-start w-full gap-4;
+    }
+    button {
+        &[data-action="add"] {
+            @apply bg-primary/70 grow h-12 hover:bg-primary text-white font-bold block rounded-lg;
+        }
+        &[data-action="remove"] {
+            @apply bg-error/70  grow h-12 hover:bg-error text-white font-bold block  rounded-lg;
+        }
+    }
+}
+
+.__submit {
+    @apply justify-end;
+    button {
+        @apply bg-primary/70  h-12  hover:bg-primary text-white font-bold block rounded-lg;
+    }
+}

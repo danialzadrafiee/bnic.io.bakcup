@@ -1,0 +1,42 @@
+padding_bug {
+    @apply w-[320px];
+}
+xaside {
+    inside {
+        @apply bg-base-content;
+    }
+    @apply flex flex-col  h-screen bg-base-content w-[320px];
+    header {
+        @apply flex justify-between items-center;
+        logo {
+            img {
+                @apply cursor-pointer block;
+            }
+        }
+        action {
+            img {
+                @apply cursor-pointer w-[40px] h-[40px] block;
+            }
+        }
+    }
+    links {
+        @apply flex flex-col gap-1;
+        a,
+        button {
+            @apply flex text-sm gap-5 items-center h-12 text-neutral-1/90 rounded-lg transition-colors px-5;
+            icon {
+                i {
+                    @apply text-xl;
+                }
+            }
+            span {
+                // styles for the span element
+            }
+        }
+    }
+}
+.x-aside-link-inside:hover {
+    background: linear-gradient(to bottom, #323337, rgba(70, 79, 111, 0.3));
+    box-shadow: inset 0px 0.0625rem 0 rgba(255, 255, 255, 0.05), 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.1);
+    color: white;
+}

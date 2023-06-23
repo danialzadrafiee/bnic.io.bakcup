@@ -1,0 +1,135 @@
+main {
+    wallpaper {
+        @apply w-screen h-[300px];
+        img {
+            @apply block w-screen h-[300px] object-cover;
+        }
+    }
+    > header {
+        @apply p-6 bg-white w-[1200px] mx-auto -mt-16 block  relative h-[160px] rounded-xl;
+        avatar {
+            @apply w-max;
+            img {
+                @apply rounded-3xl -top-10 relative border-8 border-white w-44 h-44 block;
+            }
+        }
+        button,
+        a {
+            @apply bg-primary text-white flex items-center justify-center w-[140px] h-[40px] rounded-lg text-sm;
+        }
+        heading {
+            @apply text-2xl font-semibold;
+        }
+        description {
+            @apply text-sm text-neutral;
+        }
+        label {
+            @apply text-sm text-neutral;
+        }
+        valule {
+            @apply text-sm font-semibold;
+        }
+    }
+    core {
+        @apply flex w-[1200px] mx-auto py-4 flex-row gap-6;
+        navigation {
+            @apply flex flex-col gap-4 w-[270px];
+            widgect {
+                @apply rounded-xl;
+                inside {
+                    @apply flex flex-col gap-2 p-4;
+                }
+                &.__widgect-info {
+                    heading {
+                        @apply py-2 border-b border-neutral/10 px-4 font-semibold w-full block;
+                    }
+                    qrcode img {
+                        @apply block w-[110px] h-[110px] mx-auto;
+                    }
+                    name {
+                        @apply text-center font-medium;
+                    }
+                    wallet {
+                        @apply block break-words text-center   text-sm text-neutral;
+                    }
+                }
+                &.__widgect-menu {
+                    @apply p-4;
+                    list {
+                        @apply flex flex-col gap-2;
+                        a {
+                            @apply border-l-[3px] py-1 px-2 flex gap-2 items-center;
+                            i {
+                                @apply w-[20px] flex items-center justify-center;
+                            }
+                            &.active {
+                                @apply text-primary;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        article {
+            @apply flex flex-col max-w-full gap-4;
+            widgect {
+                @apply bg-white rounded-xl p-4;
+                &.__widgect-about {
+                    @apply flex flex-col;
+                    heading {
+                        @apply font-semibold;
+                    }
+                }
+                &.__widgect-address {
+                    @apply flex w-full flex-row gap-4;
+                    map {
+                        @apply w-1/2;
+                        img {
+                            @apply w-full h-[300px] block object-cover rounded-xl;
+                        }
+                    }
+                    contact {
+                        @apply w-1/2 flex flex-col gap-4;
+                        item {
+                            @apply flex flex-col gap-0;
+                            label {
+                                @apply text-sm text-neutral;
+                            }
+                            value {
+                                icons {
+                                    @apply flex flex-row mt-2 gap-2;
+                                    a {
+                                        @apply block w-[36px] h-[36px] rounded-lg;
+                                        icon img {
+                                            @apply w-[36px] h-[36px]  block object-cover  rounded-lg;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            form.js-form-real {
+                @apply bg-white  border-t py-8 my-4  flex gap-4 flex-col w-full max-w-full mx-auto;
+                additional {
+                    @apply flex flex-col gap-4;
+                    row {
+                        @apply flex gap-2;
+                    }
+                    input {
+                        @apply rounded grow-0 shrink w-full py-2 px-4 border-neutral/30;
+                    }
+                    button.js-add-additional-row,
+                    button.js-rem-additional-row {
+                        @apply flex items-center justify-center text-neutral w-[200px];
+                    }
+                }
+                button.js-btn-sign {
+                    @apply bg-primary rounded text-white px-4 py-2 block w-max ml-auto mt-20;
+                }
+            }
+       
+        }
+    }
+}
