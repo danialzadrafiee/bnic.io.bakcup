@@ -30,7 +30,7 @@ Route::group(['prefix' => 'walletconnect'], function () {
     Route::get('/update', [WalletConnectController::class, 'update'])->name('walletconnect.update');
     Route::post('/update_user', [WalletConnectController::class, 'update_user'])->name('walletconnect.update_user');
     Route::get('/search', [WalletConnectController::class, 'search'])->name('walletconnect.search');
-    Route::get('/search_invidual', [WalletConnectController::class, 'search_invidual'])->name('walletconnect.search_invidual');
+    Route::any('/search_invidual', [WalletConnectController::class, 'search_invidual'])->name('walletconnect.search_invidual');
 });
 
 Route::post('/update', [WalletConnectController::class, 'update'])->name('walletconnect.update');

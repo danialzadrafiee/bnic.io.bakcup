@@ -114,7 +114,7 @@
                                     </wallet>
                                 </widgect>
                             @else
-                                @if (!$isowner)
+                                @if ($isowner && (isset($ispublic) && !$ispublic))
                                     <widgect class="_signchain">
                                         <header>
                                             Enable your account

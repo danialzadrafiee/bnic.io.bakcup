@@ -9,7 +9,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::prefix('user')->group(function () {
-    Route::get('getUserJson',  [ApiController::class, 'getUserJson'])->name('api.getUserJson');
+    Route::any('getUserJson',  [ApiController::class, 'getUserJson'])->name('api.getUserJson');
     Route::get('getUserCategoriesJson',  [ApiController::class, 'getUserCategoriesJson'])->name('api.getUserCategoriesJson');
     Route::get('getUserJsonByEmail',  [ApiController::class, 'getUserJsonByEmail'])->name('api.getUserJsonByEmail');
     Route::post('update',  [ApiController::class, 'update'])->name('api.update');
