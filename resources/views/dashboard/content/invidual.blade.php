@@ -243,7 +243,7 @@
             <grid class="grid grid-cols-1">
                 <widgect class="_code">
                     <flex class="flex items-center  px-2 gap-4">
-                        <icon class="bg-primary/20 rounded-xl items-center justify-center shrink-0 grow flex w-[60px] h-[60px]">
+                        <icon class="bg-primary/20 rounded-xl items-center justify-center shrink-0 grow-0 flex w-[60px] h-[60px]">
                             <x-fas-id-card-clip class="w-[30px] h-[30px] text-primary "></x-fas-id-card-clip>
                         </icon>
                         <in class="flex flex-col gap-1">
