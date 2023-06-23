@@ -103,7 +103,7 @@ class WalletConnectController extends Controller
             'profession.*' => 'required|string|max:255',
             'skill.*' => 'string|max:255',
             'language.*' => 'required|string|max:2',
-            'cv' => 'required',
+            'cv' => 'nullable|string|max:5000',
             'website' => 'nullable|url',
             'facebook' => 'nullable|string|max:255',
             'twitter' => 'nullable|string|max:255',
@@ -124,7 +124,7 @@ class WalletConnectController extends Controller
 
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
-        $user->token = $maxToken ? $maxToken + 1 : 1000;
+        $user->token = $maxToken ? $maxToken + 1 : 5000;
         $user->save();
         $this->seed_cat($user);
 
