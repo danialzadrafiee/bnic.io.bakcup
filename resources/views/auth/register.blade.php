@@ -402,7 +402,7 @@
                         </job>
                         <cv class="col-span-6 gap-2 flex flex-col">
                             <heading class="text-xl my-2">About you</heading>
-                            <textarea name="cv" value="{{ old('cv') }}" class="w-full textarea textarea-bordered min-h-[300px]"></textarea>
+                            <textarea name="cv" value="{{ old('cv') }}" class="w-full textarea !border border-neutral-5 textarea-bordered min-h-[300px]"></textarea>
                         </cv>
                     </grid>
                 </page>
