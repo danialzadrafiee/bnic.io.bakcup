@@ -124,7 +124,7 @@ class WalletConnectController extends Controller
 
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
-        $user->token = $maxToken ? $maxToken + 1 : 5000;
+        $user->token = $maxToken ? $maxToken + 1 : 10000;
         $user->save();
         $this->seed_cat($user);
 

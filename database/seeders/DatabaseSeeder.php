@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $usertoken = 1000;
+        $usertoken = 10000;
         // invidual
         for ($i = 0; $i < 2; $i++) {
             DB::table('users')->insert([
