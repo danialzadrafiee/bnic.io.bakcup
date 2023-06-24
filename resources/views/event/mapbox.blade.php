@@ -40,11 +40,7 @@
         window.dispatchEvent(new Event('resize'))
     }, 0)
 
-    document.querySelector('.js_log_location').addEventListener('click', function() {
-        if (marker) {
-            console.log('Location:', marker.getLngLat());
-        }
-    });
+
 
     // Initialize Autocomplete with Mapbox's Geocoding API
     $("#address").autocomplete({
