@@ -1,7 +1,7 @@
 <mapbox class="relative block w-full">
     <div id="mapid" class="rounded-xl w-full"></div>
-    <input type="text" id="address" class="absolute top-6 right-0" />
-    <button class="js_log_location">Log Location</button>
+    <input type="text" id="address" class="absolute top-3 right-3 input input-sm input-bordered " placeholder="Search location" />
+    {{-- <button class="js_log_location">Log Location</button> --}}
 </mapbox>
 
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
@@ -15,23 +15,6 @@
     }
 </style>
 <script>
-    let SMALL_page_map_size = $('#mapid').width()
-    let BIG_page_map_size = SMALL_page_map_size + 168;
-
-    if (localStorage.getItem("aside") == 'close') {
-        $('#mapid').width(BIG_page_map_size)
-    } else {
-        $('#mapid').width(SMALL_page_map_size)
-    }
-    $('action').on('click', function() {
-        if (localStorage.getItem("aside") == 'open') {
-            $('#mapid').width(SMALL_page_map_size)
-        } else {
-            $('#mapid').width(BIG_page_map_size)
-        }
-    })
-
-
     mapboxgl.accessToken = "pk.eyJ1Ijoic3ViZGFuaWFsIiwiYSI6ImNsNTU4NXhmMTE2dXUzZG1hN3FqZGh5dHMifQ.xycsm0V8ywnavBW3lUk94A";
     var map = new mapboxgl.Map({
         container: 'mapid',
@@ -50,6 +33,12 @@
             .setLngLat([e.lngLat.lng, e.lngLat.lat])
             .addTo(map);
     });
+    map.on('dataloading', () => {
+        window.dispatchEvent(new Event('resize'));
+    });
+    setTimeout(() => {
+        window.dispatchEvent(new Event('resize'))
+    }, 0)
 
     document.querySelector('.js_log_location').addEventListener('click', function() {
         if (marker) {
