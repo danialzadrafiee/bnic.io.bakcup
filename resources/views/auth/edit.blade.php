@@ -1,5 +1,4 @@
 <x-layout.auth>
-    @vite('resources/js/auth-edit.js')
     @vite('resources/js/auth-register.js')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -18,6 +18,8 @@ export default defineConfig({
                 "resources/css/override.scss",
                 "resources/css/profile-index.scss",
                 "resources/css/x-aside.scss",
+                "resources/css/register.scss",
+                //js
                 "resources/js/abi.js",
                 "resources/js/app.js",
                 "resources/js/auth-index.js",
@@ -46,6 +48,7 @@ export default defineConfig({
                 "resources/js/qrcode.js",
                 "resources/js/vite-shims.js",
                 "resources/js/x-aside.js",
+                
             ],
 
             refresh: true,
