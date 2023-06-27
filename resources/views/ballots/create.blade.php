@@ -42,23 +42,27 @@
                 <div id="optionInputsContainer" class="flex flex-col space-y-4">
                     <label for="options" class="block text-sm text-gray-600">Options</label>
 
-                    <div id="optionInput0" class="mb-2">
+                    <flex id="optionInput0" class="mb-2 flex gap-2 items-center w-full">
                         <input type="text" name="options[]" class="optionInput input input-bordered w-full" placeholder="Enter an option">
-                        <button type="button" class="removeOptionBtn hidden">Remove</button>
-                    </div>
+                        <button type="button" id="addOptionBtn" class="btn btn-neutral w-[140px]">Add Option</button>
+                    </flex>
                 </div>
 
-                <button type="button" id="addOptionBtn" class="btn btn-neutral">Add Option</button>
+
 
                 <!-- Candidates -->
-                <div class="form-control flex flex-col space-y-1">
+                {{-- <div class="form-control flex flex-col space-y-1">
                     <label for="candidates" class="block text-sm text-gray-600">Candidates</label>
-                    <select name="candidates[]" id="candidates" multiple class="select select-bordered w-full">
-                        <!-- Candidates will be dynamically populated -->
+                    <select id="candidates" multiple class="py-3 select select-bordered w-full">
+
+                        <!-- Your options here -->
                     </select>
                     <input type="text" id="candidateSearch" placeholder="Search for users..." class="input input-bordered">
                 </div>
-
+                <div id="candidatesDiv" class="grid grid-cols-2 w-full gap-4">
+                </div> --}}
+                <input id="autocomplete-input" type="text">
+                <div id="candidatesDiv"></div>
                 <!-- Minimum require votes -->
                 <div class="form-control flex flex-col space-y-1">
                     <label for="min_required_votes" class="block text-sm text-gray-600">Minimum Required Votes</label>
@@ -75,46 +79,37 @@
             </form>
         </div>
     </main>
-    <!-- Scripts are moved to the bottom -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
-        $(function() {
-            var optionInputIndex = 1;
+        var optionInputIndex = 1;
 
-            $('#addOptionBtn').click(function() {
-                $('#optionInputsContainer').append(`
-            <div id="optionInput${optionInputIndex}" class="mb-2">
-                <input type="text" name="options[]" class="optionInput input input-bordered w-full">
-                <button type="button" class="removeOptionBtn">Remove</button>
-            </div>
-        `);
-
-                optionInputIndex++;
-            });
-
-            $(document).on('click', '.removeOptionBtn', function() {
-                $(this).parent().remove();
-            });
-
-            $('#candidateSearch').on('keyup', function() {
-                var term = $(this).val();
-
-                axios.get(route('walletconnect.search_invidual'), {
-                    params: {
-                        term: term
-                    }
-                }).then(function(response) {
-                    var users = response.data;
-                    var options = '';
-
-                    for (var i = 0; i < users.length; i++) {
-                        options += `<option value="${users[i].id}">${users[i].first_name}</option>`;
-                    }
-                    $('#candidates').html(options);
-                });
-            });
+        $('#addOptionBtn').click(function() {
+            optionInputIndex++;
+            $('#optionInputsContainer').append(
+                $('<div>').attr({
+                    id: `optionInput${optionInputIndex}`,
+                    class: 'mb-2 flex gap-2 items-center w-full'
+                }).append(
+                    $('<input>').attr({
+                        type: 'text',
+                        name: 'options[]',
+                        class: 'optionInput input input-bordered w-full'
+                    }),
+                    $('<button>').attr({
+                        type: 'button',
+                        class: 'removeOptionBtn btn btn-error w-[140px]'
+                    }).text('Remove')
+                )
+            );
         });
+        $(document).on('click', '.removeOptionBtn', function() {
+            $(this).parent().remove();
+        });
+
+
+
     </script>
 
 </x-layout.dashboard>

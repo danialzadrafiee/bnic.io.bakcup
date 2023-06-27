@@ -60,7 +60,7 @@ function fillYearOptions() {
   const currentYear = new Date().getFullYear();
   for (let i = currentYear; i >= currentYear - 100; i--) {
     const option = $("<option>").val(i).text(i);
-    $(".js-select-year").append(option);
+    $(".js_select_year").append(option);
   }
 }
 function fillMonthOptions() {
@@ -82,23 +82,23 @@ function fillMonthOptions() {
     const option = $("<option>")
       .val(index + 1)
       .text(month);
-    $(".js-select-month").append(option);
+    $(".js_select_month").append(option);
   });
 }
 function updateDays() {
-  const selectedYear = parseInt($(".js-select-year").val());
-  const selectedMonth = parseInt($(".js-select-month").val());
+  const selectedYear = parseInt($(".js_select_year").val());
+  const selectedMonth = parseInt($(".js_select_month").val());
   const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-  $(".js-select-day").html("");
+  $(".js_select_day").html("");
   for (let i = 1; i <= daysInMonth; i++) {
     const option = $("<option>").val(i).text(i);
-    $(".js-select-day").append(option);
+    $(".js_select_day").append(option);
   }
 }
 function updateRealDate() {
-  const year = $(".js-select-year").val();
-  const month = $(".js-select-month").val();
-  const day = $(".js-select-day").val();
+  const year = $(".js_select_year").val();
+  const month = $(".js_select_month").val();
+  const day = $(".js_select_day").val();
   const realDate = new Date(year, month - 1, day);
   const formattedDate = realDate.toISOString().slice(0, 10);
   $(".js-real-establishment").val(formattedDate);
@@ -129,11 +129,11 @@ function fillStatesBaseOnCountry(country) {
     });
 }
 
-$(".js-select-year").on("change", () => {
+$(".js_select_year").on("change", () => {
   updateDays();
   updateRealDate();
 });
-$(".js-select-month").on("change", () => {
+$(".js_select_month").on("change", () => {
   updateDays();
   updateRealDate();
 });
@@ -145,7 +145,7 @@ $(".js-btn-prev").on("click", () => {
   currentPage--;
   pageManager();
 });
-$(".js-select-day").on("change", updateRealDate);
+$(".js_select_day").on("change", updateRealDate);
 $(".js-select-nationality-country").on("change", function () {
   const country = $(this).val();
   fillStatesBaseOnCountry(country);
@@ -525,26 +525,16 @@ $(".js-section-page").on("change", "select", function () {
   $(this).data("interacted", true);
   checkFormFields();
 });
-
 //form validation end
 
-// upload
+//filepond upload
 import * as FilePond from "filepond";
-// Get a reference to the file input element
-
-
-// Import the plugin code
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginPdfPreview from "filepond-plugin-pdf-preview";
-// Import the plugin styles
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-
-// Register the plugin
 FilePond.registerPlugin(FilePondPluginImagePreview);
 FilePond.registerPlugin(FilePondPluginPdfPreview);
 const inputElement = document.querySelector('input[type="file"]');
-
-// Create a FilePond instance
 const pond = FilePond.create(inputElement, {
   server: {
     url: "/api/filepond", // Update this to your Laravel API endpoint
@@ -554,8 +544,6 @@ const pond = FilePond.create(inputElement, {
     load: "/load",
   },
 });
-
-// Listen for the 'processfile' event and log the file path
 pond.on("processfile", (error, file) => {
   if (error) {
     console.error("File processing failed:", error);
@@ -564,6 +552,7 @@ pond.on("processfile", (error, file) => {
   const response = JSON.parse(file.serverId);
   $(".js-corp-file").val(response.id);
 });
+//filepond upload end
 
 
 

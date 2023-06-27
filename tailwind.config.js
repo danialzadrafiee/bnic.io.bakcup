@@ -10,6 +10,12 @@ module.exports = {
                 "accent-4": "#d84c10",
                 "accent-5": "#8e55ea",
                 "accent-6": "#239550",
+                // ai
+                "accent-7": "#3fa7dd",
+                "accent-8": "#ea558e",
+                "accent-9": "#a95e39",
+                "accent-10": "#833fdd",
+                "accent-11": "#ff5c3b",
                 "neutral-0": "#fafafa",
                 "neutral-1": "#fefefe",
                 "neutral-2": "#fefefe",

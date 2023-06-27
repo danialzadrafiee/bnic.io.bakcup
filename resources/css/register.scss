@@ -1,0 +1,704 @@
+main {
+    @apply relative flex min-h-screen overflow-hidden;
+    background {
+        @apply h-screen min-w-[50vw] pointer-events-none -z-50 absolute right-0 top-0 max-h-screen;
+        img {
+            @apply block h-screen pointer-events-none -z-50 absolute right-0 top-0 max-h-screen;
+        }
+    }
+    left {
+        @apply h-screen  pointer-events-none -z-50 p-4 w-[35vw] max-h-screen;
+        section {
+            @apply bg-[#fafafb] rounded-xl h-full w-full grid  p-8;
+            logo {
+                @apply w-max;
+                img {
+                    @apply pb-12 h-[90px];
+                }
+            }
+            steps {
+                @apply flex flex-col gap-8 -mt-8;
+                step {
+                    title_p {
+                        @apply font-semibold flex items-start gap-2;
+                        x-far-circle-check {
+                            @apply w-[18px] h-[18px] mt-[5px];
+                        }
+                        span {
+                            @apply h-[28px] mt-0.5 block;
+                        }
+                    }
+                    title_s {
+                        @apply block text-[#99a1aa] ml-[26px];
+                    }
+                }
+                step {
+                    title_p {
+                        @apply font-semibold flex items-start gap-2;
+                        x-far-circle-check {
+                            @apply w-[18px] h-[18px] mt-[5px];
+                        }
+                        span {
+                            @apply h-[28px] mt-0.5 block;
+                        }
+                    }
+                    title_s {
+                        @apply block text-[#99a1aa] ml-[26px];
+                    }
+                }
+                step {
+                    title_p {
+                        @apply font-semibold flex items-start gap-2;
+                        x-far-circle-check {
+                            @apply w-[18px] h-[18px] mt-[5px];
+                        }
+                        span {
+                            @apply h-[28px] mt-0.5 block;
+                        }
+                    }
+                    title_s {
+                        @apply block text-[#99a1aa] ml-[26px];
+                    }
+                }
+                step {
+                    title_p {
+                        @apply font-semibold flex items-start gap-2;
+                        x-far-circle-check {
+                            @apply w-[18px] h-[18px] mt-[5px];
+                        }
+                        span {
+                            @apply h-[28px] mt-0.5 block;
+                        }
+                    }
+                    title_s {
+                        @apply block text-[#99a1aa] ml-[26px];
+                    }
+                }
+                step {
+                    title_p {
+                        @apply font-semibold flex items-start gap-2;
+                        x-far-circle-check {
+                            @apply w-[18px] h-[18px] mt-[5px];
+                        }
+                        span {
+                            @apply h-[28px] mt-0.5 block;
+                        }
+                    }
+                    title_s {
+                        @apply block text-[#99a1aa] ml-[26px];
+                    }
+                }
+                step {
+                    title_p {
+                        @apply font-semibold flex items-start gap-2;
+                        x-far-circle-check {
+                            @apply w-[18px] h-[18px] mt-[5px];
+                        }
+                        span {
+                            @apply h-[28px] mt-0.5 block;
+                        }
+                    }
+                    title_s {
+                        @apply block text-[#99a1aa] ml-[26px];
+                    }
+                }
+                step {
+                    title_p {
+                        @apply font-semibold flex items-start gap-2;
+                        x-far-circle-check {
+                            @apply w-[18px] h-[18px] mt-[5px];
+                        }
+                        span {
+                            @apply h-[28px] mt-0.5 block;
+                        }
+                    }
+                    title_s {
+                        @apply block text-[#99a1aa] ml-[26px];
+                    }
+                }
+            }
+        }
+    }
+    right {
+        @apply flex flex-col justify-center items-center w-full h-screen relative;
+        errors {
+            @apply bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded absolute mx-auto w-[90%] z-50 top-10 right-0 left-0;
+            strong {
+                @apply font-bold;
+            }
+            ul {
+                @apply mt-3 list-disc list-inside;
+            }
+            span {
+                @apply absolute cursor-pointer top-0 bottom-0 right-0 px-4 py-3;
+            }
+        }
+        form {
+            @apply flex flex-col w-max gap-4;
+            heading {
+                @apply flex flex-col items-center justify-center gap-2;
+                secondary {
+                    @apply text-[#B5B5BE];
+                }
+                orginal {
+                    @apply font-semibold text-3xl text-center w-96;
+                }
+            }
+            page {
+                @apply w-[750px];
+                type {
+                    @apply flex gap-2 mx-auto w-max;
+                    label {
+                        @apply  font-semibold;
+                    }
+                    a {
+                        @apply rounded-full h-5 cursor-pointer w-10 bg-neutral/20 relative;
+                        circle {
+                            @apply rounded-full bg-primary w-5 h-5 block;
+                        }
+                    }
+                }
+                fields {
+                    @apply flex flex-col gap-4 mt-4;
+                    fullname {
+                        @apply grid grid-cols-2 gap-4;
+                        firstname {
+                            @apply relative;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            input {
+                                @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                            }
+                        }
+                        lastname {
+                            @apply relative;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            input {
+                                @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                            }
+                        }
+                    }
+                    email {
+                        @apply grid grid-cols-1 gap-4;
+                        column {
+                            @apply relative;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            input {
+                                @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                            }
+                        }
+                    }
+                    bithday {
+                        @apply grid grid-cols-4 gap-4;
+                        label {
+                            @apply relative  flex items-center;
+                            span {
+                                @apply text-[#B5B5BE] flex gap-4 px-2;
+                                reqire {
+                                    @apply absolute left-2 top-2 text-error;
+                                }
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                        }
+                        year {
+                            @apply relative;
+                            select {
+                                @apply border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-0;
+                            }
+                        }
+                        month {
+                            @apply relative;
+                            select {
+                                @apply border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-0;
+                            }
+                        }
+                        day {
+                            @apply relative;
+                            select {
+                                @apply border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-0;
+                            }
+                        }
+                    }
+                    nationality {
+                        @apply grid grid-cols-4 gap-4;
+                        label {
+                            @apply relative  flex items-center;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            span {
+                                @apply text-[#B5B5BE] flex gap-4 px-2;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            text {
+                                @apply text-[#B5B5BE] px-2;
+                            }
+                        }
+                        select {
+                            @apply border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-0;
+                        }
+                        select {
+                            @apply border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-0;
+                        }
+                        button {
+                            @apply flex items-center justify-center w-full h-full;
+                            icon {
+                                @apply flex flex-grow w-full justify-center;
+                                x-fas-plus {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                        }
+                    }
+                    nationality_sec {
+                        @apply grid grid-cols-4 gap-4;
+                        label {
+                            @apply relative  flex items-center;
+                            span {
+                                @apply text-[#B5B5BE] flex gap-4 px-2;
+                                icon {
+                                    @apply flex flex-grow w-full justify-center;
+                                    x-fas-plus {
+                                        @apply text-[#92929d];
+                                    }
+                                }
+                            }
+                            text {
+                                @apply text-[#B5B5BE];
+                            }
+                        }
+                        select {
+                            @apply border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-0;
+                        }
+                        select {
+                            @apply border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-0;
+                        }
+                        button {
+                            @apply flex items-center justify-center w-full h-full;
+                            icon {
+                                @apply flex flex-grow w-full justify-center;
+                                x-fas-minus {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                        }
+                    }
+                    gender {
+                        @apply grid grid-cols-4 gap-4;
+                        label {
+                            @apply relative  flex items-center;
+                            span {
+                                @apply text-[#B5B5BE] flex gap-4 px-2;
+                                reqire {
+                                    @apply absolute left-2 top-2 text-error;
+                                }
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                        }
+                        female {
+                            @apply relative;
+                            label {
+                                @apply flex items-center gap-2 cursor-pointer  w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA];
+                                span {
+                                    @apply block text-sm;
+                                }
+                                input {
+                                    @apply border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-b-2 flex items-center px-0;
+                                }
+                            }
+                        }
+                        male {
+                            @apply relative;
+                            label {
+                                @apply flex items-center gap-2 cursor-pointer w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA];
+                                span {
+                                    @apply block text-sm;
+                                }
+                                input {
+                                    @apply border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-b-2 flex items-center px-0;
+                                }
+                            }
+                        }
+                        other {
+                            @apply relative;
+                            label {
+                                @apply flex items-center gap-2 cursor-pointer  w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA];
+                                span {
+                                    @apply block text-sm;
+                                }
+                                input {
+                                    @apply border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-b-2 flex items-center px-0;
+                                }
+                            }
+                        }
+                    }
+                    wallet {
+                        @apply grid grid-cols-1 gap-4;
+                        column {
+                            @apply relative;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            input {
+                                @apply border-[#E2E2EA] w-full text-neutral/80  placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                            }
+                            wrong {
+                                @apply absolute right-0 top-2 bottom-0 text-primary cursor-pointer;
+                            }
+                        }
+                    }
+                }
+                trms {
+                    @apply mt-4  text-center text-sm w-full block text-[#92929D];
+                }
+            }
+            page {
+                @apply w-[750px];
+                education {
+                    @apply flex flex-col gap-4 mt-4;
+                    collage {
+                        @apply grid grid-cols-5 gap-4;
+                        country {
+                            @apply relative col-span-2;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            select {
+                                @apply border-[#E2E2EA] w-full text-black  placeholder:text-[#B5B5BE] border-b-2 h-12 bg-transparent flex items-center px-10;
+                            }
+                        }
+                        univercity {
+                            @apply relative col-span-2;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute  block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            select {
+                                @apply border-[#E2E2EA] w-full text-black  placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                            }
+                        }
+                        button {
+                            @apply gap-2 text-neutral/80 flex items-center pl-2  w-full h-full;
+                        }
+                        button {
+                            @apply gap-2 text-neutral/80 flex items-center pl-2 w-full h-full;
+                        }
+                    }
+                    degree {
+                        @apply grid grid-cols-2 gap-4;
+                        field {
+                            @apply relative;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            input {
+                                @apply border-[#E2E2EA] w-full text-neutral/80 bg-transparent  placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                            }
+                        }
+                        type {
+                            @apply relative;
+                            reqire {
+                                @apply absolute left-2 top-2 text-error;
+                            }
+                            icon {
+                                @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                i {
+                                    @apply text-[#92929d];
+                                }
+                            }
+                            input {
+                                @apply border-[#E2E2EA] w-full text-neutral/80 bg-transparent  placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                            }
+                        }
+                    }
+                }
+            }
+            page {
+                @apply w-[950px];
+                grid {
+                    @apply grid grid-cols-10 w-full mt-8;
+                    job {
+                        @apply col-span-4 pr-4 flex flex-col gap-8;
+                        heading {
+                            @apply text-xl my-2;
+                        }
+                        profession {
+                            @apply flex w-full;
+                            column {
+                                @apply relative col-span-4;
+                                reqire {
+                                    @apply absolute left-2 top-2 text-error;
+                                }
+                                icon {
+                                    @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                    i {
+                                        @apply text-[#92929d];
+                                    }
+                                }
+                                input {
+                                    @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                                }
+                            }
+                            button {
+                                @apply border-[#E2E2EA]  rounded  text-neutral gap-2 flex items-center justify-center w-max mx-auto px-4 h-full;
+                            }
+                            button {
+                                @apply border-[#E2E2EA]  rounded  text-neutral gap-2 flex items-center justify-center w-max mx-auto px-4 h-full;
+                            }
+                        }
+                        skill {
+                            @apply flex w-full;
+                            column {
+                                @apply relative col-span-4;
+                                reqire {
+                                    @apply absolute left-2 top-2 text-error;
+                                }
+                                icon {
+                                    @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                    i {
+                                        @apply text-[#92929d];
+                                    }
+                                }
+                                input {
+                                    @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                                }
+                            }
+                            button {
+                                @apply border-[#E2E2EA]  rounded  text-neutral gap-2 flex items-center justify-center w-max mx-auto px-4 h-full;
+                            }
+                            button {
+                                @apply border-[#E2E2EA]  rounded  text-neutral gap-2 flex items-center justify-center w-max mx-auto px-4 h-full;
+                            }
+                        }
+                        language {
+                            @apply flex w-full;
+                            column {
+                                @apply relative col-span-4;
+                                reqire {
+                                    @apply absolute left-2 top-2 text-error;
+                                }
+                                icon {
+                                    @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                                    i {
+                                        @apply text-[#92929d];
+                                    }
+                                }
+                                select {
+                                    @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                                }
+                            }
+                            button {
+                                @apply border-[#E2E2EA]  rounded  text-neutral gap-2 flex items-center justify-center w-max mx-auto px-4 h-full;
+                            }
+                            button {
+                                @apply border-[#E2E2EA]  rounded  text-neutral gap-2 flex items-center justify-center w-max mx-auto px-4 h-full;
+                            }
+                        }
+                    }
+                    cv {
+                        @apply col-span-6 gap-2 flex flex-col;
+                        heading {
+                            @apply text-xl my-2;
+                        }
+                        textarea {
+                            @apply w-full textarea border-neutral-5 textarea-bordered min-h-[300px];
+                        }
+                    }
+                }
+            }
+            socialmedia {
+                @apply grid grid-cols-5;
+                heading {
+                    @apply col-span-5 text-xl my-4 text-center;
+                }
+                website_label {
+                    @apply flex items-center h-full w-full  col-span-1;
+                }
+                website {
+                    @apply relative col-span-4;
+                    icon {
+                        @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                        i {
+                            @apply text-[#92929d];
+                        }
+                    }
+                    input {
+                        @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                    }
+                }
+                facebook_label {
+                    @apply flex items-center h-full w-full  col-span-1;
+                }
+                facebook {
+                    @apply relative col-span-4;
+                    icon {
+                        @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                        i {
+                            @apply text-[#92929d];
+                        }
+                    }
+                    input {
+                        @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                    }
+                }
+                twitter_label {
+                    @apply flex items-center h-full w-full  col-span-1;
+                }
+                twitter {
+                    @apply relative col-span-4;
+                    icon {
+                        @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                        i {
+                            @apply text-[#92929d];
+                        }
+                    }
+                    input {
+                        @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                    }
+                }
+                instagram_label {
+                    @apply flex items-center h-full w-full col-span-1;
+                }
+                instagram {
+                    @apply relative col-span-4;
+                    icon {
+                        @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                        i {
+                            @apply text-[#92929d];
+                        }
+                    }
+                    input {
+                        @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                    }
+                }
+                linkedin_label {
+                    @apply flex items-center h-full w-full col-span-1;
+                }
+                linkedin {
+                    @apply relative col-span-4;
+                    icon {
+                        @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                        i {
+                            @apply text-[#92929d];
+                        }
+                    }
+                    input {
+                        @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                    }
+                }
+                youtube_label {
+                    @apply flex items-center h-full w-full col-span-1;
+                }
+                youtube {
+                    @apply relative col-span-4;
+                    icon {
+                        @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                        i {
+                            @apply text-[#92929d];
+                        }
+                    }
+                    input {
+                        @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                    }
+                }
+                telegram_label {
+                    @apply flex items-center h-full w-full col-span-1;
+                }
+                telegram {
+                    @apply relative col-span-4;
+                    icon {
+                        @apply absolute block h-max left-2 top-0 bottom-0 my-auto;
+                        i {
+                            @apply text-[#92929d];
+                        }
+                    }
+                    input {
+                        @apply border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-b-2 h-12 flex items-center px-10;
+                    }
+                }
+            }
+            page {
+                @apply w-[750px];
+                terms {
+                    @apply flex flex-col gap-2 py-8 text-center;
+                    h1 {
+                        @apply text-2xl font-semibold;
+                    }
+                }
+            }
+            buttons {
+                @apply flex gap-4 -mt-8;
+                button {
+                    @apply h-12 mt-12 border-[#5956E9] text-[#5956E9] cursor-pointer  border rounded-[10px] flex items-center justify-center grow;
+                    span {
+                        @apply block text-sm font-semibold;
+                    }
+                }
+                button {
+                    @apply  cursor-not-allowed h-12 mt-12 bg-[#5956E9] text-white rounded-[10px] flex items-center justify-center grow;
+                    span {
+                        @apply block text-sm font-semibold;
+                    }
+                }
+                button {
+                    @apply h-12 mt-12 bg-[#5956E9] cursor-pointer text-white rounded-[10px] flex items-center justify-center grow;
+                    span {
+                        @apply block text-sm font-semibold;
+                    }
+                }
+            }
+        }
+    }
+}

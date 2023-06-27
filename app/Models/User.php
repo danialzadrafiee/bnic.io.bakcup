@@ -62,4 +62,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Vote::class);
     }
+    public function petitions()
+    {
+        return $this->belongsToMany(Petition::class)->withPivot('user_role')->withTimestamps();
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->user_type == 'individual' ? $this->first_name . ' ' . $this->last_name : $this->corp_name;
+    }
 }

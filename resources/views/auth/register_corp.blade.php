@@ -213,17 +213,17 @@
 
                             <year class="relative">
                                 <select
-                                    class="js-select-year border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
+                                    class="js_select_year border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                                 </select>
                             </year>
                             <month class="relative">
                                 <select
-                                    class="js-select-month border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
+                                    class="js_select_month border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                                 </select>
                             </month>
                             <day class="relativ">
                                 <select
-                                    class="js-select-day border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
+                                    class="js_select_day border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                                 </select>
                             </day>
                         </establishment>

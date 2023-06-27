@@ -1,0 +1,46 @@
+#form-elements {
+    .css_heading {
+        cursor: grab;
+        @apply w-full  grid items-center h-16 px-10 border-b border-white/20 bg-[#545f6f] text-white;
+        h3 {
+            @apply hidden;
+        }
+        &::before {
+            content: "Heading";
+            display: inline-flex;
+        }
+    }
+    .css_p {
+        cursor: grab;
+        @apply p-4 relative  w-full  grid items-center h-16 px-10 border-b border-white/20 bg-[#545f6f] text-white;
+        p {
+            @apply hidden;
+        }
+        &::before {
+            content: "Paragraph";
+            display: inline-flex;
+        }
+    }
+    .css_input_text {
+        cursor: grab;
+        @apply p-4 grid gap-4  relative  w-full     placeholder-white  items-center h-16 px-10 border-b border-white/20 bg-[#545f6f] text-white;
+        input {
+            @apply hidden;
+        }
+        &::before {
+            content: "Text input";
+            display: inline-flex;
+        }
+    }
+    .css_textarea {
+        cursor: grab;
+        textarea {
+            @apply hidden;
+        }
+        @apply p-4 relative  w-full   grid items-center h-16 px-10 border-b border-white/20 bg-[#545f6f] text-white;
+        &::before {
+            content: "Text Area";
+            display: inline-flex;
+        }
+    }
+}

@@ -100,6 +100,8 @@ class CreateUsersTable extends Migration
             $table->string('pub_corp_cv')->default(1);
             $table->string('pub_corp_file')->default(1);
 
+            //admin
+            $table->string('isAdmin')->default(0);
 
 
 

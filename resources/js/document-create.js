@@ -26,13 +26,13 @@ const addRowButtonCols2 = document.getElementById("add-row-cols-2");
 // Create a function to handle row creation
 function addRow(columns) {
   const newRow = document.createElement("div");
-  newRow.classList.add("js-row", "grid", "border", "gap-2", "min-h-[40px]", "relative", "my-2");
+  newRow.classList.add("js-row", "grid", "border", "gap-2", "min-h-[40px]", "relative", "my-2" , "p-4");
   newRow.classList.add(columns === 1 ? "grid-cols-1" : "grid-cols-2");
   formCreator.querySelector(".flex").appendChild(newRow);
 
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("absolute", "top-0", "right-0", "bg-red-500", "text-white", "px-2", "py-1", "rounded");
-  deleteButton.textContent = "X";
+  deleteButton.textContent = "×";
   newRow.appendChild(deleteButton);
 
   deleteButton.addEventListener("click", () => {

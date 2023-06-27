@@ -120,8 +120,7 @@ class WalletConnectController extends Controller
         $data['profession'] = json_encode($request->input('profession'));
         $data['skill'] = json_encode($request->input('skill'));
         $data['language'] = json_encode($request->input('language'));
-
-
+        $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->first_name . $request->lastname . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
         $user->token = $maxToken ? $maxToken + 1 : 10000;
@@ -159,6 +158,7 @@ class WalletConnectController extends Controller
             'youtube' => 'nullable|string|max:255',
             'telegram' => 'nullable|string|max:255',
         ]);
+        $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->corp_name . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $data['user_type'] = 'corporation';
         $user = User::create($data);
         auth()->login($user);

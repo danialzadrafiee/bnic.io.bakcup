@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
                 'wallet' => '0x9211676A80f6F8a07d55c1A4D9755b992ee' . fake()->numberBetween(1000, 9999),
                 'website' => fake()->url(),
                 'youtube' => fake()->userName(),
+                'profile_picture' => "https://api.dicebear.com/6.x/identicon/svg?seed=" . fake()->userName() . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff",
                 "token" => ++$usertoken,
             ]);
         }
@@ -71,12 +72,13 @@ class DatabaseSeeder extends Seeder
                 'wallet' => '0xGR2z676A80f6F8a07d55c1A4D9755b992ee' . fake()->numberBetween(1000, 9999),
                 'website' =>  fake()->url(),
                 'youtube' => fake()->userName(),
+                'profile_picture' => "https://api.dicebear.com/6.x/identicon/svg?seed=" . fake()->userName() . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff",
                 "token" => ++$usertoken,
             ]);
         }
         // danial invidual
         $danial = [
-
+            'isAdmin' => 1,
             'birthday' => '1993-04-30',
             'country_primary' => 'IR',
             'country_secondary' => 'US',
@@ -100,6 +102,7 @@ class DatabaseSeeder extends Seeder
             'user_type' => 'invidual',
             'wallet' => '0x9e5d516b80f94C55fc8061d9cacCfA98b585c8ee',
             'website' => 'https://www.jamofasyfa.mobi',
+            'profile_picture' => "https://api.dicebear.com/6.x/identicon/svg?seed=danialzadrafiee&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff",
             "token" => ++$usertoken,
 
         ];
@@ -129,6 +132,7 @@ class DatabaseSeeder extends Seeder
             'user_type' => 'invidual',
             'wallet' => '0x5A4dDeB3911c24edAe11823123Cd8D7dA57Cafb6',
             'website' => 'https://www.jamofasyfa.mobi',
+            'profile_picture' => "https://api.dicebear.com/6.x/identicon/svg?seed=adlervelli&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff",
             "token" => ++$usertoken,
 
         ];
@@ -153,6 +157,7 @@ class DatabaseSeeder extends Seeder
             'user_type' => 'corporation',
             'wallet' => '0x63a3E8613ae36e2Cbbb8Dc6f4427BE38C18Bc596',
             'website' => 'https://developerpie.com',
+            'profile_picture' => "https://api.dicebear.com/6.x/identicon/svg?seed=developerpie&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff",
             "token" => ++$usertoken,
         ];
 

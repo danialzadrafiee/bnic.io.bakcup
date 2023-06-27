@@ -43,7 +43,7 @@ class BallotController extends Controller
         $totalOptionVotes = array_sum($votesForEachOption);
         $percentageOfVotes = [];
         foreach ($votesForEachOption as $optionId => $votes) {
-            $percentageOfVotes[$optionId] = ($votes / $totalOptionVotes) * 100;
+            $percentageOfVotes[$optionId] = ($votes / 1  ) * 100;
         }
 
         return view('ballots.show', compact('ballot', 'lastVoteDate', 'usersWhoVoted', 'percentageOfMinRequirement', 'percentageOfVotes'));
@@ -62,7 +62,7 @@ class BallotController extends Controller
             'title' => 'required',
             'description' => 'required',
             'type' => 'required|in:private,public',
-            'anonymous' => 'boolean',
+            'anonymous' => 'nullable',
             'min_required_votes' => 'integer',
             'ending_date' => 'required|date',
             'candidates' => 'required_if:type,private|array',

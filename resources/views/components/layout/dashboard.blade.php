@@ -67,6 +67,7 @@
             <x-layout.modals.sign_wallet :user="$user"></x-layout.modals.sign_wallet>
             <x-layout.modals.trust_link :user="$user"></x-layout.modals.trust_link>
             <x-document_finder></x-document_finder> {{-- TODO --}}
+            <x-layout.modals.edit_profile_picture :user="$user"></x-layout.modals.edit_profile_picture>
         </modals>
         <content>
             <main>
@@ -81,9 +82,7 @@
                             <profile>
                                 <div class="flex items-center gap-x-2">
                                     <relative class="relative">
-                                        <img class="rounded-lg w-12 h-12 "
-                                            src="https://api.dicebear.com/6.x/identicon/svg?seed={{ $user->user_type == 'invidual' ? $user->first_name : $user->corp_name }}&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff"
-                                            alt="">
+                                        <img class="rounded-lg w-12 h-12 hover:outline outline-primary cursor-pointer js_profile_picture" src="{{ $user->profile_picture }}">
                                     </relative>
                                     <div>
                                         <heading class="text-lg flex gap-2 items-center justify-between  font-semibold text-base-content capitalize ">
@@ -103,7 +102,9 @@
                                     </header>
 
                                     <qrcode class=" rounded-lg shadow ">
-                                        <img class="!w-[200px] rounded-lg !h-[200px] " src="{{ substr_replace($user->nfts->first()->url, 'png', -4) }}">
+                                        <a href="{{ route('dashboard.public_index', [$user->id]) }}">
+                                            <img class="!w-[200px] rounded-lg !h-[200px] " src="{{ substr_replace($user->nfts->first()->url, 'png', -4) }}">
+                                        </a>
                                     </qrcode>
                                     <wallet>
                                         <a href="https://mumbai.polygonscan.com/address/0x9bC71Cb4908c4171979d297328F471cb9939c959?a={{ $user->nfts->first()->token }}">
@@ -139,7 +140,55 @@
                                     </widgect>
                                 @endif
                             @endif
-                            @if ($isowner && (isset($ispublic) && !$ispublic))
+
+                            @if ($user->isAdmin == 1)
+                                <widgect class="_invite">
+                                    <header class="flex flex-col">
+                                        <flex class="flex items-center w-full justify-between">
+                                            <heading>Invitation</heading>
+                                            <badge class="badge text-xs bg-accent-10/30 text-accent-10">Privilaged</badge>
+                                        </flex>
+                                        <small class="text-neutral-5">Send email as invitation</small>
+                                    </header>
+                                    <wbody class="px-4 flex gap-2 justify-between w-full">
+                                        <label class="flex gap-2  items-center ">
+                                            <small>Pay user verify fee?</small>
+                                            <input type="checkbox" class="toggle toggle-sm js_pay_fee_toggle">
+                                        </label>
+                                        <flex class="flex order-12 gap-2">
+                                            <label type="button" for="inviteModal" class="btn w-[80px] btn-sm  btn-neutral ml-auto">Select</label>
+                                    </wbody>
+
+                                    <input type="checkbox" id="inviteModal" class="modal-toggle" />
+                                    <dialog id="inviteModal" class="modal bg-black/20">
+                                        <div class="modal-box">
+                                            <form method="POST" action="{{ route('mail.send_invite_mail') }}">
+                                                @csrf
+                                                <flex class="flex flex-col gap-4">
+                                                    <h3 class="font-bold text-lg">Invitation Information</h3>
+                                                    <grid class="grid grid-cols-2 gap-2">
+                                                        <input type="text" readonly name="sender_id" value="{{ $user->id }}">
+                                                        <input type="text" readonly name="sender_full_name" value="{{ $user->user_type == 'invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}">
+                                                        <input type="text" name="reciver_first_name" placeholder="First name" class="input w-full border-neutral-5/30">
+                                                        <input type="text" name="reciver_last_name" placeholder="Last name" class="input w-full border-neutral-5/30">
+                                                        <input type="email"name="reciver_email" placeholder="example@domain.com" class="col-span-2 input w-full border-neutral-5/30">
+                                                    </grid>
+                                                    <flex class="flex items-center justify-between">
+                                                        <label class="flex gap-2  items-center ">
+                                                            <p>Pay user verify fee?</p>
+                                                            <input type="checkbox" name="is_fee_paid" class="toggle js_pay_fee_toggle">
+                                                        </label>
+                                                        <button type="submit" class="btn w-[100px] btn-primary ml-auto">Send</button>
+                                                    </flex>
+                                                </flex>
+                                            </form>
+                                        </div>
+                                        <label class="modal-backdrop" for="inviteModal">Close</label>
+                                    </dialog>
+                                </widgect>
+                            @endif
+
+                            @if ($isowner && (isset($ispublic) && !$ispublic) && $user->user_type != 'corporation')
                                 <widgect class="_publicity relative">
                                     <header>
                                         <heading>Publicity Setting</heading>
@@ -174,6 +223,7 @@
                                     </footer>
                                 </widgect>
                             @endif
+
 
                             <widgect class="_trustlink relative">
                                 <header class="flex justify-between items-center   flex-wrap">

@@ -13,6 +13,8 @@ use App\Http\Middleware\Authenticate;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\BallotController;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\PetitionController;
 
 Route::get('/', [WalletConnectController::class, 'index'])->middleware([CheckWalletConnection::class])->name('index');
 Route::get('/logout', [WalletConnectController::class, 'logout'])->name('logout');
@@ -109,3 +111,49 @@ Route::delete('/options/{option}', [OptionController::class, 'destroy'])->name('
 
 
 Route::post('/votes', [VoteController::class, 'store'])->name('vote.store');
+
+
+//petition
+Route::get('/petitions', [PetitionController::class, 'index'])->name('petitions.index');
+Route::get('/petitions/create', [PetitionController::class, 'create'])->name('petitions.create');
+Route::post('/petitions', [PetitionController::class, 'store'])->name('petitions.store');
+Route::get('/petitions/{petition}', [PetitionController::class, 'show'])->name('petitions.show');
+Route::post('/petitions/{petition}/sign', [PetitionController::class, 'sign'])->name('petitions.sign');
+Route::delete('/petitions/{petition}', [PetitionController::class, 'destroy'])->name('petitions.destroy');
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+Route::get('/mail', function () {
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+
+    try {
+        //Server settings
+        $mail->SMTPDebug = 2;
+        $mail->isSMTP();
+        $mail->Host       = 'mail.developerpie.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = '_mainaccount@developerpie.com';
+        $mail->Password   = 'WTFIS0124WTFIS0124';
+        $mail->SMTPSecure = false;  // Turn off SMTP encryption
+        $mail->SMTPAutoTLS = false; // Turn off automatic TLS encryption
+        $mail->Port       = 587;
+
+        //Recipients
+        $mail->setFrom('develop1@developerpie.com', 'Develop1');
+        $mail->addAddress('subdanial@gmail.com');
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Hello';
+        $mail->Body    = view('emails.test');
+
+        $mail->send();
+        echo 'Message has been sent';
+    } catch (\PHPMailer\PHPMailer\Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+});
+Route::post("/mail/invite", [MailController::class, "send_invite_mail"])->name('mail.send_invite_mail');
+

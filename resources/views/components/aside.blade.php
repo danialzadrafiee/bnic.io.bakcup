@@ -20,7 +20,7 @@
         </header>
         <links class="x-aside-links z-50">
 
-
+            {{-- home --}}
             <tooltip class="tooltip-right z-50" data-tip="Home">
                 <a href="{{ route('dashboard.index') }}" class="x-aside-link-inside {{ Route::currentRouteName() == 'dashboard.index' ? $activeClass : '' }}">
                     <icon>
@@ -29,6 +29,7 @@
                     <span class="xjs-main-aside-span">Home</span>
                 </a>
             </tooltip>
+            {{-- cert --}}
             <tooltip class="tooltip-right z-50" data-tip="Certificates">
                 <a href="{{ route('category.index') }} " class="x-aside-link-inside {{ Route::currentRouteName() == 'category.index' ? $activeClass : '' }}">
                     <icon>
@@ -39,6 +40,7 @@
                     </span>
                 </a>
             </tooltip>
+            {{-- inbox --}}
             <tooltip class="tooltip-right z-50" data-tip="Inbox">
                 <a href="{{ route('dashboard.inbox') }}" class="x-aside-link-inside {{ Route::currentRouteName() == 'dashboard.inbox' ? $activeClass : '' }}">
                     <icon>
@@ -49,6 +51,7 @@
                     </span>
                 </a>
             </tooltip>
+            {{-- events --}}
             <tooltip class="tooltip-right z-50" data-tip="Events">
                 <a href="{{ route('event.index') }}" class="x-aside-link-inside  {{ Route::currentRouteName() == 'event.index' ? $activeClass : '' }}">
                     <icon>
@@ -59,6 +62,7 @@
                     </span>
                 </a>
             </tooltip>
+            {{-- votes --}}
             <tooltip class="tooltip-right z-50" data-tip="Events">
                 <a href="{{ route('ballots.index') }}" class="x-aside-link-inside  {{ Route::currentRouteName() == 'ballots.index' ? $activeClass : '' }}">
                     <icon>
@@ -69,6 +73,18 @@
                     </span>
                 </a>
             </tooltip>
+            {{-- petition --}}
+            <tooltip class="tooltip-right z-50" data-tip="Events">
+                <a href="{{ route('petitions.index') }}" class="x-aside-link-inside  {{ Route::currentRouteName() == 'petitions.index' ? $activeClass : '' }}">
+                    <icon>
+                        <x-fas-box class="text-accent-7" />
+                    </icon>
+                    <span class="xjs-main-aside-span">
+                        Petitions
+                    </span>
+                </a>
+            </tooltip>
+            {{-- setting --}}
             <tooltip class="tooltip-right z-50" data-tip="Settings">
                 <a href="{{ route('walletconnect.edit') }}" class="x-aside-link-inside  {{ Route::currentRouteName() == 'walletconnect.edit' ? $activeClass : '' }}">
                     <icon>
@@ -79,7 +95,7 @@
                     </span>
                 </a>
             </tooltip>
-
+            {{-- logout --}}
             <a class="x-aside-link-inside cursor-pointer js-xaside-logout">
                 <icon>
                     <x-fas-right-from-bracket class="text-accent-1" />

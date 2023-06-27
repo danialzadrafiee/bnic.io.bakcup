@@ -71,14 +71,7 @@
                     Create your Decentral identity and unlock new opportunities in the digital world.
                 </div>
                 <div class="content__buttons flex scale-150 origin-left ">
-                    {{-- <div id="connect-wallet"
-                        class="content__buttons_primary rounded-[20px] cursor-pointer gap-2 h-20 w-64 bg-[#5956E9] text-white flex items-center justify-center text-lg font-medium">
-                        <i class="fa-regular fa-wallet"></i>
-                        <span>Connect Wallet</span>
-                    </div> --}}
-                    {{-- <div id="logout" class=" bg-red-400 px-5 m-10 cursor-pointer">logot</div> --}}
                     <w3m-core-button size="500"></w3m-core-button>
-
                 </div>
             </div>
         </aside>
