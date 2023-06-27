@@ -14,6 +14,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\BallotController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\PetitionController;
 
 Route::get('/', [WalletConnectController::class, 'index'])->middleware([CheckWalletConnection::class])->name('index');
