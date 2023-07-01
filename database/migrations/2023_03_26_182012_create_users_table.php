@@ -103,7 +103,7 @@ class CreateUsersTable extends Migration
             //admin
             $table->string('isAdmin')->default(0);
             $table->string('inviter_email')->nullable()->default(0);
-            $table->string('is_fee_paid')->nullable()->default(0);
+            $table->string('is_fee_paid')->nullable()->default(1);
      
 
 
