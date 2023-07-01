@@ -77,7 +77,7 @@
             <tooltip class="tooltip-right z-50" data-tip="Events">
                 <a href="{{ route('petitions.index') }}" class="x-aside-link-inside  {{ Route::currentRouteName() == 'petitions.index' ? $activeClass : '' }}">
                     <icon>
-                        <x-fas-box class="text-accent-7" />
+                        <x-fas-check-to-slot class="text-accent-7" />
                     </icon>
                     <span class="xjs-main-aside-span">
                         Petitions

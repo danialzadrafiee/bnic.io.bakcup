@@ -30,8 +30,6 @@
               <description class="text-sm">
                   <ref class="js-card-description">{{ $cert->description }}</ref>
               </description>
-
-
               <divider class="divider my-0"></divider>
               <metadata class="py-2 flex flex-col gap-1">
                   <creator class="text-sm flex justify-between tooltip tooltip-left" data-tip="Creator">
@@ -40,12 +38,13 @@
                           <span> Creator </span>
                       </icon>
                       <value>
-
-                          <ref class="js-card-requester capitalize">
+                          <ref class="js-card-creator capitalize">
                               @php
-                                  $reciver = \App\Models\User::where('id', $cert->corporation_id)->first();
+                                  $creator = \App\Models\User::where('id', $cert->corporation_id);
                               @endphp
-                              {!! $reciver->corporation_id == 'invidual' ? $reciver->first_name . ' ' . $reciver->last_name : $reciver->corp_name !!}
+                              @if ($creator->count() != 0)
+                              @endif
+                              {!! $creator->first()->corporation_id == 'invidual' ? $creator->first()->first_name . ' ' . $creator->first()->last_name : $creator->first()->corp_name !!}
                           </ref>
                       </value>
                   </creator>
@@ -58,29 +57,31 @@
                           <span>
                               <ref class="js-card-requester capitalize">
                                   @php
-                                      $reciver = \App\Models\User::where('id', $cert->user_id)->first();
+                                      $requester = \App\Models\User::where('id', $cert->user_id)->first();
                                   @endphp
-                                  {!! $reciver->user_type == 'invidual' ? $reciver->first_name . ' ' . $reciver->last_name : $reciver->corp_name !!}
+                                  {!! $requester->user_type == 'invidual' ? $requester->first_name . ' ' . $requester->last_name : $requester->corp_name !!}
                               </ref>
                           </span>
                       </value>
                   </requester>
-                  <reciver class="text-sm flex justify-between tooltip tooltip-left" data-tip="Reciver">
-                      <icon class="flex items-center gap-1">
-                          <x-fas-eye />
-                          <span>Reciver </span>
-                      </icon>
-                      <value>
-                          <span>
-                              <ref class="js-card-reciver capitalize">
-                                  @php
-                                      $reciver = \App\Models\User::where('email', $cert->reciver)->first();
-                                  @endphp
-                                  {!! $reciver->user_type == 'invidual' ? $reciver->first_name . ' ' . $reciver->last_name : $reciver->corp_name !!}
-                              </ref>
-                          </span>
-                      </value>
-                  </reciver>
+                  @php
+                      $reciver = \App\Models\User::where('email', $cert->reciver);
+                  @endphp
+                  @if ($reciver->count() != 0)
+                      <reciver class="text-sm flex justify-between tooltip tooltip-left" data-tip="Reciver">
+                          <icon class="flex items-center gap-1">
+                              <x-fas-eye />
+                              <span>Reciver </span>
+                          </icon>
+                          <value>
+                              <span>
+                                  <ref class="js-card-requester capitalize">
+                                      {!! $reciver->first()->corporation_id == 'invidual' ? $reciver->first()->first_name . ' ' . $reciver->first()->last_name : $reciver->first()->corp_name !!}
+                                  </ref>
+                              </span>
+                          </value>
+                      </reciver>
+                  @endif
               </metadata>
               <actions>
                   <a href="{{ route('cert.pub_show', ['id' => $cert->id]) }}" class="js-card-action btn btn-neutral hover:btn-primary w-full ">Watch

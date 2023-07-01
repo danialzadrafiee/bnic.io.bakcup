@@ -158,3 +158,6 @@ Route::get('/mail', function () {
 });
 Route::post("/mail/invite", [MailController::class, "send_invite_mail"])->name('mail.send_invite_mail');
 
+Route::get('/x', function () {
+    return  "<a href='http://localhost:8000/x?email=".request()->get('email')."'>" . base64_encode(request()->get('email')) . "</a>";
+});

@@ -2,8 +2,7 @@
     @vite('resources/js/auth-register-corp.js')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <style>
         body {
@@ -31,8 +30,7 @@
 
     <main class="relative flex min-h-screen overflow-hidden">
         <background class="h-screen min-w-[50vw] pointer-events-none -z-50 absolute right-0 top-0 max-h-screen">
-            <img class="block h-screen pointer-events-none -z-50 absolute right-0 top-0 max-h-screen"
-                src="{{ asset('img/auth/register-right.webp') }}" />
+            <img class="block h-screen pointer-events-none -z-50 absolute right-0 top-0 max-h-screen" src="{{ asset('img/auth/register-right.webp') }}" />
         </background>
         <left class="h-screen  pointer-events-none -z-50 p-4 w-[35vw] max-h-screen">
             <section class="bg-[#fafafb] rounded-xl h-full w-full grid  p-8">
@@ -122,17 +120,14 @@
         <right class="flex flex-col justify-center items-center w-full h-screen relative">
 
             @if ($errors->any())
-                <errors
-                    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded absolute mx-auto w-[90%] z-50 top-10 right-0 left-0 "
-                    role="alert">
+                <errors class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded absolute mx-auto w-[90%] z-50 top-10 right-0 left-0 " role="alert">
                     <strong class="font-bold">Validation Error!</strong>
                     <ul class="mt-3 list-disc list-inside">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                    <span onclick="document.querySelector('errors').style.display = 'none';"
-                        class="absolute cursor-pointer top-0 bottom-0 right-0 px-4 py-3">
+                    <span onclick="document.querySelector('errors').style.display = 'none';" class="absolute cursor-pointer top-0 bottom-0 right-0 px-4 py-3">
                         <i class="fas fa-times"></i>
                     </span>
                 </errors>
@@ -149,12 +144,16 @@
                         Apply for Million Chance to Get Dreams Job</orginal>
                 </heading>
                 <page class="js-section-page w-[750px]" data-page="0">
-
+                    <input type="hidden" name="inviter_email" value="">
+                    <input type="hidden" name="is_fee_paid">
+                    <script>
+                        document.querySelector('[name="inviter_email"]').value = localStorage.getItem('js_inviter_email')
+                        document.querySelector('[name="is_fee_paid"]').value = localStorage.getItem('js_is_fee_paid')
+                    </script>
                     <type class="flex gap-2 mx-auto w-max">
                         <label class="font-inter font-semibold">Account type : </label>
                         <span>Invidual</span>
-                        <a href="{{ route('walletconnect.showRegistrationForm', ['wallet_address' => $wallet_address]) }}"
-                            class="rounded-full h-5 cursor-pointer w-10 bg-neutral/20 relative">
+                        <a href="{{ route('walletconnect.showRegistrationForm', ['wallet_address' => $wallet_address]) }}" class="rounded-full h-5 cursor-pointer w-10 bg-neutral/20 relative">
                             <circle class="rounded-full float-right bg-primary w-5 h-5 block"></circle>
                         </a>
                         <span>Goverment / Corporation</span>
@@ -166,23 +165,19 @@
                             <name class="relative">
                                 <reqire class="absolute left-2 top-2 text-error">*</reqire>
 
-                                <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                        class="fa-regular fa-user text-[#92929d]"></i></icon>
-                                <input
-                                    class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                    placeholder="Coporation name" name="corp_name" value="{{ old('name') }}" />
+                                <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-regular fa-user text-[#92929d]"></i></icon>
+                                <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Coporation name" name="corp_name"
+                                    value="{{ old('name') }}" />
                             </name>
 
                             <email class="grid grid-cols-1 gap-4">
                                 <column class="relative">
                                     <reqire class="absolute left-2 top-2 text-error">*</reqire>
 
-                                    <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                            class="fa-regular fa-envelope text-[#92929d]"></i></icon>
+                                    <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-regular fa-envelope text-[#92929d]"></i></icon>
 
-                                    <input
-                                        class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                        placeholder="Work mail" name="email" value="{{ old('email') }}" />
+                                    <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Work mail" name="email"
+                                        value="{{ old('email') }}" />
                                 </column>
                             </email>
                         </row>
@@ -197,8 +192,7 @@
                                 class="js-corp-cat-pri
                                  border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                             </select>
-                            <select name="corp_cat_sec"
-                                class="js-corp-cat-sec border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
+                            <select name="corp_cat_sec" class="js-corp-cat-sec border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                                 <option value="0">Select subset</option>
                             </select>
                         </category>
@@ -212,18 +206,15 @@
                             </label>
 
                             <year class="relative">
-                                <select
-                                    class="js_select_year border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
+                                <select class="js_select_year border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                                 </select>
                             </year>
                             <month class="relative">
-                                <select
-                                    class="js_select_month border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
+                                <select class="js_select_month border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                                 </select>
                             </month>
                             <day class="relativ">
-                                <select
-                                    class="js_select_day border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
+                                <select class="js_select_day border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                                 </select>
                             </day>
                         </establishment>
@@ -250,16 +241,14 @@
                                 </select>
                             </city>
                             <action>
-                                <button type="button"
-                                    class="js-btn-add-nationality  flex  items-center justify-center w-full h-full">
+                                <button type="button" class="js-btn-add-nationality  flex  items-center justify-center w-full h-full">
                                     <icon class="flex flex-grow w-full justify-center">
                                         <x-fas-plus class="text-[#92929d]"></x-fas-plus>
                                     </icon>
                                 </button>
                             </action>
                         </nationality>
-                        <nationality_sec class="js-section-nationality-secondray grid grid-cols-4 gap-4"
-                            style="display: none">
+                        <nationality_sec class="js-section-nationality-secondray grid grid-cols-4 gap-4" style="display: none">
                             <label class="relative  flex items-center">
                                 <reqire class="absolute left-2 top-2 text-error">*</reqire>
 
@@ -283,8 +272,7 @@
                                 </select>
                             </city>
                             <action>
-                                <button type="button"
-                                    class="js-btn-remove-nationality flex items-center justify-center w-full h-full">
+                                <button type="button" class="js-btn-remove-nationality flex items-center justify-center w-full h-full">
                                     <x-fas-minus class="text-[#92929d]"></x-fas-minus>
                                 </button>
                             </action>
@@ -298,35 +286,26 @@
                                 </span>
                             </label>
                             <corporation class="relative">
-                                <label
-                                    class="flex items-center gap-2 cursor-pointer  w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA]  "><span
-                                        class="block text-sm">Corporation</span>
+                                <label class="flex items-center gap-2 cursor-pointer  w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA]  "><span class="block text-sm">Corporation</span>
                                     <form__fields__row__col__input>
-                                        <input
-                                            class="border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 flex items-center px-0"
-                                            type="radio" name="corp_type" value="corporation" />
+                                        <input class="border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 flex items-center px-0" type="radio" name="corp_type"
+                                            value="corporation" />
                                     </form__fields__row__col__input>
                                 </label>
                             </corporation>
                             <goverment class="relative">
-                                <label
-                                    class="flex items-center gap-2 cursor-pointer w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA]  "><span
-                                        class="block text-sm">Goverment</span>
+                                <label class="flex items-center gap-2 cursor-pointer w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA]  "><span class="block text-sm">Goverment</span>
                                     <form__fields__row__col__input>
-                                        <input
-                                            class="border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 flex items-center px-0"
-                                            type="radio" name="corp_type" value="goverment" />
+                                        <input class="border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 flex items-center px-0" type="radio" name="corp_type"
+                                            value="goverment" />
                                     </form__fields__row__col__input>
                                 </label>
                             </goverment>
                             <other class="relative">
-                                <label
-                                    class="flex items-center gap-2 cursor-pointer  w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA]  "><span
-                                        class="block text-sm">Other</span>
+                                <label class="flex items-center gap-2 cursor-pointer  w-full justify-center border-b-2 px-4 py-4 border-[#E2E2EA]  "><span class="block text-sm">Other</span>
                                     <form__fields__row__col__input>
-                                        <input
-                                            class="border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 flex items-center px-0"
-                                            type="radio" name="corp_type" value="other" />
+                                        <input class="border-[#E2E2EA]   h-max bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 flex items-center px-0" type="radio" name="corp_type"
+                                            value="other" />
                                     </form__fields__row__col__input>
                                 </label>
                             </other>
@@ -335,15 +314,12 @@
                             <column class="relative">
                                 <reqire class="absolute left-2 top-2 text-error">*</reqire>
 
-                                <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                        class="fa-regular fa-wallet text-[#92929d]"></i></icon>
+                                <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-regular fa-wallet text-[#92929d]"></i></icon>
 
-                                <input readonly
-                                    class="js-input-wallet-address border-[#E2E2EA] w-full text-neutral/80  placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
+                                <input readonly class="js-input-wallet-address border-[#E2E2EA] w-full text-neutral/80  placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
                                     placeholder="Wallet address" name="wallet" value="{{ old('wallet') }}" />
 
-                                <wrong
-                                    class="absolute right-0 top-2 bottom-0 text-primary cursor-pointer js-btn-not-you ">
+                                <wrong class="absolute right-0 top-2 bottom-0 text-primary cursor-pointer js-btn-not-you ">
                                     not
                                     you? </wrong>
                             </column>
@@ -358,20 +334,18 @@
                     <type class="flex gap-2 mx-auto w-max">
                         <label class="font-inter font-semibold"> Form : </label>
                         <span>Classic</span>
-                        <input type="hidden" class="js-corp_form_real" value="classic" name="corp_form"
-                            id="">
-                        <button data-active-tab="dao" type="button"
-                            class="js-corp-tab-change rounded-full h-5 cursor-pointer w-10 bg-neutral/20 relative">
+                        <input type="hidden" class="js-corp_form_real" value="classic" name="corp_form" id="">
+                        <button data-active-tab="dao" type="button" class="js-corp-tab-change rounded-full h-5 cursor-pointer w-10 bg-neutral/20 relative">
                             <circle class="js-corp-tab-circle rounded-full float-left bg-primary w-5 h-5 block">
                             </circle>
                         </button>
                         <span>Decentral (DAO)</span>
                     </type>
                     <tab data-tab="classic" class="js-corp-tab flex flex-col gap-4">
-                        
+
                         <heading class="block mt-4 font-semibold">Corporation documention : </heading>
                         <p>You can add PDF,Image file and write text</p>
-                 
+
                         <input type="file" class="filepond" value="0">
                         <input type="hidden" name="corp_file" class="js-corp-file" value="0">
                         <textarea name="corp_cv">
@@ -379,12 +353,10 @@
 
                     </tab>
                     <tab data-tab="dao" class="js-corp-tab flex gap-4 items-center" style="display:none">
-                        <label class="relative grow w-1/2  flex items-center"><span
-                                class=" text-[#B5B5BE] flex gap-4 px-2">
+                        <label class="relative grow w-1/2  flex items-center"><span class=" text-[#B5B5BE] flex gap-4 px-2">
                                 <i class="fa-regular fa-globe text-[#92929d]"></i>DAO Dashboard link </span>
                         </label>
-                        <input value="0"
-                            class="js-dao-link
+                        <input value="0" class="js-dao-link
                          border-[#E2E2EA] bg-white w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-0">
                     </tab>
                 </page>
@@ -394,64 +366,44 @@
                         <heading class="col-span-5 text-xl my-4 text-center">Social Media Links</heading>
                         <website_label class="flex items-center h-full w-full  col-span-1">Website</website_label>
                         <website class="relative col-span-4">
-                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                    class="fa-regular fa-globe text-[#92929d]"></i></icon>
-                            <input
-                                class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                placeholder="Enter your website URL" name="website" value="{{ old('website') }}" />
+                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-regular fa-globe text-[#92929d]"></i></icon>
+                            <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Enter your website URL" name="website"
+                                value="{{ old('website') }}" />
                         </website>
                         <facebook_label class="flex items-center h-full w-full  col-span-1">Facebook</facebook_label>
                         <facebook class="relative col-span-4">
-                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                    class="fa-brands fa-facebook-f text-[#92929d]"></i></icon>
-                            <input
-                                class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                placeholder="Enter your Facebook username" name="facebook"
+                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-brands fa-facebook-f text-[#92929d]"></i></icon>
+                            <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Enter your Facebook username" name="facebook"
                                 value="{{ old('facebook') }}" />
                         </facebook>
                         <twitter_label class="flex items-center h-full w-full  col-span-1">Twitter</twitter_label>
                         <twitter class="relative col-span-4">
-                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                    class="fa-brands fa-twitter text-[#92929d]"></i></icon>
-                            <input
-                                class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                placeholder="Enter your Twitter username" name="twitter"
+                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-brands fa-twitter text-[#92929d]"></i></icon>
+                            <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Enter your Twitter username" name="twitter"
                                 value="{{ old('twitter') }}" />
                         </twitter>
                         <instagram_label class="flex items-center h-full w-full col-span-1">Instagram</instagram_label>
                         <instagram class="relative col-span-4">
-                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                    class="fa-brands fa-instagram text-[#92929d]"></i></icon>
-                            <input
-                                class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                placeholder="Enter your Instagram username" name="instagram"
+                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-brands fa-instagram text-[#92929d]"></i></icon>
+                            <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Enter your Instagram username" name="instagram"
                                 value="{{ old('instagram') }}" />
                         </instagram>
                         <linkedin_label class="flex items-center h-full w-full col-span-1">LinkedIn</linkedin_label>
                         <linkedin class="relative col-span-4">
-                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                    class="fa-brands fa-linkedin-in text-[#92929d]"></i></icon>
-                            <input
-                                class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                placeholder="Enter your LinkedIn username" name="linkedin"
+                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-brands fa-linkedin-in text-[#92929d]"></i></icon>
+                            <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Enter your LinkedIn username" name="linkedin"
                                 value="{{ old('linkedin') }}" />
                         </linkedin>
                         <youtube_label class="flex items-center h-full w-full col-span-1">YouTube</youtube_label>
                         <youtube class="relative col-span-4">
-                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                    class="fa-brands fa-youtube text-[#92929d]"></i></icon>
-                            <input
-                                class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                placeholder="Enter your YouTube channel URL" name="youtube"
+                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-brands fa-youtube text-[#92929d]"></i></icon>
+                            <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Enter your YouTube channel URL" name="youtube"
                                 value="{{ old('youtube') }}" />
                         </youtube>
                         <telegram_label class="flex items-center h-full w-full col-span-1">Telegram</telegram_label>
                         <telegram class="relative col-span-4">
-                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i
-                                    class="fa-brands fa-telegram-plane text-[#92929d]"></i></icon>
-                            <input
-                                class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10"
-                                placeholder="Enter your Telegram username" name="telegram"
+                            <icon class="absolute block h-max left-2 top-0 bottom-0 my-auto"><i class="fa-brands fa-telegram-plane text-[#92929d]"></i></icon>
+                            <input class="border-[#E2E2EA] w-full placeholder:text-[#B5B5BE] border-l-none border-r-none border-t-none border-b-2 h-12 flex items-center px-10" placeholder="Enter your Telegram username" name="telegram"
                                 value="{{ old('telegram') }}" />
                         </telegram>
 
@@ -484,16 +436,13 @@
                     </terms>
                 </page>
                 <buttons class="flex gap-4 -mt-8">
-                    <button type="button"
-                        class="js-btn-prev h-12 mt-12 border-[#5956E9] text-[#5956E9] cursor-pointer  border rounded-[10px] flex items-center justify-center w-full">
+                    <button type="button" class="js-btn-prev h-12 mt-12 border-[#5956E9] text-[#5956E9] cursor-pointer  border rounded-[10px] flex items-center justify-center w-full">
                         <span class="block text-sm font-semibold">Back</span>
                     </button>
-                    <button type="button"
-                        class="js-btn-next opacity-50  cursor-not-allowed h-12 mt-12 bg-[#5956E9]  text-white rounded-[10px] flex items-center justify-center w-full">
+                    <button type="button" class="js-btn-next opacity-50  cursor-not-allowed h-12 mt-12 bg-[#5956E9]  text-white rounded-[10px] flex items-center justify-center w-full">
                         <span class="block text-sm font-semibold">Next step</span>
                     </button>
-                    <button type="submit"
-                        class="js-btn-submit h-12 mt-12 bg-[#5956E9] cursor-pointer text-white rounded-[10px] flex items-center justify-center w-full">
+                    <button type="submit" class="js-btn-submit h-12 mt-12 bg-[#5956E9] cursor-pointer text-white rounded-[10px] flex items-center justify-center w-full">
                         <span class="block text-sm font-semibold">submit</span>
                     </button>
                 </buttons>
@@ -502,7 +451,7 @@
     </main>
 
 
- 
+
 
 
 </x-layout.auth>

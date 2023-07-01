@@ -111,10 +111,10 @@
                 <widgect class="flex flex-row items-center gap-3 _code">
                     <right class="order-2">
                         <header>
-                            Describe
+                            Information
                         </header>
-                        <value>
-                            {!! $user->corp_cv !!}
+                        <value class="block">
+                            {{ $user->corp_cv }}
                         </value>
                     </right>
                     <left class="order-1">

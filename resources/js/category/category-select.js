@@ -1,4 +1,3 @@
-console.log(GLOBAL_AUTH_USER.id)
 const get_categories = () => {
     return axios
         .get(route("api.getUserCategoriesJson"), {

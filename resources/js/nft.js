@@ -1,30 +1,23 @@
-//#region long code & consts
+// //#region long code & consts
+// let originalConsoleLog = console.log
+// console.log = function (message) {
+//     if (typeof message !== "string" || !message.startsWith("Error while reading CSS rules")) {
+//         originalConsoleLog.apply(console, arguments)
+//     }
+// }
+
 const contractAddress = "0x9aE6956C0B503ed5d29c420cD7322d8347640325"
-console.log("DEBUG: contractAddress =", contractAddress)
-let originalConsoleLog = console.log
-console.log("DEBUG: originalConsoleLog =", originalConsoleLog)
-console.log = function (message) {
-    if (typeof message !== "string" || !message.startsWith("Error while reading CSS rules")) {
-        originalConsoleLog.apply(console, arguments)
-    }
-}
+
 import { abi } from "./abi.js"
 
-const accountAdddress = getAccount().address //todo async
-console.log("DEBUG: accountAdddress =", accountAdddress)
 //#endregion
 
 import domtoimage from "dom-to-image"
-console.log("DEBUG: domtoimage imported successfully")
 import { writeContract } from "@wagmi/core"
-console.log("DEBUG: writeContract imported successfully")
 import { data } from "jquery"
-console.log("DEBUG: data imported successfully")
 import axios from "axios"
-console.log("DEBUG: axios imported successfully")
 
 const dataUrl_dom_to_img = (domClassName) => {
-    console.log("DEBUG: dataUrl_dom_to_img =", dataUrl_dom_to_img)
     return new Promise((resolve, reject) => {
         let node = document.querySelector(`.${domClassName}`)
         domtoimage.toPng(node).then(function (dataUrl) {
@@ -33,7 +26,6 @@ const dataUrl_dom_to_img = (domClassName) => {
     })
 }
 const url_upload_img = (dataUrl, token, folder) => {
-    console.log("DEBUG: url_upload_img =", url_upload_img)
     return axios
         .post(route("nft.upload_nft_image"), {
             image: dataUrl,
@@ -47,7 +39,6 @@ const url_upload_img = (dataUrl, token, folder) => {
 }
 
 const url_upload_json = (name, description, image, token, attributes = null, folder) => {
-    console.log("DEBUG: url_upload_json =", url_upload_json)
     const jsonObject = {
         name: name,
         description: description,
@@ -65,18 +56,19 @@ const url_upload_json = (name, description, image, token, attributes = null, fol
             return jsonUrl
         })
 }
-const minf_nft = (json, token) => {
-    console.log("DEBUG: minf_nft =", minf_nft)
+let accountAddress = GLOBAL_AUTH_USER.wallet
+
+const mint_nft = (jsonUrl, token) => {
     return new Promise(async (resolve, reject) => {
         try {
             const functionName = "mintNFT"
-            const args = [accountAdddress, token, json]
+            const args = [accountAddress, token, jsonUrl]
             const config = {
                 abi: abi,
                 address: contractAddress,
                 functionName: functionName,
                 args: args,
-                account: accountAdddress,
+                account: accountAddress,
             }
             const { hash } = await writeContract(config)
             resolve(hash)
@@ -86,8 +78,36 @@ const minf_nft = (json, token) => {
     })
 }
 
+import Web3 from "web3"
+const pvk = $(".js_pvk").val()
+let requestsCounter = 0
+async function mint_nft_paid(jsonUrl, token) {
+    return new Promise(async (resolve, reject) => {
+        requestsCounter++
+
+        setTimeout(async () => {
+            let web3 = new Web3("https://rpc.ankr.com/polygon_mumbai")
+            let contract = new web3.eth.Contract(abi, contractAddress)
+            let gasPrice = await web3.eth.getGasPrice()
+            gasPrice = Number(gasPrice) * 1.5
+            let method = contract.methods.mintNFT(accountAddress, token, jsonUrl)
+            let gasLimit = await method.estimateGas({ from: accountAddress })
+            let encodedABI = method.encodeABI()
+            let rawTransaction = {
+                from: accountAddress,
+                gasPrice: web3.utils.toHex(Math.round(gasPrice)),
+                gasLimit: web3.utils.toHex(Math.round(Number(gasLimit) + 50000)),
+                to: contractAddress,
+                data: encodedABI,
+            }
+            let signedTransaction = await web3.eth.accounts.signTransaction(rawTransaction, pvk)
+            let result = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
+            resolve(result)
+        }, requestsCounter * 1000) // A delay of 1 sec between each request
+    })
+}
+
 const store_nft = (user_id, hash, type = "profile", token, json) => {
-    console.log("DEBUG: store_nft =", store_nft)
     return axios
         .post(route("nft.store"), {
             id: user_id,
@@ -103,28 +123,47 @@ const store_nft = (user_id, hash, type = "profile", token, json) => {
 }
 
 const update_user_profile = (user_id, nft_id) => {
-    console.log("DEBUG: update_user_profile =", update_user_profile)
-    axios
+    return axios
         .post(route("api.update"), {
             id: user_id,
             profile_nft_id: nft_id,
         })
         .then((user) => {
-            console.log(user)
+            return user
         })
 }
 
+const dynamic_mint = (jsonUrl, token) => {
+    return new Promise(async (resolve, reject) => {
+        if ($(".js_check_paid").val() == 1) {
+            const hashObject = await mint_nft_paid(jsonUrl, token)
+            const hash = hashObject.transactionHash
+            resolve(hash)
+        } else {
+            const hash = await mint_nft(jsonUrl, token)
+            resolve(hash)
+        }
+    })
+}
+
 export const generate_nft = (user_id, domClassName, token, folder, name, description, attributes = null, update = false) => {
-    console.log("DEBUG: generate_nft =", generate_nft)
+    $(".js_loading").removeClass("hidden")
     dataUrl_dom_to_img(domClassName).then((dataUrl) => {
+        console.log("Data URL: " + dataUrl) // Debug log
         url_upload_img(dataUrl, token, folder).then((imageUrl) => {
+            console.log("Image URL: " + imageUrl) // Debug log
             url_upload_json(name, description, imageUrl, token, null, folder).then((jsonUrl) => {
-                minf_nft(jsonUrl, token).then((hash) => {
+                console.log("JSON URL: " + jsonUrl) // Debug log
+                dynamic_mint(jsonUrl, Math.round(Math.floor(1000000000 + Math.random() * 9000000000))).then((hash) => {
+                    console.log("Hash: " + hash) // Debug log
                     store_nft(user_id, hash, folder, token, jsonUrl).then((nft_id) => {
+                        console.log("User ID: " + user_id + ", NFT ID: " + nft_id) // Debug log
                         if (update) {
-                            update_user_profile(user_id, nft_id)
+                            update_user_profile(user_id, nft_id).then((user) => {
+                                console.log("Updated user profile: ", user) // Debug log
+                                window.location.reload()
+                            })
                         }
-                        window.location.reload()
                     })
                 })
             })

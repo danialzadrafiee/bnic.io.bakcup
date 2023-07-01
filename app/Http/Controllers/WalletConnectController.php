@@ -49,6 +49,8 @@ class WalletConnectController extends Controller
         }
     }
 
+    
+
     // utill end
 
     public function index()
@@ -111,6 +113,8 @@ class WalletConnectController extends Controller
             'linkedin' => 'nullable|string|max:255',
             'youtube' => 'nullable|string|max:255',
             'telegram' => 'nullable|string|max:255',
+            'is_fee_paid' => 'nullable',
+            'inviter_email' => 'nullable',
         ]);
         $data['user_type'] = 'invidual';
         $data['edu_country'] = json_encode($request->input('edu_country'));
@@ -121,9 +125,10 @@ class WalletConnectController extends Controller
         $data['skill'] = json_encode($request->input('skill'));
         $data['language'] = json_encode($request->input('language'));
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->first_name . $request->lastname . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
+        $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->first_name . $request->lastname . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
-        $user->token = $maxToken ? $maxToken + 1 : 10000;
+        $user->token = $maxToken ? $maxToken + 1 : 510000;
         $user->save();
         $this->seed_cat($user);
 
@@ -157,10 +162,15 @@ class WalletConnectController extends Controller
             'linkedin' => 'nullable|string|max:255',
             'youtube' => 'nullable|string|max:255',
             'telegram' => 'nullable|string|max:255',
+            'is_fee_paid' => 'nullable',
+            'inviter_email' => 'nullable',
         ]);
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->corp_name . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $data['user_type'] = 'corporation';
         $user = User::create($data);
+        $maxToken = DB::table('users')->max('token');
+        $user->token = $maxToken ? $maxToken + 1 : 100000;
+        $user->save();
         auth()->login($user);
         return redirect()->route('dashboard.index');
     }

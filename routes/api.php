@@ -10,8 +10,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::prefix('user')->group(function () {
     Route::any('getUserJson',  [ApiController::class, 'getUserJson'])->name('api.getUserJson');
-    Route::get('getUserCategoriesJson',  [ApiController::class, 'getUserCategoriesJson'])->name('api.getUserCategoriesJson');
-    Route::get('getUserJsonByEmail',  [ApiController::class, 'getUserJsonByEmail'])->name('api.getUserJsonByEmail');
+    Route::any('getUserCategoriesJson',  [ApiController::class, 'getUserCategoriesJson'])->name('api.getUserCategoriesJson');
+    Route::any('getUserJsonByEmail',  [ApiController::class, 'getUserJsonByEmail'])->name('api.getUserJsonByEmail');
     Route::post('update',  [ApiController::class, 'update'])->name('api.update');
     Route::post('update_publicity',  [ApiController::class, 'update_publicity'])->name('api.update_publicity');
     Route::post('upload',  [ApiController::class, 'upload'])->name('api.upload');
@@ -24,7 +24,8 @@ Route::get('public_dashboard/{id}', [ApiController::class, 'public_dashboard'])-
 
 Route::post('filepond/process', [FilepondController::class, 'process']);
 Route::delete('filepond/revert', [FilepondController::class, 'revert']);
-Route::get('get_certificates', [ApiController::class, 'get_certificates'])->name('api.get_certificates');
+Route::any('get_certificate', [ApiController::class, 'get_certificate'])->name('api.get_certificate');
+Route::any('get_certificates', [ApiController::class, 'get_certificates'])->name('api.get_certificates');
 
 
 

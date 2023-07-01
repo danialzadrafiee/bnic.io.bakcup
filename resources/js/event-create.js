@@ -48,8 +48,10 @@ pond.on("processfile", (error, file) => {
         return
     }
     const response = JSON.parse(file.serverId)
-    $(".js-corp-file").val(response.id)
+    $(".js-event-image").val(response.id)
+    console.log(response.id)
 })
+
 let selected_users = []
 
 const searchUsers = () => {
@@ -143,4 +145,30 @@ $(function () {
             select_user($(this).val())
             $(this).closest("card").remove()
         })
+})
+
+$(".js-publicity-toggle").on("click", function () {
+    $(".js-invite-list-section").toggle(0)
+    $(".js-main-col").toggleClass(["col-span-6", "col-span-8"])
+})
+
+let title = $(".js-event-title").val()
+let image = $(".js-event-image").val()
+let accurate_location = $(".js-accurate-location").val()
+let invited_users = selected_users
+let end_date = $(".js-end-date").val()
+
+$(".js-create-invite").prop("disabled", true)
+$(".js-create-invite").on("click", function () {})
+$("*").on("keyup keydown keypress change", function () {
+    title = $(".js-event-title").val()
+    image = $(".js-event-image").val()
+    accurate_location = $(".js-accurate-location").val()
+    invited_users = selected_users
+    end_date = $(".js-end-date").val()
+    if ([title, accurate_location, invited_users, end_date, map_lng].every((e) => !e.length) && image.length) {
+        $(".js-create-invite").prop("disabled", false)
+    } else {
+        $(".js-create-invite").prop("disabled", true)
+    }
 })

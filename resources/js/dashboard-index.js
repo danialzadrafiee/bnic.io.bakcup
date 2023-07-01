@@ -59,3 +59,40 @@ categoryEditElements.forEach((element, index) => {
         iconElement.style.color = `var(${textColor})`
     }
 })
+function addCatValid() {
+    if (icon != "" && $(".js-category-name").val() != "") {
+        $(".js-category-submit").prop("disabled", false)
+    } else {
+        $(".js-category-submit").prop("disabled", true)
+    }
+}
+let icon = ""
+$(".js-category-name").on("keyup", function () {
+    addCatValid()
+})
+$(".js-category-submit").on("click", function () {
+    axios
+        .post(route("api.add_category_to_user"), {
+            user_id: GLOBAL_AUTH_USER.id,
+            icon: icon,
+            name: $(".js-category-name").val(),
+            publicity: 1,
+        })
+        .then(() => {
+            window.location.reload()
+        })
+})
+$(".js_category_icon").on("click", function () {
+    icon = $(this).find("i").attr("class").replace("fas", "").trim()
+    $(".js_category_icon").removeClass("js_active bg-primary text-white")
+    $(this).addClass("js_active bg-primary text-white")
+    addCatValid()
+})
+
+// public function add_category_to_user(Request $request)
+// {
+
+//     $user = User::where('id', $request->user_id)->first();
+//     $category = $user->categories()->create($request->all());
+//     return $category;
+// }

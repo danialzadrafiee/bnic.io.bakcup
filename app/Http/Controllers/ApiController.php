@@ -41,6 +41,9 @@ class ApiController extends Controller
         $user->save();
         return response()->json($user);
     }
+
+
+
     public function update_publicity(Request $request)
     {
         $user = User::find($request->id);
@@ -114,6 +117,11 @@ class ApiController extends Controller
     }
 
 
+    public function get_certificate(Request $request)
+    {
+        $cert = SignCert::find($request->cert_id);
+        return $cert;
+    }
     public function get_certificates(Request $request)
     {
         $user = User::find($request->id);
@@ -181,7 +189,14 @@ class ApiController extends Controller
     public function search_corporation(Request $request)
     {
         $search = $request->get('term');
-        $corporations = User::where('corp_name', 'LIKE', '%' . $search . '%')->get();
+        $corporations = User::where('user_type', 'corporation')
+            ->where(function ($query) use ($search) {
+                $query->where('corp_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $search . '%');
+            })
+            ->get();
+
+
         return response()->json($corporations);
     }
 }

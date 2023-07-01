@@ -1,4 +1,5 @@
 import moment from "moment"
+import modal from "jquery-modal"
 let container = $(".js-certificate-requests")
 const getQueryParams = () => {
     let queryParams = {}
@@ -55,9 +56,24 @@ const listCertificates = (certificates) => {
         templateClone.find(".js-card-subject").html(certificate.name)
         templateClone.find(".js-card-description").html(certificate.description)
         templateClone.find("figure img").attr("src", certificate.image)
-        templateClone.find(".js-card-creator").html(certificate.corporation_id)
-        templateClone.find(".js-card-requester").html(certificate.user_id)
+        //creator
+        axios.post(route("api.getUserJson"), { id: certificate.corporation_id }).then((r) => {
+            templateClone.find(".js-card-creator").html(r.data.corp_name)
+        })
+        //requester
+        axios.post(route("api.getUserJson"), { id: certificate.user_id }).then((r) => {
+            templateClone.find(".js-card-requester").html(r.data.first_name + " " + r.data.last_name)
+        })
+        //reciver
         templateClone.find(".js-card-reciver").html(certificate.reciver)
+        axios.post(route("api.getUserJsonByEmail"), { id: certificate.reciver }).then((r) => {
+            if (r.data.first_name != undefined) {
+                templateClone.find(".js-card-reciver").html(r.data.first_name + " " + r.data.last_name)
+            } else {
+                templateClone.find(".js-requester-row").addClass("hidden")
+            }
+        })
+
         //link
         templateClone.find(".js-card-action").attr("href", route("cert.pub_show", { id: certificate.id }))
         // Parse the date and time
@@ -65,8 +81,20 @@ const listCertificates = (certificates) => {
         templateClone.find(".js-card-date").html(createdAt.format("YYYY-MM-DD"))
         templateClone.find(".js-card-time").html(createdAt.format("HH:mm:ss"))
         //badges
+
         certificate.creator_verify == 1 && templateClone.find(".js-badge-creator").removeClass("badge-warning").addClass("badge-accent")
         certificate.reciver_verify == 1 && templateClone.find(".js-badge-reciver").removeClass("badge-warning").addClass("badge-accent")
+
+        // edit
+        templateClone.find(".js_edit_card").attr("id", `card_${certificate.id}`)
+        templateClone.find(".js_edit_card").on("click", function () {
+            console.log($(this).attr("id"));
+            
+            axios.post(route("api.get_certificate"), { cert_id: $(this).attr("id").replace("card_","") }).then((r) => {
+                $('.js_cert_name').html(r.data.name)
+                $("#modal_edit").show()
+            })
+        })
         // Append to the parent container
         $(".js-certificate-requests").append(templateClone)
     })
@@ -86,7 +114,7 @@ function truncateString(str) {
         return str
     }
 }
-get_search_result()
+
 function get_search_result() {
     $(".js-section-corp-data").empty()
     let template = $(".corporation-template")
@@ -98,6 +126,7 @@ function get_search_result() {
             corporations.data.forEach((corporation) => {
                 let template_clone = template.clone()
                 template_clone.find("img").attr("src", `https://api.dicebear.com/6.x/initials/svg?seed=${corporation.corp_name.replace(/[^a-zA-Z0-9]/g, "")}`)
+
                 template_clone.find("name").html(corporation.corp_name)
                 template_clone.find("detail").html(truncateString(corporation.corp_cv))
                 template_clone.find("type").html(corporation.user_type)
@@ -107,3 +136,30 @@ function get_search_result() {
             })
         })
 }
+get_search_result()
+
+// modal
+
+const get_categories = () => {
+    return axios
+        .get(route("api.getUserCategoriesJson"), {
+            params: {
+                user_id: GLOBAL_AUTH_USER.id,
+            },
+        })
+        .then((json) => {
+            return json.data
+        })
+}
+get_categories().then((categories) => {
+    categories.forEach((element) => {
+        $(".js_categories").append(
+            $("<option>", {
+                text: element.name,
+            })
+        )
+    })
+})
+$(".JSX_MODAL").on("click", function (e) {
+    $(e.target).hasClass("JSX_MODAL") && $(this).hide()
+})

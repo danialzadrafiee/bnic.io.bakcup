@@ -1,10 +1,38 @@
 <x-layout.dashboard :user="$user">
+
     @vite(['resources/js/category/category-index.js'])
     <style>
         ._row_code {
             display: none;
         }
     </style>
+
+
+    <BMODAL id="modal_edit" class="JSX_MODAL w-screen z-[100] flex items-center justify-center h-screen bg-black/70 fixed left-0 top-0" style="display: none">
+        <inside class=" bg-white w-[500px] rounded-xl">
+            <grid class="grid grid-cols-2 gap-4 p-8">
+                <cel class="col-span-2">
+                    <heading>
+                        <ref class="js_cert_name text-lg font-semibold"></ref>
+                    </heading>
+                </cel>
+                <cel class="col-span-1">
+                    <label class="flex flex-col gap-2">
+                        <span class="text-sm">Primary Category</span>
+                        <select class="select !border !border-neutral-5/30 js_categories"></select>
+                    </label>
+                </cel>
+                <cel class="col-span-1">
+                    <label  class="flex flex-col gap-2">
+                        <span class="text-sm">Sub Category</span>
+                        <select class="select !border !border-neutral-5/30 js_categories_sub"></select>
+                    </label>
+                </cel>
+            </grid>
+        </inside>
+
+    </BMODAL>
+
     @include('category.index.edit')
 
     <main class="flex flex-col gap-2 max-w-[100%] @container ">
@@ -22,13 +50,19 @@
         <divider class="divider mt-0"></divider>
         <templates class="hidden">
             <card class="js-card-template card w-full bg-base-100  shadow-xl relative">
-                <figure class="h-64"><img src="https://api.dicebear.com/6.x/shapes/svg?seed=qgK4p36iXT" class="h-full w-full object-cover" />
-                </figure>
-                <badges class="card-actions justify-end absolute top-4 right-4">
-                    <div class="js-badge-creator badge badge-warning">Creator</div>
-                    <div class="js-badge-reciver badge badge-warning">Reciver</div>
-                </badges>
-                <card-body class="card-body p-4">
+                <header class="rounded-t-lg relative">
+                    <figure class="h-64"><img src="https://api.dicebear.com/6.x/shapes/svg?seed=qgK4p36iXT" class="h-full w-full object-cover" />
+                        <edit_card class="js_edit_card cursor-pointer flex bg-neutral top-4 left-4 rounded-lg text-white items-center absolute justify-center w-8 h-8">
+                            <x-fas-edit></x-fas-edit>
+                        </edit_card>
+                    </figure>
+                    <badges class="card-actions justify-end absolute bottom-4 right-4">
+                        <div class="js-badge-creator badge badge-warning">Creator</div>
+                        <div class="js-badge-reciver badge badge-warning">Reciver</div>
+                    </badges>
+                </header>
+                <card-body class="card-body relative p-4">
+
                     <subject class="font-medium">
                         <ref class="js-card-subject"></ref>
                     </subject>
@@ -58,30 +92,30 @@
                             </icon>
                             <value>
                                 <span>
-                                    <ref class="js-card-creator"></ref>
+                                    <ref class="js-card-creator capitalize"></ref>
                                 </span>
                             </value>
                         </creator>
                         <requester class="text-sm flex justify-between">
                             <icon class="flex items-center gap-1">
                                 <x-fas-user />
-                                <span>Requester: </span>
+                                <span class="">Requester: </span>
                             </icon>
                             <value>
                                 <span>
-                                    <ref class="js-card-requester"></ref>
+                                    <ref class="js-card-requester capitalize"></ref>
                                 </span>
                             </value>
                         </requester>
 
-                        <reciver class="text-sm flex justify-between">
+                        <reciver class="js-requester-row  text-sm flex justify-between">
                             <icon class="flex items-center gap-1">
                                 <x-fas-eye />
                                 <span>Reciver: </span>
                             </icon>
                             <value>
                                 <span>
-                                    <ref class="js-card-reciver"></ref>
+                                    <ref class="js-card-reciver capitalize"></ref>
                                 </span>
                             </value>
                         </reciver>
@@ -95,6 +129,8 @@
         </templates>
         <documents class="js-certificate-requests grid grid-cols-2 @[800px]:grid-cols-3  gap-4">
         </documents>
+
+
     </main>
 
 </x-layout.dashboard>

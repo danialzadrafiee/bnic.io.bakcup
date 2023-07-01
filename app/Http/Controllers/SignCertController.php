@@ -79,10 +79,10 @@ class SignCertController extends Controller
 
 
         $success = $request->success;
-        if ($success == true) {
+        // if ($success == true) {
             return view('cert.show', compact('cert', 'success', 'watcher_rule'));
-        }
-        return view('cert.show', compact('cert'));
+        // }
+        // return view('cert.show', compact('cert'));
     }
 
     public function pub_show(Request $request)

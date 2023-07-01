@@ -21,7 +21,7 @@
                        <!-- Modal body -->
                        <div class="p-6 space-y-6 flex flex-col items-center">
                            {{-- NFT Box --}}
-                           <nft class="js-nft-box w-[300px] h-[320px] border bg-white flex items-center gap-2.5 py-4 px-0 rounded border-neutral/50 flex-col ">
+                           <nft class="js-nft-box w-[300px] h-[320px] border bg-white flex items-center gap-2.5 py-4 px-0  border-neutral/50 flex-col ">
                                <code>
                                    @if ($user->user_type == 'invidual')
                                        <span class="uppercase">
@@ -44,7 +44,7 @@
                                    </design>
                                </qrcode>
                                <name class="text-sm capitalize">
-                                   <span>{{ $user->first_name }} {{ $user->last_name }}</span>
+                                   <span>{{$user->user_type=='invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}</span>
                                </name>
                            </nft>
                            <p class="text-base leading-relaxed text-center text-neutral-500 ">
@@ -57,7 +57,7 @@
                        <div class="flex items-center justify-center p-6 space-x-2 border-t border-neutral-200 rounded-b">
 
                            <button for="sign_wallet_modal" class="btn btn-neutral">Decline</button>
-                           <button data-id={{ $user->id }} type="button" class="js-btn-signchain-submit btn btn-primary">Generate
+                           <button data-id={{ $user->id }} type="button" class="js-btn-signchain-submit btn btn-primary"><span class="js_loading transition-all hidden loading loading-spinner loading-sm"></span> Generate
                                Profile NFT</button>
                        </div>
                    </div>

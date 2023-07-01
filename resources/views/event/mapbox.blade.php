@@ -4,10 +4,12 @@
     {{-- <button class="js_log_location">Log Location</button> --}}
 </mapbox>
 
-<script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+
+<script src="https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/dist/mapbox-gl.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/dist/mapbox-gl.min.css" rel="stylesheet">
+
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
     #mapid {
@@ -15,7 +17,8 @@
     }
 </style>
 <script>
-    mapboxgl.accessToken = "pk.eyJ1Ijoic3ViZGFuaWFsIiwiYSI6ImNsNTU4NXhmMTE2dXUzZG1hN3FqZGh5dHMifQ.xycsm0V8ywnavBW3lUk94A";
+    mapboxgl.accessToken = "pk.eyJ1Ijoic3ViZGFuaWFsIiwiYSI6ImNsNTU3cmcwdjE2cm0zZnFxdm1pemZ3cjQifQ.fLqs4EX703SYVVE0DzknNw";
+
     var map = new mapboxgl.Map({
         container: 'mapid',
         style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
@@ -24,7 +27,7 @@
     });
 
     var marker;
-
+    let map_lng = [];
     map.on('click', function(e) {
         if (marker) {
             marker.remove();
@@ -32,6 +35,7 @@
         marker = new mapboxgl.Marker()
             .setLngLat([e.lngLat.lng, e.lngLat.lat])
             .addTo(map);
+        map_lng = [e.lngLat.lng, e.lngLat.lat]
     });
     map.on('dataloading', () => {
         window.dispatchEvent(new Event('resize'));

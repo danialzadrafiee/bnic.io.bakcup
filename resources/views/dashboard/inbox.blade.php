@@ -12,7 +12,7 @@
 
 
     <main class="w-full @container/inbox ">
-        <grid class="grid w-full grid-cols-1 rounded-xl  ">
+        <grid class="grid w-full grid-cols-1 gap-12 rounded-xl  ">
             <reciver>
                 <header class="font-medium px-3 pt-3">
                     Observer Requests
@@ -24,6 +24,7 @@
                     @include('dashboard/inbox/card', ['certs' => $requester_certs])
                 </content>
             </reciver>
+
             <requester class="flex flex-col">
                 <header class="font-medium px-3 pt-3">
                     Sent Requests

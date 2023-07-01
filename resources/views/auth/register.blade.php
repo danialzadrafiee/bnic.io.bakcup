@@ -141,6 +141,13 @@
                 </heading>
                 <page class="js-section-page" data-page="0">
                     <input type="hidden" name="birthday" class="js-real-birthday">
+                  
+                    <input type="hidden" name="inviter_email" value="">
+                    <input type="hidden" name="is_fee_paid">
+                    <script>
+                        document.querySelector('[name="inviter_email"]').value = localStorage.getItem('js_inviter_email')
+                        document.querySelector('[name="is_fee_paid"]').value = localStorage.getItem('js_is_fee_paid')
+                    </script>
                     <type>
                         <label>Account type : </label>
                         <span>Invidual</span>

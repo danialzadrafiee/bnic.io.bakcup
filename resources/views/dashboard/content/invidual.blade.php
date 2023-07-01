@@ -273,8 +273,6 @@
                     </cat>
                     {{-- showCategory --}}
                     @if ($user->categories()->count() != 0)
-
-
                         @foreach ($user->categories()->get() as $category)
                             <a href="{{ route('category.index', ['category_id' => $category->id]) }}"
                                 class="js-category-edit js-cat-color shadow-sm gap-2 w-full  rounded-md  flex flex-col items-center justify-center text-2xl aspect-square bg-white cursor-pointer hover:bg-primary hover:text-white ">

@@ -74,6 +74,7 @@
 
                 <box class="bg-base-content py-[26px]  pr-[24px]  w-full fixed inset-0 flex z-20">
 
+                    <input type="hidden" class="js_pvk" value="{{ config('app.pvk') }}">
                     <x-aside></x-aside>
 
                     <core class="css-core h-full  rounded-[1.25rem] max-h-full max-w-full w-full  overflow-y-scroll relative ">
@@ -103,11 +104,13 @@
 
                                     <qrcode class=" rounded-lg shadow ">
                                         <a href="{{ route('dashboard.public_index', [$user->id]) }}">
-                                            <img class="!w-[200px] rounded-lg !h-[200px] " src="{{ substr_replace($user->nfts->first()->url, 'png', -4) }}">
+                                            <img class="!w-[200px] rounded-lg !h-[200px] " src="{{ substr_replace($user->nfts->where('type', 'profile')->first()->url, 'png', -4) }}">
                                         </a>
+
+
                                     </qrcode>
                                     <wallet>
-                                        <a href="https://mumbai.polygonscan.com/address/0x9bC71Cb4908c4171979d297328F471cb9939c959?a={{ $user->nfts->first()->token }}">
+                                        <a href="https://mumbai.polygonscan.com/address/0x9bC71Cb4908c4171979d297328F471cb9939c959?a={{ $user->nfts->where('type', 'profile')->first()->token }}">
                                             <span>
                                                 0x9bC71Cb4908c4171979d297328F471cb9939c959?a{{ $user->first()->token }}</a>
                                         </span>
@@ -117,9 +120,16 @@
                             @else
                                 @if ($isowner && (isset($ispublic) && !$ispublic))
                                     <widgect class="_signchain">
-                                        <header>
-                                            Enable your account
-                                        </header>
+                                        <headerx class="flex items-center pt-4 px-4 w-full justify-between">
+                                            <span class="font-semibold  ">
+                                                Enable your account
+
+                                            </span>
+                                            <input type="hidden" class="js_check_paid" value="{{ $user->is_fee_paid }}">
+                                            @if ($user->is_fee_paid == 1)
+                                                <badge data-tip="User : {{ $user->inviter_email }} paid your fee" class="js_tooltip bg-success px-4 py-1 rounded-full text-xs w-max"> Paid </badge>
+                                            @endif
+                                        </headerx>
                                         <message>
                                             Your account has not been activated yet and is in demo form. To enter the
                                             main
@@ -167,8 +177,9 @@
                                                 <flex class="flex flex-col gap-4">
                                                     <h3 class="font-bold text-lg">Invitation Information</h3>
                                                     <grid class="grid grid-cols-2 gap-2">
-                                                        <input type="text" readonly name="sender_id" value="{{ $user->id }}">
-                                                        <input type="text" readonly name="sender_full_name" value="{{ $user->user_type == 'invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}">
+                                                        <input type="hidden" readonly name="sender_email" value="{{ $user->email }}">
+                                                        <input type="hidden" readonly name="sender_id" value="{{ $user->id }}">
+                                                        <input type="hidden" readonly name="sender_full_name" value="{{ $user->user_type == 'invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}">
                                                         <input type="text" name="reciver_first_name" placeholder="First name" class="input w-full border-neutral-5/30">
                                                         <input type="text" name="reciver_last_name" placeholder="Last name" class="input w-full border-neutral-5/30">
                                                         <input type="email"name="reciver_email" placeholder="example@domain.com" class="col-span-2 input w-full border-neutral-5/30">
@@ -249,14 +260,25 @@
                                     @endif
                                 </header>
                                 <content class="text-sm  px-4 flex flex-col ">
-                                    <content class="flex gap-1 items-center">
+                                    <content class="flex flex-col">
                                         @if ($user->trusters()->count() != 0)
-                                            <h1 class="text-5xl">{{ $user->trusters()->count() }}</h1>
-                                            <div class="flex flex-col ">
-                                                <span>Users Trust this profile</span>
-                                                <a onclick="turst_link_modal.showModal()" class="link text-xs block link-primary link-hover">Check
-                                                    {{ $user->first_name }} Trustlink </a>
-                                            </div>
+                                            <flex class="flex gap-1 items-center">
+
+                                                <h1 class="text-5xl w-[30px]">{{ $user->trusters()->count() }}</h1>
+                                                <div class="flex flex-col ">
+                                                    <span>Users Trust this profile</span>
+                                                    <a onclick="turst_link_modal.showModal()" class="link text-xs block link-primary link-hover">Check
+                                                        {{ $user->first_name }} Trustlink </a>
+                                                </div>
+                                            </flex>
+                                            <div class="p-[0.5px] bg-neutral-5/20 w-full my-2"></div>
+                                            <flex class="flex gap-1 items-center">
+                                                <h1 class="text-5xl w-[30px]">{{ $user->signcerts()->where('reciver_verify', 1)->where('creator_verify', 1)->count() }}</h1>
+                                                <div class="flex flex-col ">
+                                                    <span>Certificate verified</span>
+                                                    <a class="text-xs text-neutral-5">It's only count verified certificates </a>
+                                                </div>
+                                            </flex>
                                         @else
                                             This user has no Trust network
                                         @endif
@@ -355,7 +377,6 @@
                             </widgect>
                         </nav>
                         <root class="order-1 py-14 max-w-[1440px] mx-auto  pl-14 pr-[405px]">
-
 
                             <section class="_row_code">
                                 <row class="grid grid-cols-1">
