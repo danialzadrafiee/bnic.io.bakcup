@@ -9,12 +9,7 @@
 <x-layout.dashboard :user="$me">
 
 
-
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-file-poster@2.5.1/dist/filepond-plugin-file-poster.min.css"
-        rel="stylesheet" />
-
-
+    @vite('resources/css/filepond.scss')
     @vite(['resources/js/app.js', 'resources/js/event-create.js'])
 
     <main>
@@ -62,29 +57,31 @@
                     <label class="block  text-neutral-700">Event details <sup class="text-error">*</sup></label>
                     <textarea id="editor" name="description"
                         class="js-event-description block border rounded-lg min-h-[200px]  border-neutral-300 p-2"></textarea>
-                        {{-- mapbox --}}
+                    {{-- mapbox --}}
                     <row>
                         <label class="block  text-neutral-700 mb-2 mt-6">Select Location <sup
                                 class="text-error">*</sup></label>
                         @include('event/mapbox')
-                        <input type="text" class="border input js_map_lng">
+                        <input type="hidden" class="border input js_map_lng">
                     </row>
                     <label class="text-sm mt-4">Accurate address information.</label>
                     <textarea class="js-accurate-location w-full textarea !border !border-neutral-5/30" name="accurate_location"
                         placeholder="123 Main Street, Apt, Cityville, Stateprovince 37663"></textarea>
-                    <footer class="flex justify-between">
-
+                    <footer class="flex  mt-6 justify-between">
                         <div class="col-span-6 sm:col-span-3">
-                            <input type="datetime-local" name="end_at" id="end_at" autocomplete="end-date"
-                                class="js-end-date mt-1 block w-full py-2 px-3 border rounded-bl-none border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <label for="end_at"
-                                class="block px-3 text-xs w-max py-2 rounded-t-none border border-t-0 rounded-lg border-neutral-5/30 font-medium text-gray-700">Ending
-                                date</label>
+                            <input type="datetime-local" name="date"
+                                class="js-event-date mt-1 block w-full py-2 px-3 border rounded-bl-none border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <label for="date"
+                                class="block px-3 text-xs w-max py-2 rounded-t-none border border-t-0 rounded-lg border-neutral-5/30 font-medium text-gray-700">Event
+                                Time</label>
                         </div>
-                        <button class="js-create-invite ml-auto flex btn btn-primary">Create invitation</button>
+                        <tooltip class="js-create-invite-tooltip tooltip" data-tip="Please fill all required fields">
+                            <button class="js-create-invite ml-auto flex btn btn-primary">Create event</button>
+                        </tooltip>
                     </footer>
                 </grid>
-                <users class="col-span-2  js-invite-list-section grid grid-cols-1 gap-2 grow h-max" style="display: none">
+                <users class="col-span-2  js-invite-list-section grid grid-cols-1 gap-2 grow h-max"
+                    style="display: none">
                     <row class="grid grid-cols-1 w-full">
                         <column class="col-span-1 items-center">
                             <heading class="text-lg font-semibold">Invite list</heading>
@@ -119,7 +116,8 @@
                     <search class="join">
                         <div>
                             <div>
-                                <input class="js-search-input input input-sm  input-bordered join-item"
+                                <input
+                                    class="js-search-input input input-sm  input-bordered border-neutral-5/30 join-item"
                                     placeholder="Search..." />
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 <mapbox class="relative block w-full">
     <div id="mapid" class="rounded-xl w-full"></div>
-    <input type="text" id="address" class="absolute top-3 right-3 input input-sm input-bordered " placeholder="Search location" />
+    <input type="text" id="address" class="absolute top-3 right-3 input input-sm input-bordered border-neutral-5/30 " placeholder="Search location" />
     {{-- <button class="js_log_location">Log Location</button> --}}
 </mapbox>
 
@@ -36,7 +36,7 @@
             .setLngLat([e.lngLat.lng, e.lngLat.lat])
             .addTo(map);
         map_lng = [e.lngLat.lng, e.lngLat.lat]
-        $('.js_map_lng').val(map_lng)
+        $('.js_map_lng').val(map_lng).change()
     });
     map.on('dataloading', () => {
         window.dispatchEvent(new Event('resize'));

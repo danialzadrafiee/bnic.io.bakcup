@@ -1,6 +1,6 @@
 <x-layout.dashboard :user="$user">
 
-    @vite(['resources/js/category/category-index.js'])
+    @vite(['resources/js/category-index.js'])
     <style>
         ._row_code {
             display: none;

@@ -1,4 +1,4 @@
-@vite(['resources/js/category/category-select.js'])
+@vite(['resources/js/category-select.js'])
 
 
 <flex class="flex gap-4 items-center ">

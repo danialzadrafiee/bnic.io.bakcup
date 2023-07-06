@@ -16,11 +16,11 @@ return new class extends Migration
             $table->integer('user_id'); //creator
             $table->string('type');
             $table->string('title');
-            $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->string('content')->nullable();
             $table->string('time')->nullable();
-            $table->string('location')->nullable();
+            $table->string('lng_location')->nullable();
+            $table->string('accurate_location')->nullable();
             $table->string('token')->nullable();
             $table->timestamps();
         });

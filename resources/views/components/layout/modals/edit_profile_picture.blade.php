@@ -1,4 +1,4 @@
-<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+@vite('resources/css/filepond.scss')
 <dialog id="edit_profile_picture" class="modal" >
     <form method="dialog" class="modal-box h-max" >
         <flex class="flex items-end gap-2">

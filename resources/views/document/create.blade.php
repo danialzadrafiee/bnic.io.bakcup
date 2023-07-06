@@ -10,7 +10,7 @@
         }
     </style>
     <main>
-        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+        @vite('resources/css/filepond.scss')
         <div class="flex min-h-screen ">
 
             <navbar class="w-[350px] shrink-0 flex flex-col min-h-screen  bg-base-content ">

@@ -11,7 +11,7 @@
             display: none;
         }
     </style>
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+  @vite('resources/css/filepond.scss')
     <link href="
     https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css
     " rel="stylesheet">

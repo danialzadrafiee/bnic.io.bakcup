@@ -38,7 +38,6 @@ Route::group(['prefix' => 'walletconnect'], function () {
 });
 
 Route::post('/update', [WalletConnectController::class, 'update'])->name('walletconnect.update');
-
 Route::group(['prefix' => 'dashboard', 'middleware' => Authenticate::class], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/public/{user_id}', [DashboardController::class, 'public_index'])->name('dashboard.public_index');
@@ -64,6 +63,7 @@ Route::group(['prefix' => 'cert'], function () {
     Route::any('/category/update/', [SignCertController::class, 'category_update'])->name('cert.category_update'); //can be pv usin auth->user
 });
 
+//documents
 Route::group(['prefix' => 'action'], function () {
     Route::get('/search_invi_by_name', [ActionController::class, 'search_invi_by_name'])->name('actions.search_invi_by_name');
     Route::get('/search_corp_by_name', [ActionController::class, 'search_corp_by_name'])->name('actions.search_corp_by_name');
@@ -74,9 +74,12 @@ Route::group(['prefix' => 'category'], function () {
     Route::any('/', [CategoryController::class, 'index'])->name('category.index');
     Route::any('/select', [CategoryController::class, 'select'])->name('category.select');
 });
+
+
 Route::group(['prefix' => 'sub_cat'], function () {
     Route::any('/select/{sub_cat_id}', [SubCatController::class, 'select'])->name('sub_cat.select');
 });
+
 
 Route::group(['prefix' => 'nft'], function () {
     Route::post('/create_json_nft', [NftController::class, 'create_json_nft'])->name('nft.create_json_nft');
@@ -89,6 +92,7 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('inbox', [DashboardController::class, 'inbox'])->name('dashboard.inbox');
 });
 
+
 Route::group(['prefix' => 'event'], function () {
     Route::get('/index', [EventController::class, 'index'])->name('event.index');
     Route::get('/create', [EventController::class, 'create'])->name('event.create');
@@ -97,9 +101,7 @@ Route::group(['prefix' => 'event'], function () {
 });
 
 
-
-
-// Ballot routes
+//ballot routes
 Route::get('/ballots', [BallotController::class, 'index'])->name('ballots.index');
 Route::get('/ballots/create', [BallotController::class, 'create'])->name('ballots.create');
 Route::get('/ballots/{ballot}', [BallotController::class, 'show'])->name('ballots.show');
@@ -107,15 +109,12 @@ Route::get('/ballots/{ballot}/votes', [BallotController::class, 'getVotes'])->na
 Route::post('/ballots', [BallotController::class, 'store'])->name('ballots.store');
 Route::delete('/ballots/{ballot}', [BallotController::class, 'destroy'])->name('ballots.destroy');
 
-// Vote routes
-Route::post('/ballots/{ballot}/votes', [VoteController::class, 'store'])->name('votes.store');
 
-// Option routes (if you decide to use the OptionController)
+//vote routes
+Route::post('/ballots/{ballot}/votes', [VoteController::class, 'store'])->name('votes.store');
 Route::post('/options', [OptionController::class, 'store'])->name('options.store');
 Route::put('/options/{option}', [OptionController::class, 'update'])->name('options.update');
 Route::delete('/options/{option}', [OptionController::class, 'destroy'])->name('options.destroy');
-
-
 Route::post('/votes', [VoteController::class, 'store'])->name('vote.store');
 
 
@@ -128,38 +127,36 @@ Route::post('/petitions/{petition}/sign', [PetitionController::class, 'sign'])->
 Route::delete('/petitions/{petition}', [PetitionController::class, 'destroy'])->name('petitions.destroy');
 
 
+
 Route::get('/mail', function () {
     $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
-
     try {
-        //Server settings
         $mail->SMTPDebug = 2;
         $mail->isSMTP();
         $mail->Host       = 'mail.developerpie.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = '_mainaccount@developerpie.com';
         $mail->Password   = 'WTFIS0124WTFIS0124';
-        $mail->SMTPSecure = false;  // Turn off SMTP encryption
-        $mail->SMTPAutoTLS = false; // Turn off automatic TLS encryption
+        $mail->SMTPSecure = false;
+        $mail->SMTPAutoTLS = false;
         $mail->Port       = 587;
-
-        //Recipients
         $mail->setFrom('develop1@developerpie.com', 'Develop1');
         $mail->addAddress('subdanial@gmail.com');
-
-        // Content
         $mail->isHTML(true);
         $mail->Subject = 'Hello';
         $mail->Body    = view('emails.test');
-
         $mail->send();
         echo 'Message has been sent';
     } catch (\PHPMailer\PHPMailer\Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 });
-Route::post("/mail/invite", [MailController::class, "send_invite_mail"])->name('mail.send_invite_mail');
 
+Route::post("/mail/invite", [MailController::class, "send_invite_mail"])->name('mail.send_invite_mail');
 Route::get('/x', function () {
     return  "<a href='http://localhost:8000/x?email=" . request()->get('email') . "'>" . base64_encode(request()->get('email')) . "</a>";
+});
+Route::any('/git', function () {
+    $output = shell_exec('cd /var/www/bnic.io');
+    echo "<pre>$output</pre>";
 });

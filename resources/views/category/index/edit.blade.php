@@ -1,4 +1,4 @@
-@vite(['resources/js/category/category-edit.js'])
+@vite(['resources/js/category-edit.js'])
 
 <templates class="hidden">
     <card data-cert-id="0" data-category-id="0" data-active='0'

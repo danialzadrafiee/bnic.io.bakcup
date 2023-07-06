@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-
     public function index(Request $request)
     {
         $user = User::find(auth()->user()->id);
@@ -26,73 +25,46 @@ class EventController extends Controller
             default:
                 break;
         }
-
-
-
-
-
         return view('event.index', compact('created_events', 'guested_events'));
     }
-
-
-
-
 
     public function create()
     {
         return view('event.create');
     }
 
-
     public function store(Request $request)
     {
-
         $event = Event::create([
-            'user_id' => $request->creator,
+            'user_id' => auth()->user()->id,
             'type' => $request->type,
-            'title' => $request->title ?? '', // need be required TODO
+            'title' => $request->title ?? '',
             'image' => $request->image ?? "https://api.dicebear.com/6.x/initials/svg?scale=30&seed=$request->title",
-            'content' => $request->content ?? '', // need be required TODO
+            'content' => $request->content ?? '',
+            'time' => $request->time ?? '',
+            'lng_location' => $request->lng_location ?? '',
+            'accurate_location' => $request->accurate_location ?? '',
+            'token' => $request->token
         ]);
+
         $guests = json_decode($request->guests);
-        foreach ($guests as $key => $value) {
-            $guest = User::where('id', $value)->first();
-            $event->users()->attach($guest);
+
+        if ($guests != null) {
+            foreach ($guests as $key => $value) {
+                $guest = User::where('id', $value)->first();
+                $event->users()->attach($guest);
+            }
+            $event->save();
         }
-        $event->save();
+
+
+
         return redirect()->route('event.index')->with('success', 'Event created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {
         $event = Event::find($request->event_id);
         return view('event.show', compact('event'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEventRequest $request, Event $event)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Event $event)
-    {
-        //
     }
 }

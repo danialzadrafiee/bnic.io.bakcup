@@ -553,7 +553,7 @@ main {
                             @apply text-xl my-2;
                         }
                         textarea {
-                            @apply w-full textarea border-neutral-5 textarea-bordered min-h-[300px];
+                            @apply w-full textarea border-neutral-5 border min-h-[300px];
                         }
                     }
                 }

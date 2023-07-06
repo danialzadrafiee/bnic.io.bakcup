@@ -1,3 +1,6 @@
+@php
+    header('Access-Control-Allow-Origin: *');
+@endphp
 <!doctype html>
 <html data-theme="bnic" lang="en">
 
@@ -100,7 +103,7 @@
 
 
 
-    
+
     {{ $slot }}
 
     @vite('resources/css/override.scss')
