@@ -1,62 +1,87 @@
 #form-elements {
-    .css_heading {
-        cursor: grab;
-        @apply w-full  grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
-        h3 {
-            @apply hidden;
-        }
-        &::before {
-            content: "Heading";
-            display: inline-flex;
-        }
+  .css_heading {
+    cursor: grab;
+    @apply w-full  grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
+    h3 {
+      @apply hidden;
     }
-    .css_p {
-        cursor: grab;
-        @apply p-4 relative  w-full  grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
-        p {
-            @apply hidden;
-        }
-        &::before {
-            content: "Paragraph";
-            display: inline-flex;
-        }
+    &::before {
+      content: "Heading";
+      display: inline-flex;
     }
+  }
+  .css_p {
+    cursor: grab;
+    @apply p-4 relative  w-full  grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
+    p {
+      @apply hidden;
+    }
+    &::before {
+      content: "Paragraph";
+      display: inline-flex;
+    }
+  }
 
-    .css_input_text {
-        cursor: grab;
-        @apply p-4 grid gap-4  relative  w-full     placeholder-white  items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
-        input {
-            @apply hidden;
-        }
-        &::before {
-            content: "Text Input";
-            display: inline-flex;
-        }
+  .css_input_text {
+    cursor: grab;
+    @apply p-4 grid gap-4  relative  w-full     placeholder-white  items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
+    input {
+      @apply hidden;
     }
-    .css_textarea {
-        cursor: grab;
-        textarea {
-            @apply hidden;
-        }
-        @apply p-4 relative  w-full   grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
-        &::before {
-            content: "Text Area";
-            display: inline-flex;
-        }
+    &::before {
+      content: "Text Input";
+      display: inline-flex;
     }
+  }
+  .css_textarea {
+    cursor: grab;
+    textarea {
+      @apply hidden;
+    }
+    @apply p-4 relative  w-full   grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
+    &::before {
+      content: "Text Area";
+      display: inline-flex;
+    }
+  }
+  .css_banner {
+    cursor: grab;
+    label {
+      @apply hidden;
+    }
+    @apply p-4 relative  w-full   grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
+    &::before {
+      content: "Banner";
+      display: inline-flex;
+    }
+  }
+  .css_file {
+    cursor: grab;
+    .css_hide_it {
+      @apply hidden;
+    }
+    @apply p-4 relative  w-full   grid items-center h-16 px-4 border-b border-white/20 bg-[#1f2124] text-white;
+    &::before {
+      content: "Request File";
+      display: inline-flex;
+    }
+  }
 }
 .css_row {
-    @apply border;
-    column-gap: 20px;
-    padding-top: 40px;
-    padding-bottom: 40px;
+  @apply border;
+  column-gap: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 .css_input_text {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 #form-creator {
-    .css_input_field {
-        pointer-events: none;
-    }
+  .css_input_field {
+    pointer-events: none;
+  }
+  .js_file_input{
+    display: none;
+  }
 }

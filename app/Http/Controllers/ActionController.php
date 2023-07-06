@@ -10,7 +10,7 @@ class ActionController extends Controller
 {
     public function search_invi_by_name(Request $request)
     {
-        $query = $request->input('query');
+        $query = $request->query;
         $users = User::where('first_name', 'LIKE', '%' . $query . '%')
             ->orWhere('last_name', 'LIKE', '%' . $query . '%')
             ->orWhere('email', 'LIKE', '%' . $query . '%')
@@ -19,7 +19,7 @@ class ActionController extends Controller
     }
     public function search_corp_by_name(Request $request)
     {
-        $query = $request->input('query');
+        $query = $request->query;
         $corporations = User::where('corp_name', 'LIKE', '%' . $query . '%')
             ->get();
         return response()->json($corporations);

@@ -11,16 +11,20 @@ class FilepondController extends Controller
 {
     public function process(Request $request)
     {
-        if ($request->hasFile('filepond')) {
-            $file = $request->file('filepond');
-            $extension = $file->getClientOriginalExtension();
-            $filename = uniqid() . '.' . $extension;
-            $path = $file->move(public_path('uploads'), $filename);
-            return response()->json(['id' => URL::to(str_replace(public_path(), '', $path))]);
+        $files = $request->allFiles();
+        
+        if (empty($files)) {
+            return response()->json(['error' => 'No file was uploaded.'], 400);
         }
-
-        return response()->json(['error' => 'No file was uploaded.'], 400);
+    
+        $file = collect($files)->first();
+        
+        $extension = $file->getClientOriginalExtension();
+        $filename = uniqid() . '.' . $extension;
+        $path = $file->move(public_path('uploads'), $filename);
+        return response()->json(['id' => URL::to(str_replace(public_path(), '', $path))]);
     }
+    
 
     public function revert(Request $request)
     {

@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\SubCat;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Session;
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Services\DataTable;
+
 
 
 
@@ -33,23 +29,35 @@ class WalletConnectController extends Controller
             'publicity' => 1,
         ];
         $categories = [
-            ['name' => 'Travel', 'icon' => 'fa-plane']  + $catTemp,
-            ['name' => 'Services', 'icon' => 'fa-umbrella-beach']  + $catTemp,
-            ['name' => 'Education', 'icon' => 'fa-user-graduate']  + $catTemp,
-            ['name' => 'Nationality', 'icon' => 'fa-passport']  + $catTemp,
-            ['name' => 'Business', 'icon' => 'fa-chart-simple']  + $catTemp,
-            ['name' => 'Financial', 'icon' => 'fa-building-columns']  + $catTemp,
-            ['name' => 'Sports', 'icon' => 'fa-medal']  + $catTemp,
-            ['name' => 'Medical', 'icon' => 'fa-file-medical']  + $catTemp,
-            ['name' => 'Other', 'icon' => 'fa-border-all']  + $catTemp
+            ['name' => 'Travel', 'icon' => 'fa-plane', 'sub_cats' => ['Flights', 'Hotels', 'Tours', 'Car Rentals', 'Cruises', 'Travel Insurance']],
+            ['name' => 'Services', 'icon' => 'fa-umbrella-beach', 'sub_cats' => ['Cleaning', 'Repair', 'Delivery', 'Gardening', 'Home Improvement', 'Legal Services']],
+            ['name' => 'Education', 'icon' => 'fa-user-graduate', 'sub_cats' => ['Online Courses', 'Tutoring', 'Books', 'School Supplies', 'Language Learning', 'Coding Bootcamps']],
+            ['name' => 'Nationality', 'icon' => 'fa-passport', 'sub_cats' => ['Passport Services', 'Visa Services', 'Immigration Lawyers', 'Translation Services']],
+            ['name' => 'Business', 'icon' => 'fa-chart-simple', 'sub_cats' => ['Consulting', 'Marketing', 'Sales', 'Accounting', 'Human Resources', 'Project Management']],
+            ['name' => 'Financial', 'icon' => 'fa-building-columns', 'sub_cats' => ['Banking', 'Investment', 'Insurance', 'Loans', 'Credit Cards', 'Retirement Planning']],
+            ['name' => 'Sports', 'icon' => 'fa-medal', 'sub_cats' => ['Gym', 'Yoga', 'Swimming', 'Cycling', 'Hiking', 'Team Sports']],
+            ['name' => 'Medical', 'icon' => 'fa-file-medical', 'sub_cats' => ['Doctors', 'Pharmacy', 'Hospitals', 'Dentists', 'Optometrists', 'Physical Therapy']],
+            ['name' => 'Other', 'icon' => 'fa-border-all', 'sub_cats' => ['Miscellaneous', 'Hobbies', 'Crafts', 'Pets', 'Entertainment', 'Home Decor']]
         ];
 
-        foreach ($categories as $category) {
-            $category = $user->categories()->create($category);
+        foreach ($categories as $categoryData) {
+            $subCats = $categoryData['sub_cats'];
+            unset($categoryData['sub_cats']);
+        
+            $category = new Category($categoryData + ['user_id' => $user->id, 'publicity' => 1]);
+            $category->save();
+        
+            // Create subcategories and attach them to the category
+            foreach ($subCats as $subCatName) {
+                $subCat = new SubCat(['name' => $subCatName, 'publicity' => 1]);
+                $subCat->save();
+        
+                $category->subCats()->attach($subCat->id);
+            }
         }
     }
 
-    
+
 
     // utill end
 

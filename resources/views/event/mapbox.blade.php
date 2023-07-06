@@ -27,7 +27,7 @@
     });
 
     var marker;
-    let map_lng = [];
+    window.map_lng = [];
     map.on('click', function(e) {
         if (marker) {
             marker.remove();
@@ -36,6 +36,7 @@
             .setLngLat([e.lngLat.lng, e.lngLat.lat])
             .addTo(map);
         map_lng = [e.lngLat.lng, e.lngLat.lat]
+        $('.js_map_lng').val(map_lng)
     });
     map.on('dataloading', () => {
         window.dispatchEvent(new Event('resize'));

@@ -24,7 +24,7 @@ class VoteController extends Controller
 
         // For private ballots, the user must be a candidate
         if ($ballot->type === 'private' && (!$ballotUser->candidate && $ballotUser->role != 'creator')) {
-            
+
             return response()->json(['error' => 'Not authorized to vote in this ballot'], 403);
         }
 

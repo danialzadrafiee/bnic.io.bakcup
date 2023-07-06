@@ -6,167 +6,201 @@
 //     }
 // }
 
-const contractAddress = "0x9aE6956C0B503ed5d29c420cD7322d8347640325"
-
-import { abi } from "./abi.js"
-
 //#endregion
 
-import domtoimage from "dom-to-image"
-import { writeContract } from "@wagmi/core"
-import { data } from "jquery"
-import axios from "axios"
+import domtoimage from "dom-to-image";
+import { writeContract } from "@wagmi/core";
+import axios from "axios";
 
 const dataUrl_dom_to_img = (domClassName) => {
-    return new Promise((resolve, reject) => {
-        let node = document.querySelector(`.${domClassName}`)
-        domtoimage.toPng(node).then(function (dataUrl) {
-            resolve(dataUrl)
-        })
-    })
-}
+  return new Promise((resolve, reject) => {
+    let node = document.querySelector(`.${domClassName}`);
+    domtoimage.toPng(node).then(function (dataUrl) {
+      resolve(dataUrl);
+    });
+  });
+};
 const url_upload_img = (dataUrl, token, folder) => {
-    return axios
-        .post(route("nft.upload_nft_image"), {
-            image: dataUrl,
-            token: token,
-            folder: folder,
-        })
-        .then((r) => {
-            let imageUrl = r.data.url
-            return imageUrl
-        })
-}
+  return axios
+    .post(route("nft.upload_nft_image"), {
+      image: dataUrl,
+      token: token,
+      folder: folder,
+    })
+    .then((r) => {
+      let imageUrl = r.data.url;
+      return imageUrl;
+    });
+};
 
 const url_upload_json = (name, description, image, token, attributes = null, folder) => {
-    const jsonObject = {
-        name: name,
-        description: description,
-        image: image,
-        attributes: attributes,
-    }
-    return axios
-        .post(route("nft.create_json_nft"), {
-            json: jsonObject,
-            token: token,
-            folder: folder,
-        })
-        .then((r) => {
-            let jsonUrl = r.data
-            return jsonUrl
-        })
-}
-let accountAddress = GLOBAL_AUTH_USER.wallet
+  const jsonObject = {
+    name: name,
+    description: description,
+    image: image,
+    attributes: attributes,
+  };
+  return axios
+    .post(route("nft.create_json_nft"), {
+      json: jsonObject,
+      token: token,
+      folder: folder,
+    })
+    .then((r) => {
+      let jsonUrl = r.data;
+      return jsonUrl;
+    });
+};
 
+let accountAddress = GLOBAL_AUTH_USER.wallet;
+import Web3 from "web3";
+import { abi } from "./abi.js";
+const contractAddress = "0x66aaf05CCF61a760cE547FE44BdC93492Ca9c580";
 const mint_nft = (jsonUrl, token) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const functionName = "mintNFT"
-            const args = [accountAddress, token, jsonUrl]
-            const config = {
-                abi: abi,
-                address: contractAddress,
-                functionName: functionName,
-                args: args,
-                account: accountAddress,
-            }
-            const { hash } = await writeContract(config)
-            resolve(hash)
-        } catch (error) {
-            reject(error)
-        }
-    })
-}
+  return new Promise(async (resolve, reject) => {
+    try {
+      const functionName = "mintToken";
+      const args = [token, accountAddress, jsonUrl];
+      const config = {
+        abi: abi,
+        address: contractAddress,
+        functionName: functionName,
+        args: args,
+        account: accountAddress,
+      };
+      const { hash } = await writeContract(config);
+      resolve(hash);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
-import Web3 from "web3"
-const pvk = $(".js_pvk").val()
-let requestsCounter = 0
 async function mint_nft_paid(jsonUrl, token) {
-    return new Promise(async (resolve, reject) => {
-        requestsCounter++
+  const web3 = new Web3(new Web3.providers.HttpProvider("https://celo-alfajores.infura.io/v3/43fc8fa086844be0831a586fe4b764b5"));
+  const contractABI = abi;
+  const contract = new web3.eth.Contract(contractABI, contractAddress);
+  const signerAccount = "0x9e5d516b80f94C55fc8061d9cacCfA98b585c8ee";
+  const reciverAccount = GLOBAL_AUTH_USER.wallet;
+  const privateKey = $(".js_pvk").val();
+  const txData = contract.methods.mintToken(token, reciverAccount, jsonUrl).encodeABI();
+  const gasEstimate = await contract.methods.mintToken(token, accountAddress, jsonUrl).estimateGas({ from: signerAccount });
+  const gasPrice = await web3.eth.getGasPrice();
+  const nonce = await web3.eth.getTransactionCount(signerAccount, "pending");
+  const tx = {
+    from: signerAccount,
+    to: contractAddress,
+    gas: gasEstimate,
+    gasPrice: gasPrice,
+    nonce: nonce,
+    data: txData,
+  };
+  console.log(tx);
+  console.log(privateKey);
+  const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
 
-        setTimeout(async () => {
-            let web3 = new Web3("https://rpc.ankr.com/polygon_mumbai")
-            let contract = new web3.eth.Contract(abi, contractAddress)
-            let gasPrice = await web3.eth.getGasPrice()
-            gasPrice = Number(gasPrice) * 1.5
-            let method = contract.methods.mintNFT(accountAddress, token, jsonUrl)
-            let gasLimit = await method.estimateGas({ from: accountAddress })
-            let encodedABI = method.encodeABI()
-            let rawTransaction = {
-                from: accountAddress,
-                gasPrice: web3.utils.toHex(Math.round(gasPrice)),
-                gasLimit: web3.utils.toHex(Math.round(Number(gasLimit) + 50000)),
-                to: contractAddress,
-                data: encodedABI,
-            }
-            let signedTransaction = await web3.eth.accounts.signTransaction(rawTransaction, pvk)
-            let result = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
-            resolve(result)
-        }, requestsCounter * 1000) // A delay of 1 sec between each request
-    })
+  // Send the transaction and return the receipt
+  return new Promise((resolve, reject) => {
+    web3.eth
+      .sendSignedTransaction(signedTx.rawTransaction)
+      .on("receipt", (receipt) => {
+        console.log("Transaction receipt:", receipt);
+        resolve(receipt);
+      })
+      .on("error", (error) => {
+        console.error("Error sending transaction:", error);
+        reject(error);
+      });
+  });
 }
+
+// async function mint_nft_paid(jsonUrl, token) {
+//     return new Promise(async (resolve, reject) => {
+//         requestsCounter++
+//         setTimeout(async () => {
+//             let web3 = new Web3("https://matic-mumbai.chainstacklabs.com")
+//             let nonce = await web3.eth.getTransactionCount(accountAddress, "latest")
+//             let contract = new web3.eth.Contract(abi, contractAddress)
+//             let gasPrice = await web3.eth.getGasPrice()
+//             gasPrice = Number(gasPrice) + 1000000 * 10
+//             let method = contract.methods.mintToken(accountAddress, token, jsonUrl)
+//             let gasLimit = await method.estimateGas({ from: accountAddress })
+//             let encodedABI = method.encodeABI()
+//             let rawTransaction = {
+//                 nonce: web3.utils.toHex(nonce),
+//                 from: accountAddress,
+//                 gasPrice: web3.utils.toHex(Math.round(gasPrice)),
+//                 gasLimit: web3.utils.toHex(Math.round(Number(gasLimit) + 50000)),
+//                 to: contractAddress,
+//                 data: encodedABI,
+//             }
+//             let signedTransaction = await web3.eth.accounts.signTransaction(rawTransaction, pvk)
+//             let result = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
+//             resolve(result)
+//         }, requestsCounter * 1000) // A delay of 1 sec between each request
+//     })
+// }
 
 const store_nft = (user_id, hash, type = "profile", token, json) => {
-    return axios
-        .post(route("nft.store"), {
-            id: user_id,
-            type: type,
-            token: token,
-            url: json,
-            hash: hash,
-        })
-        .then((stored_nft) => {
-            let nft_id = stored_nft.data.id
-            return nft_id
-        })
-}
+  return axios
+    .post(route("nft.store"), {
+      id: user_id,
+      type: type,
+      token: token,
+      url: json,
+      hash: hash,
+    })
+    .then((stored_nft) => {
+      let nft_id = stored_nft.data.id;
+      return nft_id;
+    });
+};
 
 const update_user_profile = (user_id, nft_id) => {
-    return axios
-        .post(route("api.update"), {
-            id: user_id,
-            profile_nft_id: nft_id,
-        })
-        .then((user) => {
-            return user
-        })
-}
+  return axios
+    .post(route("api.update"), {
+      id: user_id,
+      profile_nft_id: nft_id,
+    })
+    .then((user) => {
+      return user;
+    });
+};
 
 const dynamic_mint = (jsonUrl, token) => {
-    return new Promise(async (resolve, reject) => {
-        if ($(".js_check_paid").val() == 1) {
-            const hashObject = await mint_nft_paid(jsonUrl, token)
-            const hash = hashObject.transactionHash
-            resolve(hash)
-        } else {
-            const hash = await mint_nft(jsonUrl, token)
-            resolve(hash)
-        }
-    })
-}
+  return new Promise(async (resolve, reject) => {
+    if ($(".js_check_paid").val() == 1) {
+      const hashObject = await mint_nft_paid(jsonUrl, token);
+      const hash = hashObject.transactionHash;
+      resolve(hash);
+    } else {
+      const hash = await mint_nft(jsonUrl, token);
+      resolve(hash);
+    }
+  });
+};
 
 export const generate_nft = (user_id, domClassName, token, folder, name, description, attributes = null, update = false) => {
-    $(".js_loading").removeClass("hidden")
-    dataUrl_dom_to_img(domClassName).then((dataUrl) => {
-        console.log("Data URL: " + dataUrl) // Debug log
-        url_upload_img(dataUrl, token, folder).then((imageUrl) => {
-            console.log("Image URL: " + imageUrl) // Debug log
-            url_upload_json(name, description, imageUrl, token, null, folder).then((jsonUrl) => {
-                console.log("JSON URL: " + jsonUrl) // Debug log
-                dynamic_mint(jsonUrl, Math.round(Math.floor(1000000000 + Math.random() * 9000000000))).then((hash) => {
-                    console.log("Hash: " + hash) // Debug log
-                    store_nft(user_id, hash, folder, token, jsonUrl).then((nft_id) => {
-                        console.log("User ID: " + user_id + ", NFT ID: " + nft_id) // Debug log
-                        if (update) {
-                            update_user_profile(user_id, nft_id).then((user) => {
-                                console.log("Updated user profile: ", user) // Debug log
-                                window.location.reload()
-                            })
-                        }
-                    })
-                })
-            })
-        })
-    })
-}
+  $(".js_loading").removeClass("hidden");
+  dataUrl_dom_to_img(domClassName).then((dataUrl) => {
+    console.log("Data URL: " + dataUrl); // Debug log
+    url_upload_img(dataUrl, token, folder).then((imageUrl) => {
+      console.log("Image URL: " + imageUrl); // Debug log
+      url_upload_json(name, description, imageUrl, token, null, folder).then((jsonUrl) => {
+        console.log("JSON URL: " + jsonUrl); // Debug log
+        dynamic_mint(jsonUrl, Math.round(Math.floor(1000000000 + Math.random() * 9000000000))).then((hash) => {
+          console.log("Hash: " + hash); // Debug log
+          store_nft(user_id, hash, folder, token, jsonUrl).then((nft_id) => {
+            console.log("User ID: " + user_id + ", NFT ID: " + nft_id); // Debug log
+            if (update) {
+              update_user_profile(user_id, nft_id).then((user) => {
+                console.log("Updated user profile: ", user); // Debug log
+                window.location.reload();
+              });
+            }
+          });
+        });
+      });
+    });
+  });
+};

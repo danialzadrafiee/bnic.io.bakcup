@@ -11,10 +11,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('user')->group(function () {
     Route::any('getUserJson',  [ApiController::class, 'getUserJson'])->name('api.getUserJson');
     Route::any('getUserCategoriesJson',  [ApiController::class, 'getUserCategoriesJson'])->name('api.getUserCategoriesJson');
+    Route::any('getUserSubCategoriesJson', [ApiController::class, 'getUserSubCategoriesJson'])->name('api.getUserSubCategoriesJson');
+
+
     Route::any('getUserJsonByEmail',  [ApiController::class, 'getUserJsonByEmail'])->name('api.getUserJsonByEmail');
     Route::post('update',  [ApiController::class, 'update'])->name('api.update');
     Route::post('update_publicity',  [ApiController::class, 'update_publicity'])->name('api.update_publicity');
     Route::post('upload',  [ApiController::class, 'upload'])->name('api.upload');
+    Route::post('upload_banner',  [ApiController::class, 'upload_banner'])->name('api.upload_banner');
     Route::post('uploadJson',  [ApiController::class, 'uploadJson'])->name('api.uploadJson');
 });
 
@@ -39,3 +43,5 @@ Route::any('untrust_user', [ApiController::class, 'untrust_user'])->name('api.un
 
 
 Route::post('/search_corporation', [ApiController::class, 'search_corporation'])->name('api.search_corporation');
+
+// Add this function in your controller

@@ -80,7 +80,7 @@ class SignCertController extends Controller
 
         $success = $request->success;
         // if ($success == true) {
-            return view('cert.show', compact('cert', 'success', 'watcher_rule'));
+        return view('cert.show', compact('cert', 'success', 'watcher_rule'));
         // }
         // return view('cert.show', compact('cert'));
     }
@@ -113,5 +113,13 @@ class SignCertController extends Controller
             $categories->where('category_id', $category_id);
         }
         return $categories->get();
+    }
+    public function category_update(Request $request)
+    {
+        SignCert::where('id', $request->certificate_id)->update([
+            "category_id" => $request->category_id,
+            "sub_cat_id" => $request->sub_cat_id,
+        ]);
+        return redirect()->back()->with('success', 'certificate updated');
     }
 }

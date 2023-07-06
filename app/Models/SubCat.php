@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubCat extends Model
 {
-    use HasFactory;
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_sub_cats', 'sub_cat_id', 'category_id');
+    }
 }

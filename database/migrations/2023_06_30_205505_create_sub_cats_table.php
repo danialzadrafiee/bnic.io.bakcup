@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('sub_cats', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('icon')->nullable();
+            $table->integer('publicity')->default(1);
             $table->timestamps();
         });
     }

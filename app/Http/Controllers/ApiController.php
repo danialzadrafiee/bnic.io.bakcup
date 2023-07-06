@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\File;
-use Str;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -32,7 +32,11 @@ class ApiController extends Controller
         $categrories = User::where('id', $request->user_id)->first()->categories()->get();
         return response()->json($categrories);
     }
-
+    public function getUserSubCategoriesJson(Request $request)
+    {
+        $sub_categories = Category::where('id', $request->category_id)->first()->subCats()->get();
+        return response()->json($sub_categories);
+    }
 
     public function update(Request $request)
     {
@@ -73,6 +77,22 @@ class ApiController extends Controller
         }
         return response()->json('Upload failed. No image file received or an error occurred.', 400);
     }
+
+    public function upload_banner(Request $request)
+    {
+
+        if ($request->hasFile('image')) {
+            $imageData = $request->file('image');
+            $filename = Str::random(40) . '.png';
+            $uploadPath = public_path("upload/documents/banners/");
+            if ($imageData->move($uploadPath, $filename)) {
+                $imageUrl = URL::to("/upload/documents/banners/" . $filename);
+                return response()->json($imageUrl);
+            }
+        }
+        return response()->json('Upload failed. No image file received or an error occurred.', 400);
+    }
+
 
     public function uploadJson(Request $request)
     {
@@ -195,8 +215,6 @@ class ApiController extends Controller
                     ->orWhere('email', 'LIKE', '%' . $search . '%');
             })
             ->get();
-
-
         return response()->json($corporations);
     }
 }

@@ -10,6 +10,23 @@
                 ? false
                 : true;
     @endphp
+    <style>
+        .js_file_input {
+            display: none;
+        }
+
+        .filepond--file-info {
+            display: none;
+        }
+
+        .filepond--progress-indicator {
+            display: none;
+        }
+
+        .css_hide_it_in_show {
+            display: none;
+        }
+    </style>
     <input type="hidden" class="js_nft_url" value="{{ route('cert.show', ['id' => $cert->id]) }}">
     <input type="hidden" class="js-cert-view-mode" value="{{ $mode ?? 'privite' }}">
     <input type="hidden" class="js-watcher-rule" value="{{ $watcher_rule ?? 'privite' }}">
@@ -26,9 +43,20 @@
                     border: transparent;
                     background: transparent;
                 }
+
                 textarea {
                     resize: none;
                 }
+
+                .filepond--file-action-button {
+                    display: none;
+                }
+
+                .filepond--processing-complete-indicator {
+                    display: none;
+
+                }
+
                 .css_delete {
                     display: none !important;
                 }
@@ -36,8 +64,10 @@
             <section class="js-cert-node bg-white py-20 px-5 -lg">
                 <form class="bg-white max-w-full mx-auto relative">
                     @if (request()->has('success'))
-                        <success class="absolute rounded-lg w-full  py-4 flex top-[-65px] mx-auto items-center justify-center bg-[#c6ffd0] text-green-900">
-                            <close class="absolute top-2 cursor-pointer right-2" onclick="this.parentElement.style.display = 'none'">
+                        <success
+                            class="absolute rounded-lg w-full  py-4 flex top-[-65px] mx-auto items-center justify-center bg-[#c6ffd0] text-green-900">
+                            <close class="absolute top-2 cursor-pointer right-2"
+                                onclick="this.parentElement.style.display = 'none'">
                                 <x-fas-times></x-fas-times>
                             </close>
                             {{ request('success') }}
@@ -62,7 +92,8 @@
                         <end>
                             @if ($cert->reciver != 0)
                                 @if ($blockchainised)
-                                    <tooltip class="tooltip" data-tip="Token : {{ $cert->token }}"> <a href="https://mumbai.polygonscan.com/token/0x9aE6956C0B503ed5d29c420cD7322d8347640325?a={{ $cert->token }}"
+                                    <tooltip class="tooltip" data-tip="Token : {{ $cert->token }}"> <a
+                                            href="https://mumbai.polygonscan.com/token/0x9aE6956C0B503ed5d29c420cD7322d8347640325?a={{ $cert->token }}"
                                             class="font-normal  btn btn-sm btn-success gap-4 flex-row flex-nowrap w-full flex ">
                                             <span>
                                                 Verified on blockchain
@@ -70,18 +101,22 @@
                                         </a>
                                     </tooltip>
                                 @else
-                                    <tooltip class="tooltip js-cert-modal-tooltip" data-tip="It need to be verificated first">
-                                        <button type="button" data-reciver="{{ $cert->reciver_verify }}" data-creator="{{ $cert->creator_verify }}"
+                                    <tooltip class="tooltip js-cert-modal-tooltip"
+                                        data-tip="It need to be verificated first">
+                                        <button type="button" data-reciver="{{ $cert->reciver_verify }}"
+                                            data-creator="{{ $cert->creator_verify }}"
                                             class="js-cert-sign-blockchain-modal font-normal normal-case btn btn-sm gap-2 flex-row flex-nowrap w-full flex ">
                                             <span>
                                                 Create NFT
                                             </span>
                                             <badges class="flex gap-2 items-center">
-                                                <div class="badge {{ $cert->creator_verify == 0 ? 'badge-neutral' : 'badge-success' }} badge-sm  gap-2">
-                                                    Creator
+                                                <div
+                                                    class="badge {{ $cert->creator_verify == 0 ? 'badge-neutral' : 'badge-success' }} badge-sm  rounded-full w-5 h-5 gap-2">
+                                                    C
                                                 </div>
-                                                <div class="badge {{ $cert->reciver_verify == 0 ? 'badge-neutral' : 'badge-success' }}  badge-sm  gap-2">
-                                                    Reciver
+                                                <div
+                                                    class="badge {{ $cert->reciver_verify == 0 ? 'badge-neutral' : 'badge-success' }}  badge-sm  rounded-full w-5 h-5 gap-2">
+                                                    R
                                                 </div>
                                             </badges>
                                         </button>
@@ -105,13 +140,16 @@
                         @foreach (json_decode($cert->ad_email) as $email)
                             <row class="js-row-additional pt-2  grid grid-cols-3 grid-flow-row justify-stretch w-full ">
                                 <cel>
-                                    <input class="js_additional_input" placeholder="Email" name="ad_email[]" value="{{ $email }}">
+                                    <input class="js_additional_input" placeholder="Email" name="ad_email[]"
+                                        value="{{ $email }}">
                                 </cel>
                                 <cel>
-                                    <input class="js_additional_input" placeholder="Role" name="ad_role[]" value="{{ $cert->ad_role != null ? json_decode($cert->ad_role)[$loop->index] ?? '' : '' }}">
+                                    <input class="js_additional_input" placeholder="Role" name="ad_role[]"
+                                        value="{{ $cert->ad_role != null ? json_decode($cert->ad_role)[$loop->index] ?? '' : '' }}">
                                 </cel>
                                 <cel>
-                                    <input class="js_additional_input" placeholder="Describe" value="{{ $cert->ad_role != null ? json_decode($cert->ad_describe)[$loop->index] ?? '' : '' }}">
+                                    <input class="js_additional_input" placeholder="Describe"
+                                        value="{{ $cert->ad_role != null ? json_decode($cert->ad_describe)[$loop->index] ?? '' : '' }}">
                                 </cel>
                             </row>
                         @endforeach
@@ -143,14 +181,19 @@
                                     <card class="block max-w-sm py-6 bg-white  ">
                                         <h5 class="mb-2 tracking-tight text-black/90 ">
                                             Reciver</h5>
-                                        <p class=" bg-neutral-5/10  w-full aspect-square  flex items-center justify-center ">
+                                        <p
+                                            class=" bg-neutral-5/10  w-full aspect-square  flex items-center justify-center ">
                                             @if ($profile_qrcode_json)
                                                 <img src="{{ $profile_qrcode_json }}" class="w-full h-full  p-4 ">
                                             @else
-                                                <div>Reciver is not verified</div>
-                                                <small>User can still sign but QRCode will not appear</small>
+                                                <span
+                                                    class=" px-8 flex flex-col items-center justify-center text-center">Signed<small>The
+                                                        creator has reciver the cert, but their account is not
+                                                        verified.</small></span>
                                             @endif
                                         </p>
+
+
                                     </card>
                                 </column>
                             @endif
@@ -176,11 +219,15 @@
                                 <card class="block max-w-sm py-6 bg-white  ">
                                     <h5 class="mb-2 tracking-tight text-black/90 ">
                                         Creator</h5>
-                                    <p class=" bg-neutral-5/10  w-full aspect-square  flex items-center justify-center ">
+                                    <p
+                                        class=" bg-neutral-5/10  w-full aspect-square  flex items-center justify-center ">
                                         @if ($profile_qrcode_json)
                                             <img src="{{ $profile_qrcode_json }}" class="w-full h-full  p-4 ">
                                         @else
-                                            <span class=" px-12  flex flex-col items-center justify-center text-center">Signed<small>The creator has signed the cert, but their account is not verified.</small></span>
+                                            <span
+                                                class=" px-8 flex flex-col items-center justify-center text-center">Signed<small>The
+                                                    creator has signed the cert, but their account is not
+                                                    verified.</small></span>
                                         @endif
                                     </p>
                                 </card>
@@ -199,8 +246,12 @@
                                     @if ($profile_qrcode_json)
                                         <img src="{{ $profile_qrcode_json }}" class="w-full h-full  p-4 ">
                                     @else
-                                        <span class=" px-12  flex flex-col items-center justify-center text-center">Signed<small>The requester has signed the cert, but their account is not verified.</small></span>
+                                        <span
+                                            class=" px-8 flex flex-col items-center justify-center text-center">Signed<small>The
+                                                requester has signed the cert, but their account is not
+                                                verified.</small></span>
                                     @endif
+
                                 </p>
                             </card>
                         </column>
@@ -209,11 +260,13 @@
                 @if ($watcher_rule == 'reciver')
                     <reciver_verification class="px-8 flex items-center  mx-auto">
                         @if ($cert->reciver_verify == 0)
-                            <a href="{{ route('cert.verify', ['id' => $cert->id, 'watcher_mod' => $watcher_rule]) }}" class="js-verify-certificate btn btn-primary">Verify
+                            <a href="{{ route('cert.verify', ['id' => $cert->id, 'watcher_mod' => $watcher_rule]) }}"
+                                class="js-verify-certificate btn btn-primary">Verify
                                 this
                                 certificate as reciver</a>
                         @else
-                            <a disabled class="js-verify-certificate bg-neutral  text-white text-center px-4 py-2">Allready
+                            <a disabled
+                                class="js-verify-certificate bg-neutral  text-white text-center px-4 py-2">Allready
                                 verified</a>
                         @endif
                     </reciver_verification>
@@ -221,11 +274,13 @@
                 @if ($watcher_rule == 'creator')
                     <creator_verification class="px-8 flex items-center  mx-auto">
                         @if ($cert->creator_verify == 0)
-                            <a href="{{ route('cert.verify', ['id' => $cert->id, 'watcher_mod' => $watcher_rule]) }}" class="js-verify-certificate btn btn-primary">Verify
+                            <a href="{{ route('cert.verify', ['id' => $cert->id, 'watcher_mod' => $watcher_rule]) }}"
+                                class="js-verify-certificate btn btn-primary">Verify
                                 this
                                 certificate as creator</a>
                         @else
-                            <a disabled class="js-verify-certificate bg-neutral  text-white text-center px-4 py-2">Allready
+                            <a disabled
+                                class="js-verify-certificate bg-neutral  text-white text-center px-4 py-2">Allready
                                 verified</a>
                         @endif
                     </creator_verification>

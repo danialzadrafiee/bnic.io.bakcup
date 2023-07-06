@@ -16,6 +16,7 @@ use App\Http\Controllers\BallotController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\PetitionController;
+use App\Http\Controllers\SubCatController;
 
 Route::get('/', [WalletConnectController::class, 'index'])->middleware([CheckWalletConnection::class])->name('index');
 Route::get('/logout', [WalletConnectController::class, 'logout'])->name('logout');
@@ -60,6 +61,7 @@ Route::group(['prefix' => 'cert'], function () {
     Route::get('/show', [SignCertController::class, 'show'])->name('cert.show');
     Route::get('/pub_show', [SignCertController::class, 'pub_show'])->name('cert.pub_show');
     Route::get('/list/user/{user_id}/category/{category_id}', [SignCertController::class, 'list'])->name('cert.list'); //can be pv usin auth->user
+    Route::any('/category/update/', [SignCertController::class, 'category_update'])->name('cert.category_update'); //can be pv usin auth->user
 });
 
 Route::group(['prefix' => 'action'], function () {
@@ -69,9 +71,12 @@ Route::group(['prefix' => 'action'], function () {
 
 
 Route::group(['prefix' => 'category'], function () {
-    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::any('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::any('/select', [CategoryController::class, 'select'])->name('category.select');
 });
-
+Route::group(['prefix' => 'sub_cat'], function () {
+    Route::any('/select/{sub_cat_id}', [SubCatController::class, 'select'])->name('sub_cat.select');
+});
 
 Route::group(['prefix' => 'nft'], function () {
     Route::post('/create_json_nft', [NftController::class, 'create_json_nft'])->name('nft.create_json_nft');
@@ -123,9 +128,6 @@ Route::post('/petitions/{petition}/sign', [PetitionController::class, 'sign'])->
 Route::delete('/petitions/{petition}', [PetitionController::class, 'destroy'])->name('petitions.destroy');
 
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
 Route::get('/mail', function () {
     $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
@@ -159,5 +161,5 @@ Route::get('/mail', function () {
 Route::post("/mail/invite", [MailController::class, "send_invite_mail"])->name('mail.send_invite_mail');
 
 Route::get('/x', function () {
-    return  "<a href='http://localhost:8000/x?email=".request()->get('email')."'>" . base64_encode(request()->get('email')) . "</a>";
+    return  "<a href='http://localhost:8000/x?email=" . request()->get('email') . "'>" . base64_encode(request()->get('email')) . "</a>";
 });

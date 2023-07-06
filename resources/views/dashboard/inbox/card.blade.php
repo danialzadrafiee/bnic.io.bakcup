@@ -76,7 +76,7 @@
                           <value>
                               <span>
                                   <ref class="js-card-requester capitalize">
-                                      {!! $reciver->first()->corporation_id == 'invidual' ? $reciver->first()->first_name . ' ' . $reciver->first()->last_name : $reciver->first()->corp_name !!}
+                                      {!! $reciver->first()->user_type == 'invidual' ? $reciver->first()->first_name . ' ' . $reciver->first()->last_name : $reciver->first()->corp_name !!}
                                   </ref>
                               </span>
                           </value>
