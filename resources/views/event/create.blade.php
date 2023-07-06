@@ -62,9 +62,6 @@
                     <label class="block  text-neutral-700">Event details <sup class="text-error">*</sup></label>
                     <textarea id="editor" name="description"
                         class="js-event-description block border rounded-lg min-h-[200px]  border-neutral-300 p-2"></textarea>
-                    
-                    
-                    
                         {{-- mapbox --}}
                     <row>
                         <label class="block  text-neutral-700 mb-2 mt-6">Select Location <sup
