@@ -32,7 +32,7 @@
                 </badges>
             </header>
             <picture>
-                <img src="https://api.dicebear.com/6.x/shapes/svg?seed=qgK4p36iXT" class="rounded">
+                <img src="https://api.dicebear.com/6.x/initials/svg?seed=qgK4p36iXT" class="rounded">
             </picture>
             <flex class="flex items-center gap-4 text-neutral">
                 <date class="text-sm flex gap-1 items-center">

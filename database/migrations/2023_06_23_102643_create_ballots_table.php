@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ballots', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('token')->nullable();
             $table->text('description');
             $table->enum('type', ['private', 'public']);
             $table->boolean('anonymous')->default(false);

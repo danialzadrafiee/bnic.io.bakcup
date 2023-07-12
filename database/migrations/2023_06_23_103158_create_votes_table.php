@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ballot_id');
             $table->unsignedBigInteger('option_id');
             $table->timestamps();
+            $table->string('token')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('ballot_id')->references('id')->on('ballots')->onDelete('cascade');

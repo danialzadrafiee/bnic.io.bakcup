@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->string('data');
+            $table->string('attachment')->nullable();
             $table->string('reciver')->nullable();
             $table->integer('reciver_verify')->default(0);
             $table->integer('creator_verify')->default(0);

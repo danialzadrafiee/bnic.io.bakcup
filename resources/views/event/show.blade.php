@@ -1,20 +1,21 @@
 @php
     $me = auth()->user();
 @endphp
-@vite('/resources/js/event-show.js');
-@vite('/resources/css/leaflet.scss');
-<x-layout.dashboard :user="$me">
 
-    <main class="w-full flex rounded-xl bg-white p-8 flex-col gap-4">
+<x-layout.dashboard :user="$me">
+    @vite('resources/js/event-show.js');
+    @vite('resources/css/leaflet.scss');
+    <main class="w-full flex rounded-xl bg-white p-8 flex-col gap-4 js_event_dom">
+        <input type="hidden" class="js_event_id" value="{{ $event->id }}">
         <header class="flex justify-between w-full items-center">
             <event_title class="text-lg font-semibold">{{ $event->title }}</event_title>
             <event_badges class="flex space-x-4 ">
                 @if ($event->type == 'private')
-                    <span class="badge badge-neutral">
+                    <span class="badge  text-white badge-neutral">
                         <x-fas-lock class="w-3 mr-1 h-3" /> Private
                     </span>
                 @endif
-                <span class="badge badge-info">
+                <span class="badge text-white badge-info">
                     <x-fas-user class="w-3 mr-1 h-3" /> Creator
                 </span>
             </event_badges>
@@ -28,27 +29,24 @@
         </content>
         <row>
             @php
-                $lng = $event->lng_location;
-                $lng = explode(',', $lng);
+                $lng = explode(',', str_replace(['LatLng', '(', ')'], '', $event->lng_location));
             @endphp
 
-            <label class="block  text-neutral-700 mb-2 mt-6">Select Location <sup class="text-error">*</sup></label>
-            <div id="mapid"></div>
+            <label class="block  text-neutral-700 mb-2 mt-6">Event location </label>
+            <div id="mapid" class="rounded-xl"></div>
         </row>
         <label class="text-sm mt-4">Accurate address information.</label>
         <textarea class="js-accurate-location w-full textarea !border !border-neutral-5/30" readonly name="accurate_location">{{ $event->accurate_location }}</textarea>
-        <footer class="flex  mt-6 justify-between">
-            <div class="col-span-6 sm:col-span-3">
-                <input type="datetime-local" value="{{ $event->time }}" readonly name="date" id="date"
-                    autocomplete="date"
-                    class="js-event-date mt-1 block w-full py-2 px-3 border rounded-bl-none border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                <label for="date"
-                    class="block px-3 text-xs w-max py-2 rounded-t-none border border-t-0 rounded-lg border-neutral-5/30 font-medium text-gray-700">Event
-                    Time</label>
+        <footer class="flex  mt-6 justify-between items-center">
+            <div>
+                Date and time : {{ \Carbon\Carbon::parse($event->time)->format('d M, Y') }}
             </div>
-            <tooltip class="js-create-invite-tooltip tooltip" data-tip="Please fill all required fields">
-                <button class="js-create-invite ml-auto flex btn btn-primary">Create event</button>
-            </tooltip>
+            @if ($event->token == null)
+                <button class="js_generate_event_nft btn btn-sm btn-neutral w-max flex">Generate NFT</button>
+            @else
+                <button class="btn pointer-events-none btn-sm btn-success w-max flex">Event is on blockchain</button>
+            @endif
+
         </footer>
         </grid>
         <users class="col-span-2  js-invite-list-section grid grid-cols-1 gap-2 grow h-max" style="display: none">
@@ -78,13 +76,12 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         // Setting view of map
-        let map = L.map('mapid').setView([{{ $lng[1] }}, {{ $lng[0] }}], 19);
+        let map = L.map('mapid').setView([{{ $lng[0] }}, {{ $lng[1] }}], 19);
 
         // Adding tile layer to map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
 
         // Adding marker
-        let marker = L.marker([{{ $lng[1] }}, {{ $lng[0] }}]).addTo(map);
+        let marker = L.marker([{{ $lng[0] }}, {{ $lng[1] }}]).addTo(map);
     </script>
 </x-layout.dashboard>
-

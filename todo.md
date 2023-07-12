@@ -1,6 +1,4 @@
 
-
-
 setting dynamic form #zamangir
 - motevaseta #medtime
 
@@ -26,3 +24,40 @@ setting dynamic form #zamangir
 فیکس کردن ستینگ و ری جنریت nft
 
 اضافه کردن زیر گروه دستی
+
+
+
+
+- zamangira
+document create style
+email
+cert upload madrak
+** settinge karbar 
+
+- motevaseta 
+ceritificate [tag] 
+dokmeye blockchaine certificate
+voting count algoritm - member list - anonymous	- nft
+event - nft - date *public recheck
+
+
+- kamzamana
+category add new icons lists
+petition - count - yekamam zaher
+ye dokme translate ham ezafe konam
+zahere cetificate ( ykam align bkhore )
+certificate count under trust link
+
+
+
+
+ولیدیسشن بالوتو پتیشن 
+
+
+
+ولت زمانش نباید قبل از الان باشه
+
+
+
+Corp vote
+SUbcat Add and remove

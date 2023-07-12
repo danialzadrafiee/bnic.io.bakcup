@@ -41,7 +41,7 @@
                                 @endif
 
                                 @if ($ballot->anonymous)
-                                    <span class="badge badge-info">
+                                    <span class="badge text-white badge-info">
                                         Anonymous
                                     </span>
                                 @else
@@ -56,8 +56,10 @@
                             <p class="flex justify-between"><span>Created At:</span><span
                                     class="font-medium">{{ $ballot->created_at->diffForHumans() }}</span></p>
                             <p class="flex justify-between"><span>End Date:</span><span
-                                    class="font-medium">{{ date('F j, Y, g:i A', strtotime($ballot->ending_date)) }}</span>
+                                    class="font-medium">{{ \Carbon\Carbon::parse($ballot->ending_date)->diffForHumans() }}
+                            </p></span>
                             </p>
+
                         </div>
                     </div>
                     <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
@@ -95,7 +97,7 @@
                 </div>
             @endforeach
         @else
-            <div class="btn btn-primary text-white rounded-xl shadow-md p-6 flex items-center justify-between">
+            <div class="bg-base-content text-white rounded-xl shadow-md p-6 flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         class="w-6 h-6 text-white">
@@ -104,7 +106,7 @@
                     </svg>
                     <span>No voting box exists yet, do you want create first one?</span>
                 </div>
-                <a href="{{ route('ballots.create') }}" class="btn hover:bg-white bg-white  btn-primary">Create</a>
+                <a href="{{ route('ballots.create') }}" class="btn text-base-content hover:bg-white">Create</a>
             </div>
         @endif
 

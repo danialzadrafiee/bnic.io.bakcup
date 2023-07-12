@@ -188,7 +188,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => '2023-05-28 10:54:57',
             'description' => 'Random description for default form',
             'id' => '2',
-            'image' => 'https://api.dicebear.com/6.x/shapes/svg?seed=sdsaf',
+            'image' => 'https://api.dicebear.com/6.x/initials/svg?seed=sdsaf',
             'name' => 'Default Form',
             'reciver' => 'adler@gmail.com',
             "token" => ++$documentToken,
@@ -204,7 +204,7 @@ class DatabaseSeeder extends Seeder
             'corporation_id' => '702614',
             'name' => 'Default Form',
             'description' => 'Random description for default form',
-            'image' => 'https://api.dicebear.com/6.x/shapes/svg?seed=ddasq',
+            'image' => 'https://api.dicebear.com/6.x/initials/svg?seed=ddasq',
             'data' => '<h1>content</h1>',
             'reciver' => 'adler@gmail.com',
             'reciver_verify' => '1',
@@ -219,7 +219,7 @@ class DatabaseSeeder extends Seeder
         DB::table('documents')->insert($document);
         DB::table('sign_certs')->insert($sign_cert);
         $sign_cert['id'] = 2;
-        $sign_cert['image'] = 'https://api.dicebear.com/6.x/shapes/svg?seed=aaaa';
+        $sign_cert['image'] = 'https://api.dicebear.com/6.x/initials/svg?seed=aaaa';
         $sign_cert['name'] = 'second form';
         $sign_cert['category_id'] = '1';
         $sign_cert['sub_cat_id'] = '3';

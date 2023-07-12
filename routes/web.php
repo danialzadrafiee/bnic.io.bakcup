@@ -61,12 +61,14 @@ Route::group(['prefix' => 'cert'], function () {
     Route::get('/pub_show', [SignCertController::class, 'pub_show'])->name('cert.pub_show');
     Route::get('/list/user/{user_id}/category/{category_id}', [SignCertController::class, 'list'])->name('cert.list'); //can be pv usin auth->user
     Route::any('/category/update/', [SignCertController::class, 'category_update'])->name('cert.category_update'); //can be pv usin auth->user
+    Route::any('/attach_document', [SignCertController::class, 'attach_document'])->name('cert.attach_document'); //can be pv usin auth->user
+    Route::any('/attach_read', [SignCertController::class, 'attach_read'])->name('cert.attach_read'); //can be pv usin auth->user
 });
 
 //documents
 Route::group(['prefix' => 'action'], function () {
-    Route::get('/search_invi_by_name', [ActionController::class, 'search_invi_by_name'])->name('actions.search_invi_by_name');
-    Route::get('/search_corp_by_name', [ActionController::class, 'search_corp_by_name'])->name('actions.search_corp_by_name');
+    Route::any('/search_invi_by_name', [ActionController::class, 'search_invi_by_name'])->name('actions.search_invi_by_name');
+    Route::any('/search_corp_by_name', [ActionController::class, 'search_corp_by_name'])->name('actions.search_corp_by_name');
 });
 
 

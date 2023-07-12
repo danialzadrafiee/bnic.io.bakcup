@@ -18,7 +18,7 @@ const listUsers = (users) => {
         html: $("<div>", {
           class: "card-body py-6 flex gap-4 flex-row items-center",
           html: $("<img>", {
-            src: `https://api.dicebear.com/6.x/shapes/svg?seed=${user.email}`,
+            src: `https://api.dicebear.com/6.x/initials/svg?seed=${user.email}`,
             class: "w-10 h-10 rounded",
           })
             .add(
@@ -114,4 +114,80 @@ $(".js-btn-submit").on("click", function (e) {
   e.preventDefault()
   ballot_users_to_input()
   $("#ballotForm").trigger("submit")
+})
+
+import flatpickr from "flatpickr"
+var now = new Date()
+now.setDate(now.getDate() + 1)
+var formattedNow = now.toISOString().slice(0, 16)
+flatpickr('input[type="datetime-local"]', {
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
+  minDate: formattedNow,
+  defaultDate: formattedNow,
+})
+
+import validate from "jquery-validation"
+
+$(function () {
+  var validator = $("#ballotForm").validate({
+    rules: {
+      title: {
+        required: true,
+        minlength: 5,
+      },
+      description: {
+        required: true,
+        minlength: 20,
+      },
+      options: {
+        required: true,
+      },
+      ending_date: {
+        required: true,
+      },
+    },
+    messages: {
+      title: {
+        required: "ballot title must be at least 5 characters long",
+        minlength: "ballot username must be at least 5 characters long",
+      },
+      description: {
+        required: "ballot description must be at least 20 characters long",
+        minlength: "ballot username must be at least 20 characters long",
+      },
+      options: {
+        required: "ballot options is required",
+      },
+      ending_date: {
+        required: "ballot ending date is required",
+      },
+    },
+    errorElement: "div",
+    errorPlacement: function (error, element) {
+      error.addClass("text-sm text-red-500")
+      $(element).after(error)
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass("border-red-500 JS_INVALID")
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass("border-red-500 JS_INVALID")
+    },
+    submitHandler: function (form) {
+      form.submit()
+    },
+  })
+
+  $("input , textarea, select").on("keyup change", function () {
+    $(this).valid() // validate this field only
+  })
+
+  $("input , textarea, select").on("keyup change", function () {
+    if ($("#ballotForm").find(".JS_INVALID").length === 0) {
+      $(".js-btn-submit").prop("disabled", false)
+    } else {
+      $(".js-btn-submit").prop("disabled", "disabled")
+    }
+  })
 })

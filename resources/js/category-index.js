@@ -129,10 +129,12 @@ function editCertCategory(cert_id) {
 }
 
 function truncateString(str) {
-  if (str.length > 140) {
-    return str.substring(0, 140) + "..."
-  } else {
-    return str
+  if (str) {
+    if (str.length > 40) {
+      return str.substring(0, 40) + "..."
+    } else {
+      return str
+    }
   }
 }
 

@@ -46,9 +46,9 @@ $("body").on("click", ".js-rem-additional-row", function () {
 //searchUser begin
 let template = $(".js-row-user").first()
 $(".js-btn-search").on("click", function () {
-  let query = $(".js-input-search").val()
+  let term = $(".js-input-search-user").val()
   $(".js-section-search-result").empty()
-
+  console.log(term)
   function getEmailHash(email, callback) {
     const encoder = new TextEncoder()
     const data = encoder.encode(email)
@@ -58,39 +58,39 @@ $(".js-btn-search").on("click", function () {
       callback(hashHex)
     })
   }
-
-  axios
-    .get(`${route("actions.search_invi_by_name")}?query=${query}`)
-    .then(function (response) {
-      let data = response.data
-      console.log(data)
-      if (data.length > 0) {
-        data.forEach((element) => {
-          getEmailHash(element.email, function (emailHash) {
-            let clone = template.clone() // Create a new clone for each element
-            clone.find(".js-search-user-first-name").text(element.first_name)
-            clone.find(".js-search-user-last-name").text(element.last_name)
-            clone.find(".js-search-user-email").text(element.email)
-            clone.find(".js-search-user-wallet").val(element.wallet)
-            clone.find(".js-search-user-image").attr("src", `https://api.dicebear.com/6.x/identicon/svg?seed=${element.email}`)
-            clone.find(".js-search-user-code").html(`${element.gender[0]}-${emailHash.substr(0, 8)}-${element.id}`)
-            clone
-              .find(".js-search-user-cv")
-              .html(
-                element.cv.replace(/<\/?[^>]+(>|$)/g, "").length > 90
-                  ? element.cv.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 90) + ".."
-                  : element.cv.replace(/<\/?[^>]+(>|$)/g, "")
-              )
-            $(".js-section-search-result").append(clone)
-          })
+  axios.post(route("actions.search_invi_by_name"), { term: term }).then(function (response) {
+    let data = response.data
+    console.log(data)
+    if (data.length > 0) {
+      data.forEach((element) => {
+        getEmailHash(element.email, function (emailHash) {
+          let clone = template.clone() // Create a new clone for each element
+          clone.find(".js-search-user-first-name").text(element.first_name)
+          clone.find(".js-search-user-last-name").text(element.last_name)
+          clone.find(".js-search-user-email").text(element.email)
+          clone.find(".js-search-user-wallet").val(element.wallet)
+          clone.find(".js-search-user-image").attr("src", `https://api.dicebear.com/6.x/identicon/svg?seed=${element.email}`)
+          clone.find(".js-search-user-code").html(`${element.gender[0]}-${emailHash.substr(0, 8)}-${element.id}`)
+          clone
+            .find(".js-search-user-cv")
+            .html(
+              element.cv.replace(/<\/?[^>]+(>|$)/g, "").length > 90 ? element.cv.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 90) + ".." : element.cv.replace(/<\/?[^>]+(>|$)/g, "")
+            )
+          $(".js-section-search-result").append(clone)
         })
-      } else {
-        $(".js-section-search-result").append('<p class="text-center">No se encontraron resultados</p>')
-      }
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+      })
+    } else {
+      $(".js-section-search-result").append('<p class="text-center">No se encontraron resultados</p>')
+    }
+  })
+  // axios
+  //   .post((route("actions.search_invi_by_name"), { query: query }))
+  //   .then(function (response) {
+
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error)
+  //   })
 })
 $(".js-modal-select-user").on("click", function (event) {
   if (event.target.tagName === "MODAL") {
@@ -144,6 +144,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview"
 import FilePondPluginPdfPreview from "filepond-plugin-pdf-preview"
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
 import Swal from "sweetalert2"
+import axios from "axios"
 
 FilePond.registerPlugin(FilePondPluginImagePreview)
 FilePond.registerPlugin(FilePondPluginPdfPreview)
@@ -192,6 +193,3 @@ inputElements.forEach((inputElement) => {
     $(".file_upload_url").val(response.id)
   })
 })
-
-
-import "sweetalert2/src/sweetalert2.scss"

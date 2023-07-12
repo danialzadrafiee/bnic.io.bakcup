@@ -1,27 +1,31 @@
 import * as FilePond from "filepond"
 import FilePondPluginImagePreview from "filepond-plugin-image-preview"
-FilePond.registerPlugin(FilePondPluginImagePreview)
-const inputElement = document.querySelector('input[type="file"]')
-const pond = FilePond.create(inputElement, {
-  server: {
-    url: "/api/filepond",
-    process: "/process",
-    revert: "/revert",
-    restore: "/restore",
-    load: "/load",
-  },
-})
-pond.on("processfile", (error, file) => {
-  if (error) {
-    console.error("File processing failed:", error)
-    return
-  }
-  const response = JSON.parse(file.serverId)
-  $(".js-event-image").val(response.id).trigger("change")
-  console.log(response.id)
-})
-// #END-FILEPOND
 
+$(function () {
+  FilePond.registerPlugin(FilePondPluginImagePreview)
+  const inputElement = document.querySelector('.js_event_image')
+  const pond = FilePond.create(inputElement, {
+    server: {
+      url: "/api/filepond",
+      process: "/process",
+      revert: "/revert",
+      restore: "/restore",
+      load: "/load",
+    },
+  })
+  pond.on("processfile", (error, file) => {
+    if (error) {
+      console.error("File processing failed:", error)
+      return
+    }
+    const response = JSON.parse(file.serverId)
+    $(".js-event-image").val(response.id).trigger("change")
+    console.log(response.id)
+  })
+  // #END-FILEPOND
+})
+
+//USER SEARCH
 let selected_users = []
 
 const searchUsers = () => {
@@ -42,7 +46,7 @@ const listUsers = (users) => {
         html: $("<div>", {
           class: "card-body py-6 flex gap-4 flex-row items-center",
           html: $("<img>", {
-            src: `https://api.dicebear.com/6.x/shapes/svg?seed=${user.email}`,
+            src: `https://api.dicebear.com/6.x/initials/svg?seed=${user.email}`,
             class: "w-10 h-10 rounded",
           })
             .add(
@@ -122,6 +126,7 @@ $(function () {
       $(this).closest("card").remove()
     })
 })
+//USER SEARCH END
 
 let publicity = "public"
 $(".js_event_publicity").on("click", function () {
@@ -308,3 +313,15 @@ $(".js-create-invite-tooltip").on("click", function () {
   $form.trigger("submit")
 })
 
+import flatpickr from "flatpickr"
+$(function () {
+  var now = new Date()
+  var formattedNow = now.toISOString().slice(0, 16)
+  flatpickr(".js-event-date", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: formattedNow,
+    defaultDate: formattedNow,
+  })
+  $(".js-event-date").trigger("change")
+})

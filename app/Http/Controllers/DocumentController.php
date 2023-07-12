@@ -40,7 +40,7 @@ class DocumentController extends Controller
             'reciver' => $request->reciver ?? '0',
             'description' => $request->description ?? 'describe',
             'group_id' => $request->group_id ?? '0',
-            'image' => $request->image ?? 'https://api.dicebear.com/6.x/shapes/svg?seed=' . Str::random(10),
+            'image' => $request->image ?? 'https://api.dicebear.com/6.x/initials/svg?seed=' . Str::random(10),
             'content' => $request->content,
         ]);
         return ($document);

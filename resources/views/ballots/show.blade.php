@@ -2,49 +2,60 @@
     $me = auth()->user();
 @endphp
 <x-layout.dashboard :user="$me">
-    <main class="container relative mx-auto flex flex-col py-6 px-4 space-y-6">
-        <x-qrcode class="rounded w-36 h-36" data="http://localhost:8000/ballots/1"></x-qrcode>
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-primary text-white px-6 py-4">
-                <h1 class="text-3xl font-semibold">{{ $ballot->title }}</h1>
-                <p>{{ $ballot->description }}</p>
-            </div>
-            <div class="grid grid-cols-2 gap-16 p-6">
-                @php
-                    $creator = $ballot
-                        ->users()
-                        ->where('role', 'creator')
-                        ->first();
-                @endphp
-                <div class="space-y-2">
-                    <p class="flex justify-between"><span>Created At:</span><span
-                            class="font-medium capitalize">{{ $ballot->created_at->diffForHumans() }}</span></p>
-                    <p class="flex justify-between items-center"><span>Last Vote:</span><span
-                            class="font-medium capitalize">{!! $lastVoteDate ? $lastVoteDate->diffForHumans() : 'You are first' !!}</span></p>
-                    <p class="flex justify-between"><span>Creator:</span><span
-                            class="font-medium capitalize">{{ $creator->user_type == 'invidual' ? $creator->first_name . ' ' . $creator->last_name : $creator->corp_name }}</span>
-                    </p>
+    <main class="container js_ballot_nft_dom relative mx-auto flex flex-col py-6  space-y-6">
+        <input type="hidden" class="js_ballot_id" value="{{ $ballot->id }}">
+        <grid class="flex items-center gap-3">
+            <cel_data class=" bg-white rounded-lg grow h-full shadow-sm overflow-hidden">
+                <div class="bg-neutral text-white px-6 py-4">
+                    <h1 class="text-2xl font-semibold">{{ $ballot->title }}</h1>
+                    <p>{{ $ballot->description }}</p>
+                </div>
+                <div class="grid grid-cols-2 gap-16 p-6">
+                    @php
+                        $creator = $ballot
+                            ->users()
+                            ->where('role', 'creator')
+                            ->first();
+                    @endphp
+                    <div class="space-y-2">
+                        <p class="flex justify-between"><span>Created At:</span><span
+                                class="font-medium capitalize">{{ $ballot->created_at->diffForHumans() }}</span></p>
+                        <p class="flex justify-between items-center"><span>Last Vote:</span><span
+                                class="font-medium capitalize">{!! $lastVoteDate ? $lastVoteDate->diffForHumans() : 'You are first' !!}</span></p>
+                        <p class="flex justify-between"><span>Creator:</span><span
+                                class="font-medium capitalize">{{ $creator->user_type == 'invidual' ? $creator->first_name . ' ' . $creator->last_name : $creator->corp_name }}</span>
+                        </p>
 
+                    </div>
+                    <div class="space-y-2">
+                        <p class="flex justify-between"><span>Min required votes:</span><span
+                                class="font-medium capitalize">{{ $ballot->min_required_votes }}</span></p>
+                        <p class="flex justify-between">
+                            <span>End Date:</span>
+                            <span
+                                class="font-medium capitalize">{{ date('F j, Y, g:i A', strtotime($ballot->ending_date)) }}</span>
+                        </p>
+                        <p class="flex justify-between"><span>Percentage of Min Requirement:</span><span
+                                class="font-medium capitalize">{{ ceil($percentageOfMinRequirement) }}%</span></p>
+                    </div>
                 </div>
-                <div class="space-y-2">
-                    <p class="flex justify-between"><span>Min required votes:</span><span
-                            class="font-medium capitalize">{{ $ballot->min_required_votes }}</span></p>
-                    <p class="flex justify-between">
-                        <span>End Date:</span>
-                        <span
-                            class="font-medium capitalize">{{ date('F j, Y, g:i A', strtotime($ballot->ending_date)) }}</span>
-                    </p>
-                    <p class="flex justify-between"><span>Percentage of Min Requirement:</span><span
-                            class="font-medium capitalize">{{ $percentageOfMinRequirement }}%</span></p>
-                </div>
-            </div>
-        </div>
+            </cel_data>
+            <cel_qrcode
+                class="bg-white w-max shrink-0 h-full  shadow-sm p-6 rounded-lg flex items-center justify-center flex-col gap-4 col-span-2 ">
+                <x-qrcode data="test" class="h-[140px] aspect-square w-[140px]"></x-qrcode>
+                @if ($ballot->token == null)
+                <button class="js_btn_submit_nft btn btn-sm w-full capitalize btn-neutral">Generate NFT</button>
+                @else                    
+                <button  class="js_btn_show_nft  pointer-events-none btn btn-sm w-full normal-case btn-success">Ballot is on blockchain</button>
+                @endif
+            </cel_qrcode>
+        </grid>
 
         <div class="grid grid-flow-row grid-cols-2 gap-4 items-stretch">
-            @foreach ($ballot->options as $option)
-                <div class="bg-white rounded-lg shadow-md  flex flex-col justify-center p-6 space-y-4">
+            @foreach ($ballot->options as $key => $option)
+                <div class="bg-white rounded-lg shadow-sm  flex flex-col justify-center p-6 space-y-4">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">{{ $option->value }}</h3>
+                        <h3 class=" font-semibold">{{ $option->value }}</h3>
                         <div class="space-x-2">
                             @if ($me->votes->where('ballot_id', $ballot->id)->count() == 0)
                                 <button type="button" class="voteBtn px-4 py-2 bg-primary text-white rounded-lg"
@@ -59,10 +70,10 @@
                                 votes...</div>
                         </div>
                     </div>
-                    <div class="bg-gray-200 rounded-lg">
-                        <div class="bg-primary text-white py-1 px-2 rounded-lg"
-                            style="width: {{ $percentageOfVotes[$option->id] }}%;">
-                            {{ $percentageOfVotes[$option->id] }}%
+                    <div class="bg-gray-200 rounded-lg ">
+                        <div class="bg-accent-{{ $key + 1 }} text-white py-1 px-2 rounded-lg"
+                            style="width: {{ ceil($percentageOfVotes[$option->id]) }}%;">
+                            {{ ceil($percentageOfVotes[$option->id]) }}%
                         </div>
                     </div>
                 </div>
@@ -71,7 +82,7 @@
 
         @if (!$ballot->anonymous)
             <div class="splace-y-6">
-                <div class="bg-white rounded-lg shadow-md p-6 space-y-4">
+                <div class="bg-white rounded-lg shadow-sm p-6 space-y-4">
                     <div class="flex flex-col gap-2">
                         <p class="font-medium capitalize">Users who voted :</p>
                         <div class="grid grid-cols-5 grid-flow-row capitalize gap-2 ">
@@ -89,10 +100,9 @@
             </div>
         @endif
     </main>
-
+    @vite('resources/js/ballot-show.js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -146,4 +156,16 @@
             @endforeach
         });
     </script>
+    {{-- cach accents --}}
+    <input type="hidden" class="bg-accent-1">
+    <input type="hidden" class="bg-accent-2">
+    <input type="hidden" class="bg-accent-3">
+    <input type="hidden" class="bg-accent-4">
+    <input type="hidden" class="bg-accent-5">
+    <input type="hidden" class="bg-accent-6">
+    <input type="hidden" class="bg-accent-7">
+    <input type="hidden" class="bg-accent-8">
+    <input type="hidden" class="bg-accent-9">
+    <input type="hidden" class="bg-accent-10">
+    <input type="hidden" class="bg-accent-11">
 </x-layout.dashboard>

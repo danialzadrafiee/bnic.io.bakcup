@@ -64,9 +64,11 @@ class SignCertController extends Controller
     public function show(Request $request)
     {
 
+        $mode = "public";
+        $watcher = auth()->user();
+
         $cert = SignCert::where('id', $request->id)->first();
 
-        $watcher = auth()->user();
         if ($watcher->id == $cert->corporation_id) {
             $watcher_rule = "creator";
         } elseif ($watcher->email == $cert->reciver) {
@@ -76,13 +78,8 @@ class SignCertController extends Controller
         } else {
             $watcher_rule = "stranger";
         }
-
-
         $success = $request->success;
-        // if ($success == true) {
-        return view('cert.show', compact('cert', 'success', 'watcher_rule'));
-        // }
-        // return view('cert.show', compact('cert'));
+        return view('cert.show', compact('cert', 'mode', 'watcher', 'watcher_rule', 'success'));
     }
 
     public function pub_show(Request $request)
@@ -101,9 +98,8 @@ class SignCertController extends Controller
         } else {
             $watcher_rule = "stranger";
         }
-
-
-        return view('cert.show', compact('cert', 'mode', 'watcher', 'watcher_rule'));
+        $success = $request->success;
+        return view('cert.show', compact('cert', 'mode', 'watcher', 'watcher_rule', 'success'));
     }
 
     public function list($user_id, $category_id)
@@ -121,5 +117,19 @@ class SignCertController extends Controller
             "sub_cat_id" => $request->sub_cat_id,
         ]);
         return redirect()->back()->with('success', 'certificate updated');
+    }
+
+    public function attach_document(Request $request)
+    {
+        return SignCert::where('id', $request->certificate_id)->update([
+            "attachment" => $request->attachment,
+        ]);
+    }
+
+
+    public function attach_read(Request $request)
+    {
+
+        return SignCert::find($request->certificate_id);
     }
 }

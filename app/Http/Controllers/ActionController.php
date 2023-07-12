@@ -10,12 +10,12 @@ class ActionController extends Controller
 {
     public function search_invi_by_name(Request $request)
     {
-        $query = $request->query;
-        $users = User::where('first_name', 'LIKE', '%' . $query . '%')
-            ->orWhere('last_name', 'LIKE', '%' . $query . '%')
-            ->orWhere('email', 'LIKE', '%' . $query . '%')
+        $term = $request->term;
+        $users = User::where('first_name', 'LIKE', '%' . $term . '%')
+            ->orWhere('last_name', 'LIKE', '%' . $term . '%')
+            ->orWhere('email', 'LIKE', '%' . $term . '%')
             ->where('user_type', 'invidual')->get();
-        return response()->json($users);
+        return $users;
     }
     public function search_corp_by_name(Request $request)
     {

@@ -35,6 +35,15 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        $validation = $request->validate([
+            'type' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            'time' => 'required|date|after:yesterday',
+            'lng_location' => 'required',
+            'accurate_location' => 'required',
+            'token' => 'required'
+        ]);
         $event = Event::create([
             'user_id' => auth()->user()->id,
             'type' => $request->type,
@@ -44,7 +53,8 @@ class EventController extends Controller
             'time' => $request->time ?? '',
             'lng_location' => $request->lng_location ?? '',
             'accurate_location' => $request->accurate_location ?? '',
-            'token' => $request->token
+            // 'token' => $request->token
+            'token' => null
         ]);
 
         $guests = json_decode($request->guests);

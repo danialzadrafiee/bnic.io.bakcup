@@ -63,7 +63,7 @@
         <templates class="hidden">
             <card cat-id="" sub-cat-id="" class="js-card-template card w-full bg-base-100  shadow-xl relative">
                 <header class="rounded-t-lg relative">
-                    <figure class="h-64"><img src="https://api.dicebear.com/6.x/shapes/svg?seed=qgK4p36iXT"
+                    <figure class="h-64"><img src="https://api.dicebear.com/6.x/initials/svg?seed=qgK4p36iXT"
                             class="h-full w-full object-cover" />
                         <edit_card
                             class="js_edit_card cursor-pointer flex bg-neutral top-4 left-4 rounded-lg text-white items-center absolute justify-center w-8 h-8">

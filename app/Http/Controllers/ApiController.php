@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ballot;
 use App\Models\Category;
+use App\Models\Petition;
 use App\Models\SignCert;
 use App\Models\User;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
@@ -165,20 +168,7 @@ class ApiController extends Controller
         return $category;
     }
 
-    public function update_certificate(Request $request)
-    {
-        $cert = SignCert::where('id', $request->cert_id)->first();
-        if ($cert === null) {
-            return response()->json([
-                'error' => 'No matching certificate found'
-            ], 404);
-        }
-        $columns = Schema::getColumnListing($cert->getTable());
-        $updateArray = array_intersect_key($request->all(), array_flip($columns));
-        $cert->update($updateArray);
 
-        return $cert;
-    }
 
     public function delete_category(Request $request)
     {
@@ -216,5 +206,68 @@ class ApiController extends Controller
             })
             ->get();
         return response()->json($corporations);
+    }
+
+
+
+    // update
+
+    public function update_certificate(Request $request)
+    {
+        $cert = SignCert::where('id', $request->cert_id)->first();
+        if ($cert === null) {
+            return response()->json([
+                'error' => 'No matching certificate found'
+            ], 404);
+        }
+        $columns = Schema::getColumnListing($cert->getTable());
+        $updateArray = array_intersect_key($request->all(), array_flip($columns));
+        $cert->update($updateArray);
+
+        return $cert;
+    }
+
+
+    public function update_ballot(Request $request)
+    {
+        $ballot = Ballot::where('id', $request->ballot_id)->first();
+        if ($ballot === null) {
+            return response()->json([
+                'error' => 'No matching ballot found'
+            ], 404);
+        }
+        $columns = Schema::getColumnListing($ballot->getTable());
+        $updateArray = array_intersect_key($request->all(), array_flip($columns));
+        $ballot->update($updateArray);
+        return $ballot;
+    }
+
+    public function update_petition(Request $request)
+    {
+        $petition = Petition::where('id', $request->petition_id)->first();
+        if ($petition === null) {
+            return response()->json([
+                'error' => 'No matching petition found'
+            ], 404);
+        }
+        $columns = Schema::getColumnListing($petition->getTable());
+        $updateArray = array_intersect_key($request->all(), array_flip($columns));
+        $petition->update($updateArray);
+        return $petition;
+    }
+
+
+    public function update_event(Request $request)
+    {
+        $event = Event::where('id', $request->event_id)->first();
+        if ($event === null) {
+            return response()->json([
+                'error' => 'No matching event found'
+            ], 404);
+        }
+        $columns = Schema::getColumnListing($event->getTable());
+        $updateArray = array_intersect_key($request->all(), array_flip($columns));
+        $event->update($updateArray);
+        return $event;
     }
 }

@@ -35,20 +35,21 @@
             </actions>
         </navigation>
         <inside>
-            <data class="js-section-corp-data  h-[500px] overflow-y-scroll py-4 flex flex-col gap-4 border-neutral/20 px-4">
-
-
-
+            <data
+                class="js-section-corp-data  h-[480px] overflow-y-scroll py-4 grid grid-cols-2 grid-flow-row gap-4 border-neutral/20 px-4">
             </data>
         </inside>
         </div>
-        <button class="js-btn-categories-close text-primary/80 absolute bottom-4 right-8">close</button>
+        <button class="js-btn-categories-close btn-sm btn btn-neutral">close</button>
         </div>
+    </form>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
     </form>
 </dialog>
 <templates>
-    <corporation class="corporation-template">
-        <inside class="grid grid-cols-5 py-2">
+    <corporation class="corporation-template hover:bg-primary hover:text-white h-max rounded-xl">
+        <inside class="grid grid-cols-5  items-center h-max p-4">
             <column class="col-span-3 flex gap-2  ">
                 <img class="w-[85px] h-[85px] rounded" src="" />
                 <flex class="flex flex-col">
@@ -60,7 +61,7 @@
                     </describe>
                 </flex>
             </column>
-            <column class="col-span-2 ml-auto grid gap-8 grid-cols-2 text-sm">
+            <column class="col-span-1 ml-auto grid gap-8 grid-cols-2 text-sm">
                 <flex class="col-span-1 flex flex-col gap-1">
                     <tag>
                         <label class="font-light">Type</label>
@@ -71,10 +72,12 @@
                         <cat_pri class="font-medium"></cat_pri>
                     </tag>
                 </flex>
-                <column class="col-span-1">
-                    <a href="#" class="btn btn-sm normal-case btn-neutral">
-                        Documents</a>
-                </column>
+            </column>
+            <column class="col-span-1 flex items-center justify-center">
+                <a href="#" class="btn btn-sm normal-case btn-neutral">
+                    <x-fas-eye></x-fas-eye>
+                </a>
+
             </column>
         </inside>
     </corporation>

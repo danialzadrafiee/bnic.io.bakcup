@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('hashtag')->unique();
             $table->text('content');
+            $table->text('token')->nullable();
             $table->string('picture')->nullable();
-            $table->boolean('anonymous')->default(false);
+            $table->string('type')->nullable();
+            $table->integer('min')->nullable()->default(10);
             $table->timestamp('end_at');
             $table->timestamps();
         });

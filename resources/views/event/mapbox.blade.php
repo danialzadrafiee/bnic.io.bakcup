@@ -1,66 +1,50 @@
-<mapbox class="relative block w-full">
-    <div id="mapid" class="rounded-xl w-full"></div>
-    <input type="text" id="address" class="absolute top-3 right-3 input input-sm input-bordered border-neutral-5/30 " placeholder="Search location" />
-    {{-- <button class="js_log_location">Log Location</button> --}}
-</mapbox>
+<relative class="relative block h-[380px]">
+
+    <div id="mapid" class="rounded-xl absolute z-0 w-full"></div>
+    <input type="text" id="address" class=" absolute input bg-white z-10 right-4 top-4 input-sm input-bordered border-neutral-5/30 "
+        placeholder="Search location" />
+</relative>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/dist/mapbox-gl.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/dist/mapbox-gl.min.css" rel="stylesheet">
-
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <style>
     #mapid {
         height: 380px;
     }
 </style>
-<script>
-    mapboxgl.accessToken = "pk.eyJ1Ijoic3ViZGFuaWFsIiwiYSI6ImNsNTU3cmcwdjE2cm0zZnFxdm1pemZ3cjQifQ.fLqs4EX703SYVVE0DzknNw";
 
-    var map = new mapboxgl.Map({
-        container: 'mapid',
-        style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-        center: [-0.09, 51.505], // starting position [lng, lat]
-        zoom: 13 // starting zoom
-    });
+<script>
+    var map = L.map('mapid').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
     var marker;
-    window.map_lng = [];
     map.on('click', function(e) {
         if (marker) {
-            marker.remove();
+            map.removeLayer(marker);
         }
-        marker = new mapboxgl.Marker()
-            .setLngLat([e.lngLat.lng, e.lngLat.lat])
-            .addTo(map);
-        map_lng = [e.lngLat.lng, e.lngLat.lat]
-        $('.js_map_lng').val(map_lng).change()
+        marker = L.marker(e.latlng).addTo(map);
+        $('.js_map_lng').val(e.latlng).change();
     });
-    map.on('dataloading', () => {
-        window.dispatchEvent(new Event('resize'));
-    });
-    setTimeout(() => {
-        window.dispatchEvent(new Event('resize'))
-    }, 0)
 
-
-
-    // Initialize Autocomplete with Mapbox's Geocoding API
     $("#address").autocomplete({
         source: function(request, response) {
             $.ajax({
-                url: "https://api.mapbox.com/geocoding/v5/mapbox.places/" + request.term + ".json",
-                data: {
-                    access_token: mapboxgl.accessToken
-                },
+                url: `https://nominatim.openstreetmap.org/search?format=json&q=${request.term}`,
+                dataType: "json",
                 success: function(data) {
-                    response($.map(data.features, function(item) {
+                    response($.map(data, function(item) {
                         return {
-                            label: item.place_name,
-                            value: item.place_name,
-                            coordinates: item.center
+                            label: item.display_name,
+                            value: item.display_name,
+                            latlng: [item.lat, item.lon]
                         };
                     }));
                 }
@@ -69,14 +53,10 @@
         minLength: 2,
         select: function(event, ui) {
             if (marker) {
-                marker.remove();
+                map.removeLayer(marker);
             }
-            marker = new mapboxgl.Marker()
-                .setLngLat(ui.item.coordinates)
-                .addTo(map);
-            map.flyTo({
-                center: ui.item.coordinates
-            });
+            marker = L.marker(ui.item.latlng).addTo(map);
+            map.flyTo(ui.item.latlng, map.getZoom());
         }
     });
 </script>

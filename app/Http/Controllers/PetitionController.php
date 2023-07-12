@@ -30,7 +30,9 @@ class PetitionController extends Controller
             'title' => 'required',
             'hashtag' => 'required|unique:petitions',
             'content' => 'required',
-            'end_at' => 'required|date|after:today'
+            'end_at' => 'required|date|after:today',
+            'type' => 'required',
+            'min' => 'required'
         ]);
 
         $auth_user = User::find(auth()->user()->id);
@@ -44,16 +46,16 @@ class PetitionController extends Controller
 
     public function sign(Petition $petition)
     {
-        if($petition->users()->where('user_id', auth()->user()->id)->exists()) {
+        if ($petition->users()->where('user_id', auth()->user()->id)->whereNot('user_role', 'creator')->exists()) {
             return back()->withErrors(['error' => 'You have already signed this petition']);
         }
-    
-        if(now() > $petition->end_at) {
+
+        if (now() > $petition->end_at) {
             return back()->withErrors(['error' => 'This petition has ended']);
         }
-    
+
         $petition->users()->attach(auth()->user()->id, ['user_role' => 'signer']);
-    
+
         return back();
     }
 
@@ -62,10 +64,9 @@ class PetitionController extends Controller
         if ($petition->users()->wherePivot('user_role', 'signer')->count() >= 10) {
             return back()->withErrors(['error' => 'You cannot delete a petition with 10 or more signatures.']);
         }
-    
+
         $petition->delete();
-    
+
         return back();
     }
-    
 }

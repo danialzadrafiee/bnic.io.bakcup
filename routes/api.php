@@ -28,14 +28,20 @@ Route::get('public_dashboard/{id}', [ApiController::class, 'public_dashboard'])-
 
 Route::post('filepond/process', [FilepondController::class, 'process']);
 Route::delete('filepond/revert', [FilepondController::class, 'revert']);
+
+
+
 Route::any('get_certificate', [ApiController::class, 'get_certificate'])->name('api.get_certificate');
 Route::any('get_certificates', [ApiController::class, 'get_certificates'])->name('api.get_certificates');
 
 
 
 Route::post('add_category_to_user', [ApiController::class, 'add_category_to_user'])->name('api.add_category_to_user');
-Route::post('update_certificate', [ApiController::class, 'update_certificate'])->name('api.update_certificate');
 Route::post('delete_category', [ApiController::class, 'delete_category'])->name('api.delete_category');
+Route::post('update_certificate', [ApiController::class, 'update_certificate'])->name('api.update_certificate');
+Route::any('update_ballot', [ApiController::class, 'update_ballot'])->name('api.update_ballot');
+Route::any('update_petition', [ApiController::class, 'update_petition'])->name('api.update_petition');
+Route::any('update_event', [ApiController::class, 'update_event'])->name('api.update_event');
 
 Route::any('trust_user', [ApiController::class, 'trust_user'])->name('api.trust_user');
 Route::any('untrust_user', [ApiController::class, 'untrust_user'])->name('api.untrust_user');

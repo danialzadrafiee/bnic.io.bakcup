@@ -40,7 +40,7 @@
                                     <x-fas-lock class="w-3 mr-1 h-3" /> Private
                                 </span>
                             @endif
-                            <span class="badge badge-info">
+                            <span class="badge badge-info text-white">
                                 <x-fas-user class="w-3 mr-1 h-3" /> Creator
                             </span>
                         </top_badges>
@@ -54,7 +54,7 @@
                         <h2 class="card-title">{{ $event->title }}</h2>
                         <p>{{ Str::limit($event->content, 200) }}</p>
                         <div class="card-actions justify-end">
-                            <a href="{{ route('event.show', ['event_id' => $event->id]) }}" class="btn btn-neutral hover:btn-primary btn-sm mt-5" data-id="{{ $event->id }}">
+                            <a href="{{ route('event.show', ['event_id' => $event->id]) }}" class="btn btn-neutral hover:btn-primary mt-5" data-id="{{ $event->id }}">
                                 <x-fas-eye class="w-3 mr-1 h-3" /> Watch Event
                             </a>
                         </div>
@@ -72,7 +72,7 @@
                                     <x-fas-lock class="w-3 mr-1 h-3" /> Private
                                 </span>
                             @endif
-                            <span class="badge badge-info">
+                            <span class="badge badge-info text-white">
                                 <x-fas-user class="w-3 mr-1 h-3" /> Invited
                             </span>
                         </top_badges>
@@ -86,7 +86,7 @@
                         <h2 class="card-title">{{ $event->title }}</h2>
                         <p>{{ Str::limit($event->content, 200) }}</p>
                         <div class="card-actions justify-end">
-                            <a href="{{ route('event.show', ['event_id' => $event->id]) }}" class="btn btn-neutral hover:btn-primary btn-sm mt-5" data-id="{{ $event->id }}">
+                            <a href="{{ route('event.show', ['event_id' => $event->id]) }}" class="btn btn-neutral hover:btn-primary mt-5" data-id="{{ $event->id }}">
                                 <x-fas-eye class="w-3 mr-1 h-3" /> Watch Event
                             </a>
                         </div>

@@ -43,9 +43,12 @@
     <dashboard>
         <alerts>
             @if ($errors->any())
-                <div class="js-g-alert alert items-start alert-error fixed z-50 mx-auto w-[900px] right-0 left-0 bottom-32">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                <div
+                    class="js-g-alert alert items-start alert-error fixed z-50 mx-auto w-[900px] right-0 left-0 bottom-32">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                     <span>
                         <ul>
@@ -54,7 +57,8 @@
                             @endforeach
                         </ul>
                     </span>
-                    <close class="block cursor-pointer" onclick="document.querySelector('.js-g-alert').style.display = 'none'">
+                    <close class="block cursor-pointer"
+                        onclick="document.querySelector('.js-g-alert').style.display = 'none'">
                         <x-fas-times></x-fas-times>
                     </close>
                 </div>
@@ -77,18 +81,23 @@
                     <input type="hidden" class="js_pvk" value="{{ config('app.pvk') }}">
                     <x-aside></x-aside>
 
-                    <core class="css-core h-full  rounded-[1.25rem] max-h-full max-w-full w-full  overflow-y-scroll relative ">
+                    <core
+                        class="css-core h-full  rounded-[1.25rem] max-h-full max-w-full w-full  overflow-y-scroll relative ">
 
-                        <nav class="css-nav order-2  fixed right-[18px]  rounded-r-[1.25rem] top-[26px] h-[calc(100%-52px)] overflow-y-scroll  z-10 ">
+                        <nav
+                            class="css-nav order-2  fixed right-[18px]  rounded-r-[1.25rem] top-[26px] h-[calc(100%-52px)] overflow-y-scroll  z-10 ">
                             <profile>
                                 <div class="flex items-center gap-x-2">
                                     <relative class="relative">
-                                        <img class="rounded-lg w-12 h-12 hover:outline outline-primary cursor-pointer js_profile_picture" src="{{ $user->profile_picture }}">
+                                        <img class="rounded-lg w-12 h-12 hover:outline outline-primary cursor-pointer js_profile_picture"
+                                            src="{{ $user->profile_picture }}">
                                     </relative>
                                     <div>
-                                        <heading class="text-lg flex gap-2 items-center justify-between  font-semibold text-base-content capitalize ">
+                                        <heading
+                                            class="text-lg flex gap-2 items-center justify-between  font-semibold text-base-content capitalize ">
                                             {{ $user->user_type == 'invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}
-                                            <badge class="badge badge-sm badge-primary capitalize">{{ $user->user_type }} </badge>
+                                            <badge class="badge badge-sm badge-primary capitalize">
+                                                {{ $user->user_type }} </badge>
                                         </heading>
 
                                         <p class="text-sm text-neutral-5">{{ $user->email }}</p>
@@ -104,13 +113,15 @@
 
                                     <qrcode class=" rounded-lg shadow ">
                                         <a href="{{ route('dashboard.public_index', [$user->id]) }}">
-                                            <img class="!w-[200px] rounded-lg !h-[200px] " src="{{ substr_replace($user->nfts->where('type', 'profile')->first()->url, 'png', -4) }}">
+                                            <img class="!w-[200px] rounded-lg !h-[200px] "
+                                                src="{{ substr_replace($user->nfts->where('type', 'profile')->first()->url, 'png', -4) }}">
                                         </a>
 
 
                                     </qrcode>
                                     <wallet>
-                                        <a href="https://mumbai.polygonscan.com/address/0x9bC71Cb4908c4171979d297328F471cb9939c959?a={{ $user->nfts->where('type', 'profile')->first()->token }}">
+                                        <a
+                                            href="https://mumbai.polygonscan.com/address/0x9bC71Cb4908c4171979d297328F471cb9939c959?a={{ $user->nfts->where('type', 'profile')->first()->token }}">
                                             <span>
                                                 0x9bC71Cb4908c4171979d297328F471cb9939c959?a{{ $user->first()->token }}</a>
                                         </span>
@@ -125,9 +136,12 @@
                                                 Enable your account
 
                                             </span>
-                                            <input type="hidden" class="js_check_paid" value="{{ $user->is_fee_paid }}">
+                                            <input type="hidden" class="js_check_paid"
+                                                value="{{ $user->is_fee_paid }}">
                                             @if ($user->is_fee_paid == 1)
-                                                <badge data-tip="User : {{ $user->inviter_email }} paid your fee" class="js_tooltip bg-success px-4 py-1 rounded-full text-xs w-max"> Paid </badge>
+                                                <badge data-tip="User : {{ $user->inviter_email }} paid your fee"
+                                                    class="js_tooltip bg-success px-4 py-1 rounded-full text-xs w-max">
+                                                    Paid </badge>
                                             @endif
                                         </headerx>
                                         <message>
@@ -156,7 +170,8 @@
                                     <header class="flex flex-col">
                                         <flex class="flex items-center w-full justify-between">
                                             <heading>Invitation</heading>
-                                            <badge class="badge text-xs bg-accent-10/30 text-accent-10">Privilaged</badge>
+                                            <badge class="badge text-xs bg-accent-10/30 text-accent-10">Privilaged
+                                            </badge>
                                         </flex>
                                         <small class="text-neutral-5">Send email as invitation</small>
                                     </header>
@@ -166,7 +181,8 @@
                                             <input type="checkbox" class="toggle toggle-sm js_pay_fee_toggle">
                                         </label>
                                         <flex class="flex order-12 gap-2">
-                                            <label type="button" for="inviteModal" class="btn w-[80px] btn-sm  btn-neutral ml-auto">Select</label>
+                                            <label type="button" for="inviteModal"
+                                                class="btn w-[80px] btn-sm  btn-neutral ml-auto">Select</label>
                                     </wbody>
 
                                     <input type="checkbox" id="inviteModal" class="modal-toggle" />
@@ -177,19 +193,30 @@
                                                 <flex class="flex flex-col gap-4">
                                                     <h3 class="font-bold text-lg">Invitation Information</h3>
                                                     <grid class="grid grid-cols-2 gap-2">
-                                                        <input type="hidden" readonly name="sender_email" value="{{ $user->email }}">
-                                                        <input type="hidden" readonly name="sender_id" value="{{ $user->id }}">
-                                                        <input type="hidden" readonly name="sender_full_name" value="{{ $user->user_type == 'invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}">
-                                                        <input type="text" name="reciver_first_name" placeholder="First name" class="input w-full border-neutral-5/30">
-                                                        <input type="text" name="reciver_last_name" placeholder="Last name" class="input w-full border-neutral-5/30">
-                                                        <input type="email"name="reciver_email" placeholder="example@domain.com" class="col-span-2 input w-full border-neutral-5/30">
+                                                        <input type="hidden" readonly name="sender_email"
+                                                            value="{{ $user->email }}">
+                                                        <input type="hidden" readonly name="sender_id"
+                                                            value="{{ $user->id }}">
+                                                        <input type="hidden" readonly name="sender_full_name"
+                                                            value="{{ $user->user_type == 'invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}">
+                                                        <input type="text" name="reciver_first_name"
+                                                            placeholder="First name"
+                                                            class="input w-full border-neutral-5/30">
+                                                        <input type="text" name="reciver_last_name"
+                                                            placeholder="Last name"
+                                                            class="input w-full border-neutral-5/30">
+                                                        <input type="email"name="reciver_email"
+                                                            placeholder="example@domain.com"
+                                                            class="col-span-2 input w-full border-neutral-5/30">
                                                     </grid>
                                                     <flex class="flex items-center justify-between">
                                                         <label class="flex gap-2  items-center ">
                                                             <p>Pay user verify fee?</p>
-                                                            <input type="checkbox" name="is_fee_paid" class="toggle js_pay_fee_toggle">
+                                                            <input type="checkbox" name="is_fee_paid"
+                                                                class="toggle js_pay_fee_toggle">
                                                         </label>
-                                                        <button type="submit" class="btn w-[100px] btn-primary ml-auto">Send</button>
+                                                        <button type="submit"
+                                                            class="btn w-[100px] btn-primary ml-auto">Send</button>
                                                     </flex>
                                                 </flex>
                                             </form>
@@ -209,7 +236,8 @@
                                             <label>
                                                 Public Cards
                                             </label>
-                                            <badge class="badge badge-accent  flex min-w-[50px] px-2 justify-between items-center">
+                                            <badge
+                                                class="badge badge-accent  flex min-w-[50px] px-2 justify-between items-center">
                                                 <x-fas-eye class="h-3"></x-fas-eye>
                                                 <span class="text-sm">
                                                     {{ $pub_count }}
@@ -220,7 +248,8 @@
                                             <label>
                                                 Private Cards
                                             </label>
-                                            <badge class="badge bg-accent-2 text-white flex min-w-[50px] px-2 justify-between items-center">
+                                            <badge
+                                                class="badge bg-accent-2 text-white flex min-w-[50px] px-2 justify-between items-center">
                                                 <x-fas-lock class="h-3"></x-fas-lock>
                                                 <span class="text-sm">
                                                     {{ $pv_count }}
@@ -229,8 +258,10 @@
                                         </box>
                                     </content>
                                     <footer class="px-4 mt-4 flex items-center justify-end gap-2">
-                                        <a href="{{ route('dashboard.public_index', ['user_id' => $user->id]) }}" class="normal-case btn btn-sm w-[56px] flex bg-neutral-4">view</a>
-                                        <button type="button" class="js_btn_open_publicity_modal w-[56px] normal-case btn btn-sm flex btn-neutral">Edit</button>
+                                        <a href="{{ route('dashboard.public_index', ['user_id' => $user->id]) }}"
+                                            class="normal-case btn btn-sm w-[56px] flex bg-neutral-4">view</a>
+                                        <button type="button"
+                                            class="js_btn_open_publicity_modal w-[56px] normal-case btn btn-sm flex btn-neutral">Edit</button>
                                     </footer>
                                 </widgect>
                             @endif
@@ -244,14 +275,16 @@
 
                                         @if (auth()->user()->trusteds()->where('trusted_id', $user->id)->count() == 0)
                                             <trust>
-                                                <a href="{{ route('api.trust_user', ['truster_id' => auth()->user()->id, 'trusted_id' => $user->id]) }}" class="btn btn-neutral capitalize btn-xs">Trust
+                                                <a href="{{ route('api.trust_user', ['truster_id' => auth()->user()->id, 'trusted_id' => $user->id]) }}"
+                                                    class="btn btn-neutral capitalize btn-xs">Trust
                                                     {{ $user->user_type == 'invidual' ? truncateString($user->first_name) : truncateString($user->corp_name) }}
                                                 </a>
                                             </trust>
                                         @else
                                             <trust>
                                                 <trust>
-                                                    <a href="{{ route('api.untrust_user', ['truster_id' => auth()->user()->id, 'trusted_id' => $user->id]) }}" class="btn btn-success capitalize btn-xs">UnTrust
+                                                    <a href="{{ route('api.untrust_user', ['truster_id' => auth()->user()->id, 'trusted_id' => $user->id]) }}"
+                                                        class="btn btn-success capitalize btn-xs">UnTrust
                                                         {{ $user->user_type == 'invidual' ? truncateString($user->first_name) : truncateString($user->corp_name) }}
                                                     </a>
                                                 </trust>
@@ -267,16 +300,20 @@
                                                 <h1 class="text-5xl w-[30px]">{{ $user->trusters()->count() }}</h1>
                                                 <div class="flex flex-col ">
                                                     <span>Users Trust this profile</span>
-                                                    <a onclick="turst_link_modal.showModal()" class="link text-xs block link-primary link-hover">Check
+                                                    <a onclick="turst_link_modal.showModal()"
+                                                        class="link text-xs block link-primary link-hover">Check
                                                         {{ $user->first_name }} Trustlink </a>
                                                 </div>
                                             </flex>
                                             <div class="p-[0.5px] bg-neutral-5/20 w-full my-2"></div>
                                             <flex class="flex gap-1 items-center">
-                                                <h1 class="text-5xl w-[30px]">{{ $user->signcerts()->where('reciver_verify', 1)->where('creator_verify', 1)->count() }}</h1>
+                                                <h1 class="text-5xl w-[30px]">
+                                                    {{ $user->signcerts()->where('reciver_verify', 1)->where('creator_verify', 1)->count() }}
+                                                </h1>
                                                 <div class="flex flex-col ">
                                                     <span>Certificate verified</span>
-                                                    <a class="text-xs text-neutral-5">It's only count verified certificates </a>
+                                                    <a class="text-xs text-neutral-5">It's only count verified
+                                                        certificates </a>
                                                 </div>
                                             </flex>
                                         @else
@@ -335,45 +372,45 @@
                                     @endforeach
                             </widgect>
 
-                            <widgect class="_guidance hidden">
+                            <widgect class="_translate">
                                 <header>
-                                    Guidance
+                                    Change site language
                                 </header>
-                                <style>
-                                    ._color-default {
-                                        background-color: white;
-                                    }
-
-                                    ._color-empty {
-                                        background-color: #f3f3f4;
-                                    }
-
-                                    ._color-verified {
-                                        background-color: #c6ffd0;
-                                    }
-
-                                    ._color-rejected {
-                                        background-color: #ffd0d0;
-                                    }
-                                </style>
-                                <value class="flex items-center gap-4 px-4">
-                                    <item>
-                                        <color class="_color-default"></color>
-                                        <text>default</text>
-                                    </item>
-                                    <item>
-                                        <color class="_color-empty"></color>
-                                        <text>empty</text>
-                                    </item>
-                                    <item>
-                                        <color class="_color-verified"></color>
-                                        <text>verified</text>
-                                    </item>
-                                    <item>
-                                        <color class="_color-rejected"></color>
-                                        <text>rejected</text>
-                                    </item>
-                                </value>
+                                <wbody class="px-3">
+                                    <style>
+                                        .goog-te-gadget-simple {
+                                            width: 100%;
+                                            position: absolute;
+                                            top: 0;
+                                            left: 0;
+                                            z-index: 100;
+                                            height: 45px;
+                                            background: red;
+                                            opacity: 0;
+                                        }
+                                    </style>
+                                    <label
+                                        class="js_open_translate capitalize font-light bg-accent-3 text-white btn btn-ghost border border-neutral-5/30 flex items-center relative justify-center">
+                                        <div class="flex items-center gap-1">
+                                            <x-fas-language class="w-6 h-6"></x-fas-language>
+                                            <span>
+                                                Translate
+                                            </span>
+                                        </div>
+                                        <div id="google_translate_element">
+                                        </div>
+                                    </label>
+                                    <script type="text/javascript">
+                                        function googleTranslateElementInit() {
+                                            new google.translate.TranslateElement({
+                                                pageLanguage: 'en',
+                                                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                                            }, 'google_translate_element');
+                                        }
+                                    </script>
+                                    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+                                    </script>
+                                </wbody>
                             </widgect>
                         </nav>
                         <root class="order-1 py-14 max-w-[1440px] mx-auto  pl-14 pr-[405px]">
@@ -385,7 +422,8 @@
 
                                     <widgect class="_code">
                                         <flex class="flex items-center px-2">
-                                            <icon class="bg-primary/20 rounded-xl items-center justify-center flex w-[60px] h-[60px]">
+                                            <icon
+                                                class="bg-primary/20 rounded-xl items-center justify-center flex w-[60px] h-[60px]">
                                                 <x-fas-barcode class="w-[30px] h-[30px] text-primary "></x-fas-barcode>
                                             </icon>
                                             <in>

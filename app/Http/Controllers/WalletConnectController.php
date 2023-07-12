@@ -43,15 +43,15 @@ class WalletConnectController extends Controller
         foreach ($categories as $categoryData) {
             $subCats = $categoryData['sub_cats'];
             unset($categoryData['sub_cats']);
-        
+
             $category = new Category($categoryData + ['user_id' => $user->id, 'publicity' => 1]);
             $category->save();
-        
+
             // Create subcategories and attach them to the category
             foreach ($subCats as $subCatName) {
                 $subCat = new SubCat(['name' => $subCatName, 'publicity' => 1]);
                 $subCat->save();
-        
+
                 $category->subCats()->attach($subCat->id);
             }
         }
@@ -134,6 +134,7 @@ class WalletConnectController extends Controller
         $data['language'] = json_encode($request->input('language'));
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->first_name . $request->lastname . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->first_name . $request->lastname . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
+        $data['is_fee_paid'] = 1;
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
         $user->token = $maxToken ? $maxToken + 1 : 510000;
@@ -175,6 +176,8 @@ class WalletConnectController extends Controller
         ]);
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->corp_name . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $data['user_type'] = 'corporation';
+        $data['is_fee_paid'] = 1;
+
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
         $user->token = $maxToken ? $maxToken + 1 : 100000;

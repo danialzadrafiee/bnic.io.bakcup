@@ -9,7 +9,6 @@
 <x-layout.dashboard :user="$me">
 
 
-    @vite('resources/css/filepond.scss')
     @vite(['resources/js/app.js', 'resources/js/event-create.js'])
 
     <main>
@@ -50,13 +49,13 @@
                         <column>
                             <label class="block mb-2 text-neutral-700">Featured picture <sup
                                     class="text-error">*</sup></label>
-                            <input type="file" class="filepond" value="0">
+                            <input type="file" class="js_event_image" value="0">
                             <input type="hidden" name="image" class="js-event-image" value="">
                         </column>
                     </row>
                     <label class="block  text-neutral-700">Event details <sup class="text-error">*</sup></label>
                     <textarea id="editor" name="description"
-                        class="js-event-description block border rounded-lg min-h-[200px]  border-neutral-300 p-2"></textarea>
+                        class="js-event-description block border rounded-lg min-h-[200px]  border-neutral-300 p-2">{{ old('description') ?? '' }}</textarea>
                     {{-- mapbox --}}
                     <row>
                         <label class="block  text-neutral-700 mb-2 mt-6">Select Location <sup
@@ -131,7 +130,7 @@
                     @foreach ($users as $user)
                         <card class="card bg-base-100 shadow">
                             <div class="card-body py-6 flex gap-4 flex-row items-center">
-                                <img src="https://api.dicebear.com/6.x/shapes/svg?seed={{ $user->email }}"
+                                <img src="https://api.dicebear.com/6.x/initials/svg?seed={{ $user->email }}"
                                     class="w-10 h-10 rounded">
                                 <div class="flex flex-col ">
                                     <div class="font-semibold">

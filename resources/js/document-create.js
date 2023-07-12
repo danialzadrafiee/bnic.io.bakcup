@@ -1,5 +1,6 @@
 import axios from "axios"
 import Sortable from "sortablejs/modular/sortable.complete.esm.js"
+import * as f from "util"
 
 const formElements = document.getElementById("form-elements")
 const formCreator = document.getElementById("form-creator")
@@ -188,7 +189,7 @@ $("#submit-form").on("click", function () {
     url: route("document.store"),
     type: "POST",
     data: {
-      reciver: $(".js-input-email").val(),
+      reciver: $(".js_reciver_checkbox").is(":checked") ? $(".js-input-email").val() : null,
       name: $('[name="name"]').val(),
       description: $('[name="description"]').val(),
       content: cleanFormCreatorContent,
@@ -257,9 +258,31 @@ eventsList.forEach(function (eventType) {
       }
     })
 
+    if ($(".js-form-name").val().length == 0) {
+      valid_flag[3] = false
+    } else {
+      valid_flag[3] = true
+    }
+    if ($(".js-form-description").val().length == 0) {
+      valid_flag[4] = false
+    } else {
+      valid_flag[4] = true
+    }
+
+    if ($(".js_reciver_checkbox").is(":checked")) {
+      if ($(".js-input-email").val().length == 0) {
+        valid_flag[5] = false
+      } else {
+        valid_flag[5] = true
+      }
+    } else {
+      valid_flag[5] = true
+    }
+
     var allTrue = valid_flag.every(function (element) {
       return element === true
     })
+
     if (allTrue) {
       $("#submit-form").removeClass("!bg-primary/20 !text-white/80").prop("disabled", false)
     } else {
@@ -277,77 +300,22 @@ $("html").on("change", ".js-publicity-checkbox", function () {
   }
 })
 
-//searchUser begin
-let template = $(".js-row-user").first()
-
-$(".js-btn-search").on("click", function () {
-  let query = $(".js-input-search").val()
-  $(".js-section-search-result").empty()
-
-  function getEmailHash(email, callback) {
-    const encoder = new TextEncoder()
-    const data = encoder.encode(email)
-    crypto.subtle.digest("SHA-256", data).then((hashBuffer) => {
-      const hashArray = Array.from(new Uint8Array(hashBuffer))
-      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
-      callback(hashHex)
-    })
-  }
-  axios
-    .get(`${route("actions.search_invi_by_name")}?query=${query}`)
-    .then(function (response) {
-      let data = response.data
-      if (data.length > 0) {
-        data.forEach((element) => {
-          getEmailHash(element.email, function (emailHash) {
-            let clone = template.clone() // Create a new clone for each element
-            clone.find(".js-search-user-first-name").text(element.first_name)
-            clone.find(".js-search-user-last-name").text(element.last_name)
-            clone.find(".js-search-user-email").text(element.email)
-            clone.find(".js-search-user-wallet").val(element.wallet)
-            clone.find(".js-search-user-image").attr("src", `https://api.dicebear.com/6.x/identicon/svg?seed=${element.email}`)
-            clone.find(".js-search-user-code").html(`${element.gender[0]}-${emailHash.substr(0, 8)}-${element.id}`)
-            clone
-              .find(".js-search-user-cv")
-              .html(
-                element.cv.replace(/<\/?[^>]+(>|$)/g, "").length > 90
-                  ? element.cv.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 90) + ".."
-                  : element.cv.replace(/<\/?[^>]+(>|$)/g, "")
-              )
-            $(".js-section-search-result").append(clone)
-          })
-        })
-      } else {
-        $(".js-section-search-result").append('<p class="text-center">No se encontraron resultados</p>')
-      }
-    })
-    .catch(function (error) {
-      console.error(error)
-    })
-})
-$(".js-modal-select-user").on("click", function (event) {
-  if (event.target.tagName === "MODAL") {
-    $(this).hide()
-  }
-})
-
-let selected_email = null
-$("body").on("click", ".js-input-email", function () {
-  selected_email = $(this)
-  $(".js-modal-select-user").show()
-})
-$("body").on("click", ".js-btn-select-user", function () {
-  selected_email.val($(this).data("email"))
-  $(".js-modal-select-user").hide()
-})
+if ($(".js_reciver_checkbox").is(":checked")) {
+  $(".js-input-email").show()
+} else {
+  $(".js-input-email").hide()
+}
 
 $(".js_reciver_checkbox").on("click", function () {
-  $(".js-input-email").toggle()
+  if ($(this).is(":checked")) {
+    $(".js-input-email").show()
+  } else {
+    $(".js-input-email").hide()
+  }
 })
 
 $(document).on("change", ".js_banner_input", function (e) {
   let dataCounter = $(this).attr("data-counter")
-
   let file = this.files[0]
   if (file) {
     let reader = new FileReader()
@@ -390,3 +358,83 @@ function upload_banner(file) {
       throw error
     })
 }
+
+//USER SEARCH
+let selected_users = []
+
+const searchUsers = () => {
+  return axios
+    .post(route("walletconnect.search_invidual"), {
+      term: $(".js-search-input.input").val(),
+    })
+    .then((users) => {
+      return users.data
+    })
+}
+const listUsers = (users) => {
+  $(".js-searched-users").empty()
+  users.forEach((user) => {
+    console.log(GLOBAL_AUTH_USER.id)
+    if (user.id != GLOBAL_AUTH_USER.id) {
+      let card = $("<card>", {
+        class: "card bg-base-100 shadow",
+        html: $("<div>", {
+          class: "card-body py-6 flex gap-4 flex-row items-center",
+          html: $("<img>", {
+            src: `https://api.dicebear.com/6.x/initials/svg?seed=${user.email}`,
+            class: "w-10 h-10 rounded",
+          })
+            .add(
+              $("<div>", {
+                class: "flex flex-col",
+                html: $("<div>", {
+                  class: "font-semibold",
+                  text: `${user.first_name} ${user.last_name}`,
+                }).add(
+                  $("<p>", {
+                    class: "text-sm",
+                    text: `${user.email}`,
+                  })
+                ),
+              })
+            )
+            .add(
+              $("<button>", {
+                job: "add",
+                value: `${user.id}`,
+                type: "button",
+                class: "js-select-user !w-20 btn btn-sm btn-neutral ml-auto",
+                text: "Select",
+                click: function () {
+                  select_user(user.id)
+                },
+              })
+            ),
+        }),
+      }) //end card
+      $(".js-searched-users").append(card)
+    }
+  }) //end foreach
+}
+
+$(".js_show_user_select_modal").on("click", () => {
+  searchUsers().then((users) => {
+    listUsers(users)
+    user_select.showModal()
+  })
+})
+
+$(".js-search-btn").on("click", () => {
+  searchUsers().then((users) => {
+    listUsers(users)
+  })
+})
+
+const select_user = (selected_user) => {
+  axios.post(route("api.getUserJson"), { id: selected_user }).then((user) => {
+    $(".js-input-email").val(user.data.email)
+    user_select.close()
+  })
+}
+
+//USER SEARCH END

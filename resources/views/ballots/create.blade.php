@@ -156,7 +156,7 @@
                     @foreach ($users as $user)
                         <card class="card bg-base-100 shadow">
                             <div class="card-body py-6 flex gap-4 flex-row items-center">
-                                <img src="https://api.dicebear.com/6.x/shapes/svg?seed={{ $user->email }}"
+                                <img src="https://api.dicebear.com/6.x/initials/svg?seed={{ $user->email }}"
                                     class="w-10 h-10 rounded">
                                 <div class="flex flex-col ">
                                     <div class="font-semibold">

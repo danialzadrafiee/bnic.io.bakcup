@@ -9,7 +9,7 @@
                       <frow class="card-body flex flex-row justify-between items-center">
                           <frow class="flex flex-row gap-4">
                               <img class="w-12 rounded aspect-square"
-                                  src="https://api.dicebear.com/6.x/shapes/svg?seed={{ $truster->user_type == 'invidual' ? $truster->first_name . ' ' . $truster->last_name : $truster->corp_name }}">
+                                  src="https://api.dicebear.com/6.x/initials/svg?seed={{ $truster->user_type == 'invidual' ? $truster->first_name . ' ' . $truster->last_name : $truster->corp_name }}">
                               <fcol class="flex flex-col">
                                   <name class="font-semibold capitalize">
                                       {{ $truster->user_type == 'invidual' ? $truster->first_name . ' ' . $truster->last_name : $truster->corp_name }}

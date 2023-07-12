@@ -1,3 +1,9 @@
+@php
+    $me = auth()->user();
+    $users = \App\Models\User::take(10)
+        ->where('user_type', 'invidual')
+        ->get();
+@endphp
 <x-layout.global>
     @vite(['resources/js/document-create.js', 'resources/css/document-create.scss'])
     <style>
@@ -11,7 +17,7 @@
     </style>
     <main>
         @vite('resources/css/filepond.scss')
-        <div class="flex min-h-screen ">
+        <div class="flex h-screen  ">
 
             <navbar class="w-[350px] shrink-0 flex flex-col min-h-screen  bg-base-content ">
                 <header class="bg-[#0c0d0e]  flex items-center text-white h-16">
@@ -187,7 +193,7 @@
                                     User will upload document here <x-fas-upload></x-fas-upload>
                                 </div>
                             </field>
-                            
+
                         </elements>
                         <information class="block  right-10 bottom-10 bg-[#1f2124] rounded-xl pt-6  mt-auto mb-4  ">
                             <h2 class="pl-4 text-white mb-2 ">Form Information <sup>*</sup></h2>
@@ -199,8 +205,8 @@
                                     class="js-form-description  bg-transparent border text-white text-sm border-white/30 w-full py-2 px-4 placeholder:text-sm placeholder:text-white/60 placeholder:font-normal"
                                     placeholder="Form description *" name="description">
 
-                                <input type="text" id="reciver"
-                                    class="js-input-email bg-transparent border text-white text-sm border-white/30 w-full py-2 px-4 placeholder:text-sm placeholder:text-white/60 placeholder:font-normal"
+                                <input type="text" id="reciver" readonly
+                                    class="js-input-email js_show_user_select_modal bg-transparent border text-white text-sm border-white/30 w-full py-2 px-4 placeholder:text-sm placeholder:text-white/60 placeholder:font-normal"
                                     placeholder="example@gmail.com *" style="display: none" required>
                                 <flex class="flex justify-between w-full mt-4 ">
                                     <label class="flex w-full cursor-pointer  items-center justify-between">
@@ -223,7 +229,7 @@
 
             </navbar>
 
-            <editor class="grow w-full block pb-18">
+            <editor class="grow w-full block overflow-y-scroll mb-18 pb-18">
                 <div
                     class="w-full h-[65px] flex items-center mb-[54px] bg-[#1f2124]  text-lg text-white font-semibold">
                     <heading class="w-full mx-auto flex max-w-5xl">
@@ -231,7 +237,7 @@
                     </heading>
                 </div>
                 <inside class="w-full mx-auto flex max-w-5xl">
-                    <div id="form-creator" class="js-form-creator w-full bg-white css_form_creator">
+                    <div id="form-creator" class="js-form-creator w-full bg-white css_form_creator ">
                         <div class="flex flex-col space-y-4">
                         </div>
                         <div class="flex border rounded items-center justify-center flex-col py-4 mt-4 js-remlunch">
@@ -270,53 +276,51 @@
     </main>
 
 
-    <modal
-        class="js-modal-select-user w-screen h-screen bg-black/80 fixed inset-0 m-auto z-10 flex flex-col items-center justify-center"
-        style="display:none">
-        <inside class="w-[950px]  rounded flex-col flex bg-white">
-            <header class="flex items-center p-4 justify-between">
-                <heading class="text-lg">Search and select user</heading>
-                <searchbox class="flex">
-                    <input type="text"
-                        class="js-input-search bg-neutral/5 rounded rounded-r-none border border-neutral/20 px-4 py-2"
-                        placeholder="Search user">
-                    <button
-                        class="js-btn-search bg-primary/80 hover:bg-primary rounded-r text-white text-sm text-center p-2">Search</button>
-                </searchbox>
-            </header>
-            <section class="js-section-search-result p-4 overflow-y-auto h-[500px]">
-                @foreach ($modal_users as $user)
-                    <user class="js-row-user rounded border-b py-4  border-neutral/20 flex gap-4 flex-row w-full  ">
-                        <column class="flex shrink-0 w-[84px] h-[84px]">
-                            <img src="https://api.dicebear.com/6.x/identicon/svg?seed={{ $user->email }}"
-                                class="js-search-user-image w-[84px] h-[84px] block rounded bg-neutral/10 p-2">
-                        </column>
-                        <column class="flex flex-col   self-end gap-0">
-                            <name>
-                                <span class="js-search-user-first-name"> {{ $user->first_name }} </span>
-                                <span class="js-search-user-last-name"> {{ $user->last_name }} </span>
-                            </name>
-                            <wallet class="js-search-user-wallet text-neutral text-sm">{{ $user->wallet }}</wallet>
-                            <email class="js-search-user-email text-neutral text-sm">{{ $user->email }}</email>
-                            <code class="text-neutral text-sm js-search-user-code">
-                                {{ $user->gender[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->id }}</code>
-                        </column>
-                        <column class="flex flex-col  self-center">
-                            <about class="js-search-user-cv text-sm text-neutral">
-                                {!! strlen(strip_tags($user->cv)) > 90 ? substr(strip_tags($user->cv), 0, 90) . '..' : strip_tags($user->cv) !!}
-                            </about>
-                        </column>
-                        <column class="self-start">
-                            <button
-                                class="js-btn-select-user bg-primary/80 hover:bg-primary rounded text-white text-center text-xs p-2"
-                                data-email="{{ $user->email }}">Select</button>
-                        </column>
-                    </user>
-                @endforeach
-            </section>
-        </inside>
-    </modal>
 
+
+    <modal>
+        <dialog id="user_select" class="modal">
+            <form method="dialog" class="modal-box min-w-[400px]">
+                <header class="flex justify-between items-center">
+                    <heading class="font-bold shrink-0 grow w-max text-lg">Select user</heading>
+                    <search class="join shrink ">
+                        <div>
+                            <div>
+                                <input
+                                    class="js-search-input input input-sm w-[200px]  input-bordered border-neutral-5/30 join-item"
+                                    placeholder="Search..." />
+                            </div>
+                        </div>
+                        <div class="indicator">
+                            <button type="button"
+                                class="js-search-btn btn btn-sm btn-neutral join-item">Search</button>
+                        </div>
+                    </search>
+                </header>
+                <list class="js-searched-users flex mt-4 flex-col gap-4">
+                    @foreach ($users as $user)
+                        <card class="card bg-base-100 shadow">
+                            <div class="card-body py-6 flex gap-4 flex-row items-center">
+                                <img src="https://api.dicebear.com/6.x/initials/svg?seed={{ $user->email }}"
+                                    class="w-10 h-10 rounded">
+                                <div class="flex flex-col ">
+                                    <div class="font-semibold">
+                                        {{ $user->first_name }} {{ $user->last_name }}
+                                    </div>
+                                    <p class="text-sm">{{ $user->email }}</p>
+                                </div>
+                                <button job="add" value="{{ $user->id }}" type="button"
+                                    class="js-select-user !w-20 btn btn-sm btn-neutral ml-auto">Select</button>
+                            </div>
+                        </card>
+                    @endforeach
+                </list>
+            </form>
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
+    </modal>
 
 
 </x-layout.global>

@@ -170,11 +170,10 @@
                     </header>
                     <value>
                         <img src="{{ $document->image }}" class="rounded-lg">
-                        <span class="text-sm">
+                        <span class="text-sm my-2 mx-auto text-center w-max block">
                             {{ $document->description }}
                         </span>
-                        <br>
-                        <a href="{{ route('document.show', ['document' => $document->id]) }}" class="text-primary">View
+                        <a href="{{ route('document.show', ['document' => $document->id]) }}" class="btn-primary mx-auto flex btn btn-sm">View
                             Documention</a>
                     </value>
                     </right>

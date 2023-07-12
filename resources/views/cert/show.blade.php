@@ -1,69 +1,92 @@
 <x-layout.dashboard :user="$cert->corporation">
     @vite(['resources/js/cert-show.js'])
-    @php
-        $blockchainised =
-            \App\Models\User::where('id', $cert->user_id)
-                ->first()
-                ->nfts()
-                ->where('token', $cert->token)
-                ->count() == 0
-                ? false
-                : true;
-    @endphp
+
     <style>
+        attachment .filepond--drop-label {
+            background: #fafafa;
+        }
+
         .js_file_input {
             display: none;
         }
 
-        .filepond--file-info {
-            display: none;
+        form input,
+        form textarea {
+            padding: 0px !important;
+            border: transparent;
+            background: transparent;
         }
 
-        .filepond--progress-indicator {
-            display: none;
+        textarea {
+            resize: none;
+        }
+
+        .css_delete {
+            display: none !important;
         }
 
         .css_hide_it_in_show {
             display: none;
         }
     </style>
+
+
+    @if ($watcher_rule == 'creator')
+        <style>
+            .filepond--file-info:not(attachment .filepond--file-info) {
+                display: none;
+            }
+
+            .filepond--progress-indicator:not(attachment .filepond--progress-indicator) {
+                display: none;
+            }
+
+            .filepond--file-action-button:not(attachment .filepond--file-action-button) {
+                display: none;
+            }
+
+            .filepond--processing-complete-indicator:not(attachment .filepond--processing-complete-indicator) {
+                display: none;
+            }
+        </style>
+    @else
+        <style>
+            .filepond--file-info {
+                display: none;
+            }
+
+            .filepond--progress-indicator {
+                display: none;
+            }
+
+
+            .filepond--file-action-button {
+                display: none;
+            }
+
+            .filepond--processing-complete-indicator {
+                display: none;
+
+            }
+        </style>
+    @endif
     <input type="hidden" class="js_nft_url" value="{{ route('cert.show', ['id' => $cert->id]) }}">
     <input type="hidden" class="js-cert-view-mode" value="{{ $mode ?? 'privite' }}">
     <input type="hidden" class="js-watcher-rule" value="{{ $watcher_rule ?? 'privite' }}">
+    <input type="hidden" class="js-cert-id" value="{{ $cert->id ?? '' }}">
     <main class="flex">
         <article>
-            <style>
-                /* form input,
-                    form textarea {
-                        border: 1px solid rgb(233, 233, 233);
-                    } */
-                form input,
-                form textarea {
-                    padding: 0px !important;
-                    border: transparent;
-                    background: transparent;
-                }
 
-                textarea {
-                    resize: none;
-                }
 
-                .filepond--file-action-button {
-                    display: none;
-                }
+            <attachment class="px-8 bg-white rounded-xl h-max relative mb-4 flex-col pt-8 flex gap-4  py-4">
+                <label class="text-sm">Attachment</label>
+                <input type="file" value="" class="js_cert_attachment_input" name="cert_attachment">
+            </attachment>
 
-                .filepond--processing-complete-indicator {
-                    display: none;
 
-                }
-
-                .css_delete {
-                    display: none !important;
-                }
-            </style>
             <section class="js-cert-node bg-white py-20 px-5 -lg">
                 <form class="bg-white max-w-full mx-auto relative">
-                    @if (request()->has('success'))
+                    {{-- @if (request()->has('success'))
                         <success
                             class="absolute rounded-lg w-full  py-4 flex top-[-65px] mx-auto items-center justify-center bg-[#c6ffd0] text-green-900">
                             <close class="absolute top-2 cursor-pointer right-2"
@@ -72,7 +95,7 @@
                             </close>
                             {{ request('success') }}
                         </success>
-                    @endif
+                    @endif --}}
                     <header class="px-8 flex items-end justify-between">
                         <start class="flex text-sm justify-end items-end  gap-2">
                             <qr class="w-24 ">
@@ -90,45 +113,51 @@
                             </column>
                         </start>
                         <end>
-                            @if ($cert->reciver != 0)
-                                @if ($blockchainised)
-                                    <tooltip class="tooltip" data-tip="Token : {{ $cert->token }}"> <a
-                                            href="https://mumbai.polygonscan.com/token/0x9aE6956C0B503ed5d29c420cD7322d8347640325?a={{ $cert->token }}"
-                                            class="font-normal  btn btn-sm btn-success gap-4 flex-row flex-nowrap w-full flex ">
-                                            <span>
-                                                Verified on blockchain
-                                            </span>
-                                        </a>
-                                    </tooltip>
-                                @else
-                                    <tooltip class="tooltip js-cert-modal-tooltip"
-                                        data-tip="It need to be verificated first">
-                                        <button type="button" data-reciver="{{ $cert->reciver_verify }}"
-                                            data-creator="{{ $cert->creator_verify }}"
-                                            class="js-cert-sign-blockchain-modal font-normal normal-case btn btn-sm gap-2 flex-row flex-nowrap w-full flex ">
-                                            <span>
-                                                Create NFT
-                                            </span>
-                                            <badges class="flex gap-2 items-center">
-                                                <div
-                                                    class="badge {{ $cert->creator_verify == 0 ? 'badge-neutral' : 'badge-success' }} badge-sm  rounded-full w-5 h-5 gap-2">
-                                                    C
-                                                </div>
+                            @if ($cert->token != null)
+                                <tooltip class="tooltip" data-tip="Token : {{ $cert->token }}"> <a
+                                        href="https://mumbai.polygonscan.com/token/0x9aE6956C0B503ed5d29c420cD7322d8347640325?a={{ $cert->token }}"
+                                        class="font-normal  btn btn-sm btn-success gap-4 flex-row flex-nowrap w-full flex ">
+                                        <span>
+                                            Verified on blockchain
+                                        </span>
+                                    </a>
+                                </tooltip>
+                            @else
+                                <input type="hidden" class="js_cert_has_reciver"
+                                    value="{{ $cert->reciver != 0 ? 1 : 0 }}">
+                                <tooltip class="tooltip js-cert-modal-tooltip"
+                                    data-tip="It need to be verificated first">
+                                    <button type="button" data-reciver="{{ $cert->reciver_verify }}"
+                                        data-creator="{{ $cert->creator_verify }}"
+                                        class="js-cert-sign-blockchain-modal font-normal normal-case btn btn-sm gap-2 flex-row flex-nowrap w-full flex ">
+                                        <span>
+                                            Create NFT
+                                        </span>
+                                        <badges class="flex gap-2 items-center">
+                                            <div
+                                                class="badge {{ $cert->creator_verify == 0 ? 'badge-neutral' : 'badge-success' }} badge-sm  rounded-full w-5 h-5 gap-2">
+                                                C
+                                            </div>
+                                            @if ($cert->reciver != 0)
                                                 <div
                                                     class="badge {{ $cert->reciver_verify == 0 ? 'badge-neutral' : 'badge-success' }}  badge-sm  rounded-full w-5 h-5 gap-2">
                                                     R
                                                 </div>
-                                            </badges>
-                                        </button>
-                                    </tooltip>
-                                @endif
+                                            @endif
+
+                                        </badges>
+                                    </button>
+                                </tooltip>
                             @endif
                         </end>
+
                     </header>
+
                     <divider class="h-[0.5px] bg-neutral-5/10 block w-full px-8 mt-6 mb-2"></divider>
                     {!! $cert->data !!}
                 </form>
-                <form action="{{ route('cert.sign') }}" method="POST" class="js-form-real">
+
+                <form action="{{ route('cert.sign') }}" method="POST" class="js-form-real block w-full">
                     <input type="hidden" name="document_id" value="{{ $cert->id }}">
                     <input type="hidden" name="corporation_id" value="{{ $cert->corporation->id }}">
                     <input type="hidden" name="data" class="js-hidden-real-content">
@@ -266,7 +295,7 @@
                                 certificate as reciver</a>
                         @else
                             <a disabled
-                                class="js-verify-certificate bg-neutral  text-white text-center px-4 py-2">Allready
+                                class="js-verify-certificate bg-neutral rounded-lg text-white text-center px-4 py-2">Allready
                                 verified</a>
                         @endif
                     </reciver_verification>
@@ -280,7 +309,7 @@
                                 certificate as creator</a>
                         @else
                             <a disabled
-                                class="js-verify-certificate bg-neutral  text-white text-center px-4 py-2">Allready
+                                class="js-verify-certificate rounded bg-neutral  text-white text-center px-4 py-2">Allready
                                 verified</a>
                         @endif
                     </creator_verification>

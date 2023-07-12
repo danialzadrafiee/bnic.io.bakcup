@@ -1,7 +1,7 @@
   @foreach ($certs as $cert)
       <card class="js-card-template card w-full bg-base-100 shadow-xl relative">
           <figure class="relative">
-              <img src="https://api.dicebear.com/6.x/shapes/svg?seed={{ $cert->name }}" class="w-full" />
+              <img src="https://api.dicebear.com/6.x/initials/svg?seed={{ $cert->name }}" class="w-full" />
               <flex class="flex items-center gap-4 absolute badge badge-neutral bottom-4 h-8 text-xs left-4 ">
                   <date class="text-xs flex gap-1  items-center">
                       <x-far-calendar class="w-3 h-3" />
@@ -23,7 +23,7 @@
               <div class="js-badge-reciver badge {{ $cert->reciver_verify ? 'badge-accent' : 'badge-warning' }}">Reciver</div>
           </badges>
 
-          <card-body class="card-body p-4">
+          <card-body class="card-body p-4 flex flex-col">
               <subject class="font-medium">
                   <ref class="js-card-subject">{{ $cert->name }}</ref>
               </subject>
@@ -83,7 +83,7 @@
                       </reciver>
                   @endif
               </metadata>
-              <actions>
+              <actions class="mt-auto">
                   <a href="{{ route('cert.pub_show', ['id' => $cert->id]) }}" class="js-card-action btn btn-neutral hover:btn-primary w-full ">Watch
                       certificate</a>
               </actions>
