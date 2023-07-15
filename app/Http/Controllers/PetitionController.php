@@ -41,9 +41,9 @@ class PetitionController extends Controller
         $petition = $auth_user->petitions()->create($input);
         $petition->users()->updateExistingPivot(auth()->user()->id, ['user_role' => 'creator']);
 
-        $maxToken = DB::table('petitions')->max('token');
-        $petition->token = $maxToken ? $maxToken + 1 : 600100;
-        $petition->save();
+        // $maxToken = DB::table('petitions')->max('token');
+        // $petition->token = $maxToken ? $maxToken + 1 : 600100;
+        // $petition->save();
 
 
         return redirect()->route('petitions.index');

@@ -81,8 +81,8 @@ class BallotController extends Controller
             'min_required_votes' => $request->min_required_votes,
             'ending_date' => $request->ending_date,
         ]);
-        $maxToken = DB::table('ballots')->max('token');
-        $ballot->token = $maxToken ? $maxToken + 1 : 400100;
+        // $maxToken = DB::table('ballots')->max('token');
+        // $ballot->token = $maxToken ? $maxToken + 1 : 400100;
         $ballot->save();
 
         // Create a new BallotUser with role as 'creator'
@@ -92,7 +92,6 @@ class BallotController extends Controller
             'role' => 'creator',
             'candidate' => true
         ]);
-
         // Save the BallotUser
         $ballotUser->save();
 

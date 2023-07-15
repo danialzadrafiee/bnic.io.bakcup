@@ -185,6 +185,7 @@ valid_flag[1] = false
 $("#submit-form").on("click", function () {
   const formCreatorContent = formCreator.innerHTML
   let cleanFormCreatorContent = cleanFormContent(formCreatorContent)
+  $(this).addClass("pointer-events-none opacity-50")
   $.ajax({
     url: route("document.store"),
     type: "POST",

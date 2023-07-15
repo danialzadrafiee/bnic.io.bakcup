@@ -109,9 +109,9 @@
                                         </a>
                                     </qrcode>
                                     <wallet>
-                                        <a href="https://mumbai.polygonscan.com/address/{{ config('app.contract') }}?a={{ $user->nfts->where('type', 'profile')->first()->token }}">
+                                        <a href="https://mumbai.polygonscan.com/address/{{ config('app.contract') }}?a={{ $user->nfts->where('type', 'profile')->last()->token }}">
                                             <span>
-                                                {{ config('app.contract') }}?a{{ $user->first()->token }}</a>
+                                                {{ config('app.contract') }}?a{{ $user->nfts->where('type', 'profile')->last()->token }}</a>
                                         </span>
                                         </a>
                                     </wallet>
@@ -393,9 +393,6 @@
 
                             <section class="_row_code">
                                 <row class="grid grid-cols-1">
-
-
-
                                     <widgect class="_code">
                                         <flex class="flex items-center px-2">
                                             <icon class="bg-primary/20 rounded-xl items-center justify-center flex w-[60px] h-[60px]">
@@ -407,9 +404,9 @@
                                                 </header>
                                                 <value>
                                                     @if ($user->user_type == 'invidual')
-                                                        {{ $user->gender[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->token }}
+                                                        {{ $user->gender[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->nfts->where('type', 'profile')->count() !=0 ? $user->nfts->where('type', 'profile')->last()->token : '' }}
                                                     @else
-                                                        {{ $user->corp_type[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->token }}
+                                                        {{ $user->corp_type[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->nfts->where('type', 'profile')->count() !=0 ? $user->nfts->where('type', 'profile')->last()->token : '' }}
                                                     @endif
                                                 </value>
                                             </in>

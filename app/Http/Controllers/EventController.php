@@ -60,17 +60,20 @@ class EventController extends Controller
         ]);
 
 
-        $maxToken = DB::table('events')->max('token');
-        $event->token = $maxToken ? $maxToken + 1 : 500100;
-        $event->save();
-
+        // $maxToken = DB::table('events')->max('token');
+        // $event->token = $maxToken ? $maxToken + 1 : 500100;
+        // $event->save();
 
         $guests = $request->guests;
 
+        $nonNullValues = array_filter($guests, function ($value) {
+            return !is_null($value);
+        });
+        $guest_exists = !empty($nonNullValues);
 
         $fullname = auth()->user()->user_type == 'invidual' ? auth()->user()->first_name . ' ' . auth()->user()->last_name : auth()->user()->corp_name;
         $controller = app()->make(MailController::class);
-        if ($guests != null) {
+        if ($guest_exists != null) {
             foreach ($guests as $key => $value) {
                 $guest = User::where('id', $value)->first();
                 $event->users()->attach($guest);
