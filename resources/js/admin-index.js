@@ -15,6 +15,7 @@ $(".is_fee_paid").on("change", function () {
     .post(route("admin.userUpdate"), {
       user_id: $(this).attr("user_id"),
       isAdmin,
+      inviter_email: "info@bnic.io",
     })
     .then((r) => {
       console.log(r.data)
