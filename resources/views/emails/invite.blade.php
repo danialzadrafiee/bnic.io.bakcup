@@ -14,7 +14,7 @@
             <div style="margin-top: 8px;">
                 <h1 style="font-size: 2rem; font-weight: 400;">Invitation to Explore BNIC.io - Unlock the Power of Blockchain
                     Authentication</h1>
-                <p style="font-size: 1.125rem;">Dear {{ $request->reciver_first_name }} {{ $request->reciver_last_name }} </p>
+                <p style="font-size: 1.125rem;">Dear {{ $request->reciver_first_name ?? '' }} {{ $request->reciver_last_name ?? '' }} </p>
                 <p style="margin-top: 4px; font-size: 1.125rem;">We are thrilled to extend a special invitation to you to explore
                     BNIC.io, the revolutionary platform that enables you and your company to harness the transformative power of
                     blockchain authentication. As someone who values security, transparency, and cutting-edge technology, we believe
