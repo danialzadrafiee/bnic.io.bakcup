@@ -48,4 +48,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([])->toArray(),
     //bnic_exclusive
     'pvk' => env('PVK', ''),
+    'pub' => "0x9e5d516b80f94C55fc8061d9cacCfA98b585c8ee",
+    'contract' => "0x66aaf05ccf61a760ce547fe44bdc93492ca9c580",
+
 ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Petition;
 use App\Models\User;
+use DB;
 
 class PetitionController extends Controller
 {
@@ -39,6 +40,11 @@ class PetitionController extends Controller
         $input = $request->except('_token');
         $petition = $auth_user->petitions()->create($input);
         $petition->users()->updateExistingPivot(auth()->user()->id, ['user_role' => 'creator']);
+
+        $maxToken = DB::table('petitions')->max('token');
+        $petition->token = $maxToken ? $maxToken + 1 : 600100;
+        $petition->save();
+
 
         return redirect()->route('petitions.index');
     }

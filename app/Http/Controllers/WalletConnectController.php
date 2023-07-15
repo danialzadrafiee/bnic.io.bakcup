@@ -137,7 +137,7 @@ class WalletConnectController extends Controller
         // $data['is_fee_paid'] = 1;
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
-        $user->token = $maxToken ? $maxToken + 1 : 510000;
+        $user->token = $maxToken ? $maxToken + 1 : 100100;
         $user->save();
         $this->seed_cat($user);
 
@@ -180,7 +180,7 @@ class WalletConnectController extends Controller
 
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
-        $user->token = $maxToken ? $maxToken + 1 : 100000;
+        $user->token = $maxToken ? $maxToken + 1 : 200100;
         $user->save();
         auth()->login($user);
         return redirect()->route('dashboard.index');

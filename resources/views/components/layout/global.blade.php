@@ -12,6 +12,9 @@
     <script>
         const GLOBAL_AUTH_USER = JSON.parse(document.querySelector('meta[name="global-auth-user"]').getAttribute(
             "content"));
+
+        const GLOBAL_CONTRACT = "{{ config('app.contract') }}"
+        const GLOBAL_PUB = "{{ config('app.pub') }}"
     </script>
     <title>Bnic.io</title>
     @vite(['resources/css/app.scss', 'resources/js/app.js', 'resources/js/footer.js'])
@@ -73,19 +76,14 @@
     @if (session('success'))
         <global_alert_success class="js-g-alert fixed bottom-4 w-[50vw] z-50 right-0 left-0 mx-auto">
             <div class=" alert alert-success">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span>Your purchase has been confirmed!</span>
                 <div>
-                    <button class="js-g-alert-close btn btn-circle btn-sm btn-outline"
-                        onclick="this.closest('.js-g-alert').style.display = 'none'">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
+                    <button class="js-g-alert-close btn btn-circle btn-sm btn-outline" onclick="this.closest('.js-g-alert').style.display = 'none'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>

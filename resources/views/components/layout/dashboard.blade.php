@@ -109,9 +109,9 @@
                                         </a>
                                     </qrcode>
                                     <wallet>
-                                        <a href="https://mumbai.polygonscan.com/address/0x9bC71Cb4908c4171979d297328F471cb9939c959?a={{ $user->nfts->where('type', 'profile')->first()->token }}">
+                                        <a href="https://mumbai.polygonscan.com/address/{{ config('app.contract') }}?a={{ $user->nfts->where('type', 'profile')->first()->token }}">
                                             <span>
-                                                0x9bC71Cb4908c4171979d297328F471cb9939c959?a{{ $user->first()->token }}</a>
+                                                {{ config('app.contract') }}?a{{ $user->first()->token }}</a>
                                         </span>
                                         </a>
                                     </wallet>

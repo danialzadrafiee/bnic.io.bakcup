@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateSignCertRequest;
 use App\Models\SignCert;
 use App\Models\User;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 class SignCertController extends Controller
@@ -56,6 +57,12 @@ class SignCertController extends Controller
             'ad_role' => json_encode($request->input('ad_role')),
             'ad_describe' => json_encode($request->input('ad_describe')),
         ]);
+
+        $maxToken = DB::table('sign_certs')->max('token');
+        $cert->token = $maxToken ? $maxToken + 1 : 300100;
+        $cert->save();
+
+
 
         $fullname = auth()->user()->user_type == 'invidual' ? auth()->user()->first_name . ' ' . auth()->user()->last_name : auth()->user()->corp_name;
 

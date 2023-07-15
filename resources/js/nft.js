@@ -57,7 +57,7 @@ const url_upload_json = (name, description, image, token, attributes = null, fol
 let accountAddress = GLOBAL_AUTH_USER.wallet
 import Web3 from "web3"
 import { abi } from "./abi.js"
-const contractAddress = "0x66aaf05CCF61a760cE547FE44BdC93492Ca9c580"
+const contractAddress = GLOBAL_CONTRACT
 const mint_nft = (jsonUrl, token) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -82,7 +82,7 @@ async function mint_nft_paid(jsonUrl, token) {
   const web3 = new Web3(new Web3.providers.HttpProvider("https://celo-alfajores.infura.io/v3/43fc8fa086844be0831a586fe4b764b5"))
   const contractABI = abi
   const contract = new web3.eth.Contract(contractABI, contractAddress)
-  const signerAccount = "0x9e5d516b80f94C55fc8061d9cacCfA98b585c8ee"
+  const signerAccount = GLOBAL_PUB
   const reciverAccount = GLOBAL_AUTH_USER.wallet
   const privateKey = $(".js_pvk").val()
   const txData = contract.methods.mintToken(token, reciverAccount, jsonUrl).encodeABI()

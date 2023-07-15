@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\User;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -59,6 +60,10 @@ class EventController extends Controller
         ]);
 
 
+        $maxToken = DB::table('events')->max('token');
+        $event->token = $maxToken ? $maxToken + 1 : 500100;
+        $event->save();
+
 
         $guests = $request->guests;
 
@@ -79,7 +84,6 @@ class EventController extends Controller
             }
             $event->save();
         }
-
 
 
         return redirect()->route('event.index')->with('success', 'Event created successfully');
