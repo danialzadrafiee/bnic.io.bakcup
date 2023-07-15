@@ -43,8 +43,8 @@
             cursor: pointer;
         }
     </style>
-    <input type="text" class="js_inviter_email" value="{{ base64_decode(request()->get('hash')) }}">
-    <input type="text" class="js_is_fee_paid" value="{{ request()->get('p') == 100 ? 1 : 0 }}"> {{-- 100 paid 200 unpaid --}}
+    <input type="hidden" class="js_inviter_email" value="{{ base64_decode(request()->get('hash')) }}">
+    <input type="hidden" class="js_is_fee_paid" value="{{ request()->get('p') == 100 ? 1 : 0 }}"> {{-- 100 paid 200 unpaid --}}
 
 
 

@@ -404,9 +404,9 @@
                                                 </header>
                                                 <value>
                                                     @if ($user->user_type == 'invidual')
-                                                        {{ $user->gender[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->nfts->where('type', 'profile')->count() !=0 ? $user->nfts->where('type', 'profile')->last()->token : '' }}
+                                                        {{ $user->gender[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->nfts->where('type', 'profile')->count() != 0 ? $user->nfts->where('type', 'profile')->last()->token : '' }}
                                                     @else
-                                                        {{ $user->corp_type[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->nfts->where('type', 'profile')->count() !=0 ? $user->nfts->where('type', 'profile')->last()->token : '' }}
+                                                        {{ $user->corp_type[0] }}-{{ substr(hash('sha256', $user->email), 0, 8) }}-{{ $user->nfts->where('type', 'profile')->count() != 0 ? $user->nfts->where('type', 'profile')->last()->token : '' }}
                                                     @endif
                                                 </value>
                                             </in>
