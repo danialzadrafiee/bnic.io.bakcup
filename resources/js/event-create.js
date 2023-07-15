@@ -300,8 +300,8 @@ $(".js-create-invite-tooltip").on("click", function () {
   $("<input>")
     .attr({
       type: "hidden",
-      id: "users",
-      name: "users",
+      id: "guests",
+      name: "guests[]",
       value: selected_users, // ensure this variable is defined somewhere
     })
     .appendTo($form)

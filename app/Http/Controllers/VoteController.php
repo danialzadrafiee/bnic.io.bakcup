@@ -28,10 +28,6 @@ class VoteController extends Controller
             return response()->json(['error' => 'Not authorized to vote in this ballot'], 403);
         }
 
-        // // For public ballots, the user must be a voter or a creator
-        // if ($ballot->type === 'public' && $ballotUser->role !== 'voter' && $ballotUser->role !== 'creator') {
-        //     return response()->json(['error' => 'Not authorized to vote in this ballot'], 403);
-        // }
 
         // Ensure the user hasn't voted in this ballot already
         $existingVote = Vote::where('ballot_id', $ballot->id)

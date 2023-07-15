@@ -1,0 +1,27 @@
+td {
+  @apply whitespace-nowrap;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  thead {
+    tr {
+      background-color: #009879;
+      color: #ffffff;
+      text-align: left;
+    }
+    th,
+    td {
+      padding: 12px 15px;
+    }
+    tbody {
+      tr {
+        border-bottom: 1px solid #dddddd;
+      }
+    }
+  }
+}

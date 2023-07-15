@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ballot;
 use App\Models\BallotUser;
 use App\Models\Option;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class BallotController extends Controller
@@ -43,7 +44,7 @@ class BallotController extends Controller
         $totalOptionVotes = array_sum($votesForEachOption);
         $percentageOfVotes = [];
         foreach ($votesForEachOption as $optionId => $votes) {
-            $percentageOfVotes[$optionId] = ($votes / 1  ) * 100;
+            $percentageOfVotes[$optionId] = ($votes / 1) * 100;
         }
 
         return view('ballots.show', compact('ballot', 'lastVoteDate', 'usersWhoVoted', 'percentageOfMinRequirement', 'percentageOfVotes'));
@@ -95,6 +96,12 @@ class BallotController extends Controller
         // Save the BallotUser
         $ballotUser->save();
 
+
+
+
+        $fullname = auth()->user()->user_type == 'invidual' ? auth()->user()->first_name . ' ' . auth()->user()->last_name : auth()->user()->corp_name;
+        $controller = app()->make(MailController::class);
+
         // If the ballot type is private, add each candidate to the BallotUser table
         if ($request->type === 'private') {
             foreach ($request->candidates as $candidateId) {
@@ -105,6 +112,14 @@ class BallotController extends Controller
                     'candidate' => true
                 ]);
 
+                $guest = User::where('id', $candidateId)->first();
+                $data = [
+                    "type" => 'voting_created',
+                    'url' => route('ballots.show',  $ballot),
+                    "sender_full_name" => $fullname,
+                    'reciver_email' => $guest->email
+                ];
+                $controller->send_other_mails($data);
                 $candidate->save();
             }
         }

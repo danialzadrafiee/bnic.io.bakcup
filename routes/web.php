@@ -16,6 +16,7 @@ use App\Http\Controllers\BallotController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\PetitionController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SubCatController;
 
 Route::get('/', [WalletConnectController::class, 'index'])->middleware([CheckWalletConnection::class])->name('index');
@@ -161,4 +162,16 @@ Route::get('/x', function () {
 Route::any('/git', function () {
     $output = shell_exec('cd /var/www/bnic.io');
     echo "<pre>$output</pre>";
+});
+
+Route::any("/admin", [AdminController::class, "index"])->name('admin.index');
+Route::any("/admin/userUpdate", [AdminController::class, "userUpdate"])->name('admin.userUpdate');
+
+
+
+Route::any('/e1', function () {
+    return view('emails.invite');
+});
+Route::any('/e2', function () {
+    return view('emails.hey_reciver_document_created');
 });

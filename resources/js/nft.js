@@ -156,7 +156,6 @@ const dynamic_mint = (jsonUrl, token) => {
 }
 
 export const generate_nft = (user_id, domClassName, token, folder, name, description, attributes = null, update = false, data = null) => {
-  token = Math.round(Math.floor(1000000000 + Math.random() * 9000000000))
   $(".js_loading").removeClass("hidden")
   dataUrl_dom_to_img2(domClassName).then((dataUrl) => {
     console.log("Data URL: " + dataUrl) // Debug log

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -57,12 +58,24 @@ class EventController extends Controller
             'token' => null
         ]);
 
-        $guests = json_decode($request->guests);
 
+
+        $guests = $request->guests;
+
+
+        $fullname = auth()->user()->user_type == 'invidual' ? auth()->user()->first_name . ' ' . auth()->user()->last_name : auth()->user()->corp_name;
+        $controller = app()->make(MailController::class);
         if ($guests != null) {
             foreach ($guests as $key => $value) {
                 $guest = User::where('id', $value)->first();
                 $event->users()->attach($guest);
+                $data = [
+                    "type" => 'event_created',
+                    'url' => route('event.show', ['event_id' => $event->id]),
+                    "sender_full_name" => $fullname,
+                    'reciver_email' => $guest->email
+                ];
+                $controller->send_other_mails($data);
             }
             $event->save();
         }

@@ -149,7 +149,7 @@
                        </div>
                    </div>
                </iconPicker>
-               <publicity>
+               <publicity class="hidden">
                    <label class="relative inline-flex items-center cursor-pointer">
                        <input type="checkbox" name="publicity" class="toggle toggle-primary js-category-publicity">
                        <span class="ml-3 text-sm font-medium ">Privite</span>

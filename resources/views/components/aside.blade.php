@@ -95,6 +95,21 @@
                     </span>
                 </a>
             </tooltip>
+
+            {{-- setting --}}
+            @if ($auth_user->isAdmin == 1)
+                <tooltip class="tooltip-right z-50" data-tip="Admin">
+                    <a href="{{ route('admin.index') }}" class="x-aside-link-inside  {{ Route::currentRouteName() == 'admin.index' ? $activeClass : '' }}">
+                        <icon>
+                            <x-fas-lock class="text-accent-11" />
+                        </icon>
+                        <span class="xjs-main-aside-span">
+                            Admin
+                        </span>
+                    </a>
+                </tooltip>
+            @endif
+
             {{-- logout --}}
             <a class="x-aside-link-inside cursor-pointer js-xaside-logout">
                 <icon>

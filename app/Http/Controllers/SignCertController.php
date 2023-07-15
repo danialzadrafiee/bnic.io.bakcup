@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSignCertRequest;
 use App\Http\Requests\UpdateSignCertRequest;
 use App\Models\SignCert;
+use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -29,8 +30,6 @@ class SignCertController extends Controller
     }
     public function sign(Request $request)
     {
-
-
         $validation = $request->validate([
             'document_id' => 'required|integer',
             'corporation_id' => 'required|integer',
@@ -57,6 +56,41 @@ class SignCertController extends Controller
             'ad_role' => json_encode($request->input('ad_role')),
             'ad_describe' => json_encode($request->input('ad_describe')),
         ]);
+
+        $fullname = auth()->user()->user_type == 'invidual' ? auth()->user()->first_name . ' ' . auth()->user()->last_name : auth()->user()->corp_name;
+
+        $controller = app()->make(MailController::class);
+
+
+
+        $data1 = [
+            "type" => 'cert_is_signed',
+            'url' => route('cert.show', ['id' => $cert->id]),
+            "sender_full_name" => $fullname,
+            'reciver_email' => $request->reciver
+        ];
+
+        $data2 = [
+            "type" => 'cert_is_signed',
+            'url' => route('cert.show', ['id' => $cert->id]),
+            "sender_full_name" => $fullname,
+            'reciver_email' => User::find($request->corporation_id)->email,
+        ];
+
+
+        $data3 = [
+            "type" => 'cert_is_signed',
+            'url' => route('cert.show', ['id' => $cert->id]),
+            "sender_full_name" => $fullname,
+            'reciver_email' => Auth::user()->email
+        ];
+
+        $controller->send_other_mails($data1);
+        $controller->send_other_mails($data2);
+        $controller->send_other_mails($data3);
+
+
+
 
         return redirect()->route('cert.show', ['id' => $cert->id, 'success' => 'Certificate has been signed']);
     }

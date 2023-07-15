@@ -134,7 +134,7 @@ class WalletConnectController extends Controller
         $data['language'] = json_encode($request->input('language'));
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->first_name . $request->lastname . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->first_name . $request->lastname . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
-        $data['is_fee_paid'] = 1;
+        // $data['is_fee_paid'] = 1;
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');
         $user->token = $maxToken ? $maxToken + 1 : 510000;
@@ -176,7 +176,7 @@ class WalletConnectController extends Controller
         ]);
         $data['profile_picture'] = "https://api.dicebear.com/6.x/identicon/svg?seed=" . $request->corp_name . "&backgroundType=solid,gradientLinear&backgroundColor=cbe5fe&rowColor=0084ff";
         $data['user_type'] = 'corporation';
-        $data['is_fee_paid'] = 1;
+        // $data['is_fee_paid'] = 1;
 
         $user = User::create($data);
         $maxToken = DB::table('users')->max('token');

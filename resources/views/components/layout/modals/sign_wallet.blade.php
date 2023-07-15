@@ -38,13 +38,13 @@
                                    </design>
                                    <div class="js-nft-qrcode !h-[220px]">
                                        <div class="addhere"></div>
-                                       <x-qrcode data="{{ route('dashboard.public_index', ['user_id' => $user->id]) }}"></x-qrcode>
+                                       <x-qrcode class="w-[220px] h-[220px]" data="{{ route('dashboard.public_index', ['user_id' => $user->id]) }}"></x-qrcode>
                                    </div>
                                    <design class="bg-base-content block w-[46px] h-[60px]">
                                    </design>
                                </qrcode>
                                <name class="text-sm capitalize">
-                                   <span>{{$user->user_type=='invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}</span>
+                                   <span>{{ $user->user_type == 'invidual' ? $user->first_name . ' ' . $user->last_name : $user->corp_name }}</span>
                                </name>
                            </nft>
                            <p class="text-base leading-relaxed text-center text-neutral-500 ">

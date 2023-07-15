@@ -3,8 +3,8 @@
 @endphp
 
 <x-layout.dashboard :user="$me">
-    @vite('resources/js/event-show.js');
-    @vite('resources/css/leaflet.scss');
+    @vite('resources/js/event-show.js')
+    @vite('resources/css/leaflet.scss')
     <main class="w-full flex rounded-xl bg-white p-8 flex-col gap-4 js_event_dom">
         <input type="hidden" class="js_event_id" value="{{ $event->id }}">
         <header class="flex justify-between w-full items-center">
@@ -21,8 +21,7 @@
             </event_badges>
         </header>
         <figure>
-            <img data-fancybox="gallery" class="w-full h-56 object-cover rounded-xl object-bottom"
-                src="{{ $event->image }}">
+            <img data-fancybox="gallery" class="w-full h-56 object-cover rounded-xl object-bottom" src="{{ $event->image }}">
         </figure>
         <content>
             {{ $event->content }}
@@ -54,8 +53,7 @@
                 <column class="col-span-1 items-center">
                     <heading class="text-lg font-semibold">Invite list</heading>
                     <row class="grid py-3 grid-flow-row gap-4 js-selected-users">
-                        <button
-                            class="btn btn-sm btn-neutral border bg-transparent text-neutral-300 cursor-pointer border-neutral-300 h-max rounded-lg p-3.5 flex items-center justify-center js_show_user_select_modal">
+                        <button class="btn btn-sm btn-neutral border bg-transparent text-neutral-300 cursor-pointer border-neutral-300 h-max rounded-lg p-3.5 flex items-center justify-center js_show_user_select_modal">
                             <x-fas-plus></x-fas-plus>
                         </button>
                     </row>
