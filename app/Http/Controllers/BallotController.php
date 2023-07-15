@@ -84,7 +84,7 @@ class BallotController extends Controller
         // $maxToken = DB::table('ballots')->max('token');
         // $ballot->token = $maxToken ? $maxToken + 1 : 400100;
         $ballot->save();
-
+        // git
         // Create a new BallotUser with role as 'creator'
         $ballotUser = new BallotUser([
             'user_id' => auth()->id(),
