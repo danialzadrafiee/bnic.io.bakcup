@@ -6,7 +6,7 @@
               <heading class="text-lg font-medium ">TrustLink network</heading>
               <grid class="grid grid-cols-2 gap-4">
                   <cel>
-                    <heading class="badge badge-primary badge-sm mb-1">Trusters</heading>
+                      <heading class="badge badge-primary badge-sm mb-1">Trusters</heading>
                       @foreach ($user->trusters as $truster)
                           <card class="card bg-base-100 shadow-xl">
                               <frow class="card-body flex flex-row justify-between items-center">
@@ -30,24 +30,24 @@
                       @endforeach
                   </cel>
                   <cel>
-                    <heading class="badge badge-primary badge-sm mb-1">Trustings</heading>
+                      <heading class="badge badge-primary badge-sm mb-1">Trustings</heading>
                       @foreach ($user->trusteds as $trusted)
                           <card class="card bg-base-100 shadow-xl">
                               <frow class="card-body flex flex-row justify-between items-center">
                                   <frow class="flex flex-row gap-4">
                                       <img class="w-12 rounded aspect-square"
-                                          src="https://api.dicebear.com/6.x/initials/svg?seed={{ $truster->user_type == 'invidual' ? $truster->first_name . ' ' . $truster->last_name : $truster->corp_name }}">
+                                          src="https://api.dicebear.com/6.x/initials/svg?seed={{ $trusted->user_type == 'invidual' ? $trusted->first_name . ' ' . $trusted->last_name : $trusted->corp_name }}">
                                       <fcol class="flex flex-col">
                                           <name class="font-semibold capitalize">
-                                              {{ $truster->user_type == 'invidual' ? $truster->first_name . ' ' . $truster->last_name : $truster->corp_name }}
+                                              {{ $trusted->user_type == 'invidual' ? $trusted->first_name . ' ' . $trusted->last_name : $trusted->corp_name }}
                                           </name>
                                           <type class="font-light capitalize">
-                                              {{ $truster->user_type }}
+                                              {{ $trusted->user_type }}
                                           </type>
                                       </fcol>
                                   </frow>
                                   <frow>
-                                      <a href="{{ route('dashboard.public_index', $truster->id) }}" type="button" class="btn btn-sm btn-neutral">Visit Profile</a>
+                                      <a href="{{ route('dashboard.public_index', $trusted->id) }}" type="button" class="btn btn-sm btn-neutral">Visit Profile</a>
                                   </frow>
                               </frow>
                           </card>
