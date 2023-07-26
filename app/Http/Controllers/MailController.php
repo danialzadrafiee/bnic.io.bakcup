@@ -84,6 +84,7 @@ class MailController extends Controller
     $mail->isSMTP();
     $mail->Host       = 'mail.bnic.io';
     $mail->SMTPAuth   = true;
+    $mail->SMTPDebug = 2;
     $mail->Username   = '_mainaccount@developerpie.com';
     $mail->Password   = 'WTFIS0124WTFIS0124';
     $mail->SMTPSecure = false;  // Turn off SMTP encryption
