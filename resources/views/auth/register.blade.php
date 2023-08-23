@@ -137,7 +137,7 @@
                     <secondary>
                         GET STARTED</secondary>
                     <orginal>
-                        Apply for Million Chance to Get Dreams Job</orginal>
+                    Empower Your Digital Identity</orginal>
                 </heading>
                 <page class="js-section-page" data-page="0">
                     <input type="hidden" name="birthday" class="js-real-birthday">
@@ -454,23 +454,7 @@
                             <h1>Terms and Conditions</h1>
                         </heading>
                         <content>
-                            The user agrees to comply with all applicable laws and regulations while using the site.
-                            The user must be at least 13 years of age or have parental consent to use the site.
-                            The user agrees not to post any content that is harmful, offensive, or infringes on the
-                            rights of
-                            others.
-                            The site reserves the right to remove any content that violates its policies or is deemed
-                            inappropriate.
-                            The user agrees not to use the site for spamming, phishing, or other malicious activities.
-                            The user is responsible for maintaining the security of their account and password.
-                            The site is not responsible for any loss or damage resulting from the use of the site.
-                            The user agrees to indemnify and hold harmless the site and its owners from any claims
-                            arising out
-                            of their use of the site.
-                            The site may suspend or terminate a user's account for any violation of these terms.
-                            The user agrees to the site's privacy policy and acknowledges that their personal
-                            information may be
-                            collected and used for various purposes.
+                        Users are granted limited, revocable access to the platform and its content. When registering, users commit to providing accurate, current information and maintaining the confidentiality of their account details. Users may create, upload, or share content on Bnic.io, retaining ownership of their content. However, by doing so, they grant Bnic.io permission to utilize this content. Content considered inappropriate or against these terms can be modified or removed by Bnic.io. Transactions made on the blockchain through the platform are irreversible, so users should understand their implications. Bnic.io offers the platform "as is" without any guarantees and isn't responsible for losses or damages from using the site. Access to Bnic.io can be terminated or suspended for any user without prior notice. Terms may change, and users are encouraged to review them periodically. 
                         </content>
                     </terms>
                 </page>
